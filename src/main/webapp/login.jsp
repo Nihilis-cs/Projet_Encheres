@@ -53,7 +53,7 @@
 
 			<!--formulaire-->
 			<form class="form-login"
-				action="${request.getContextPath}/connection" method="post">
+				action="${pageContext.request.contextPath}/connection" method="post">
 				<label for="inputIdentifiant" class="sr-only">Identifiant</label> <input
 					type="text" id="inputIdentifiant" class="form-control"
 					name="pseudo" placeholder="Pseudo" required autofocus> <label
