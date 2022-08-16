@@ -65,14 +65,11 @@
 						value="remember"> Se souvenir de moi
 					</label>
 				</div>
-				<div class="text-center">
-					<button class="btn btn-lg btn-primary " type="submit"
-						title="Me connecter">Me connecter</button>
-					<div class="text-center">
-					  <input type="button" onclick="${pageContext.request.contextPath}/connection" value="Crée un compte" />
-						<a href="#">Mot de passe oublié</a>
-					</div>
-				</div>
+				<button class="btn btn-lg btn-primary btn-block" type="submit"
+					title="Me connecter">
+					<img class="small-icon" src="images/connect.svg" alt="Me connecter">
+				</button>
+				<a href="#">Mot de passe oublié</a>
 			</form>
 		</main>
 		<!--footer-->
