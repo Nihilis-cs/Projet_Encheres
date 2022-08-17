@@ -10,11 +10,13 @@ import bo.Utilisateurs;
 
 
 
+
 public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 	private final String INSERT = "insert into utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
+	
+	private final String SELECT_BY_PSEUDO = "select * from UTILISATEURS where pseudo = ? ";
 
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
@@ -115,4 +117,23 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return user;
 	}
 
+	public Utilisateurs selectByPseudo(String user) throws DALException{
+		Utilisateurs utilisateur = null;
+		
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_PSEUDO)){
+			stmt.setString(1, user);
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				utilisateur = utilisateurBuilder(rs);
+			}
+			
+		} catch (SQLException e) {
+			throw new DALException("Erreur dans la selection par le pseudo : " + e.getMessage());
+		}
+		
+		return utilisateur;
+	}
+	
 }
