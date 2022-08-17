@@ -11,9 +11,16 @@
 </head>
 
 <body>
-<p>${requestScope.estConnecte}</p>
-<c:if test=" ${requestScope.estConnecte == true}"> <p>Etat connection : vous êtes connecté ! </p> </c:if>
+	<p>${estConnecte}</p>
+	
+	<c:if test="${estConnecte eq '1'}">
+		<p>Etat connection : vous êtes connecté !</p>
+	</c:if>
 
-	<c:if test=" ${estConnecte == false}"> <p>Etat connection : vous n'êtes pas connecté ! </p></c:if>
+	<c:if test="${estConnecte eq '0'}">
+		<p>Etat connection : vous n'êtes pas connecté !</p>
+	</c:if>
+
+
 </body>
 </html>

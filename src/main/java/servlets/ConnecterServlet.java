@@ -39,11 +39,11 @@ public class ConnecterServlet extends HttpServlet {
 		try {
 			Utilisateurs utilisateur = dao.getUtilisateurByMailMDP(pseudo, mdp);
 			if (utilisateur == null) {
-				request.setAttribute("estConnecte", "false");
+				request.setAttribute("estConnecte", "0");
 				
 				//response.getWriter().append("Erreur ");
 			}else {
-				request.setAttribute("estConnecte", "true");
+				request.setAttribute("estConnecte", "1");
 				//response.getWriter().append("Connecté ");
 			}
 		} catch (DALException e) {
