@@ -82,7 +82,8 @@
 					</c:if>
 					<c:if test="${not empty utilisateurActif}">
 						<li class="nav-item d-none d-lg-block"><a class="nav-link"
-							href="#" alt="Me déconnecter">Me déconnecter</a></li>
+							href="${pageContext.request.contextPath}/connection"
+							alt="Me déconnecter">Me déconnecter</a></li>
 					</c:if>
 
 				</ul>
@@ -278,48 +279,55 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script>
-        // Example starter JavaScript for disabling form submissions if there are invalid fields
-        (function() {
-            'use strict';
-    
-            window.addEventListener('load', function() {
-            	checkAchats();
-            	checkVentes();
-                achats.addEventListener('change', function(event) {
-                	checkAchats();
-                }, false);
-                ventes.addEventListener('change', function(event) {
-                	checkVentes();
-                }, false);
-                
-                function checkAchats() {
-                	//id radio button achats
-                	var achats = document.getElementById('achats');
-                    if (achats.checked){
-                    	//id des checkbox
-                        document.getElementById('venteencours').disabled = true;
-                        document.getElementById('nondebutees').disabled = true;
-                        document.getElementById('terminees').disabled = true;
-                        document.getElementById('encours').disabled = false;
-                        document.getElementById('ouvertes').disabled = false;
-                        document.getElementById('remportees').disabled = false;
-                    }
-                }
-                function checkVentes(){
-                	//id radio button ventes
-                	var ventes = document.getElementById('ventes');
-                    if (ventes.checked){
-                    	//id des checkbox
-                        document.getElementById('venteencours').disabled = false;
-                        document.getElementById('nondebutees').disabled = false;
-                        document.getElementById('terminees').disabled = false;
-                        document.getElementById('encours').disabled = true;
-                        document.getElementById('ouvertes').disabled = true;
-                        document.getElementById('remportees').disabled = true;
-                    }
-                }
-            }, false);
-        })();
-    </script>
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
+
+			window
+					.addEventListener(
+							'load',
+							function() {
+								checkAchats();
+								checkVentes();
+								achats.addEventListener('change', function(
+										event) {
+									checkAchats();
+								}, false);
+								ventes.addEventListener('change', function(
+										event) {
+									checkVentes();
+								}, false);
+
+								function checkAchats() {
+									//id radio button achats
+									var achats = document
+											.getElementById('achats');
+									if (achats.checked) {
+										//id des checkbox
+										document.getElementById('venteencours').disabled = true;
+										document.getElementById('nondebutees').disabled = true;
+										document.getElementById('terminees').disabled = true;
+										document.getElementById('encours').disabled = false;
+										document.getElementById('ouvertes').disabled = false;
+										document.getElementById('remportees').disabled = false;
+									}
+								}
+								function checkVentes() {
+									//id radio button ventes
+									var ventes = document
+											.getElementById('ventes');
+									if (ventes.checked) {
+										//id des checkbox
+										document.getElementById('venteencours').disabled = false;
+										document.getElementById('nondebutees').disabled = false;
+										document.getElementById('terminees').disabled = false;
+										document.getElementById('encours').disabled = true;
+										document.getElementById('ouvertes').disabled = true;
+										document.getElementById('remportees').disabled = true;
+									}
+								}
+							}, false);
+		})();
+	</script>
 </body>
 </html>
