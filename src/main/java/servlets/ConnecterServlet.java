@@ -19,7 +19,7 @@ import dal.UtilisateursDAOJdbcImp;
 /**
  * Servlet implementation class ConnecterServlet
  */
-@WebServlet("/connection")
+@WebServlet("/utilisateur/login")
 public class ConnecterServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
     

@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
-@WebServlet("/accueil")
+@WebServlet("/navigation/accueil")
 public class AccueillirServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

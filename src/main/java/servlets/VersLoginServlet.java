@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class VersLoginServlet
  */
-@WebServlet("/to/login")
+@WebServlet("/navigation/login")
 public class VersLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

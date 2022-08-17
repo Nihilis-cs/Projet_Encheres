@@ -18,7 +18,7 @@ import dal.UtilisateursDAOJdbcImp;
 /**
  * Servlet implementation class CreeCompteServlet
  */
-@WebServlet("/creer")
+@WebServlet("/utilisateur/inscription")
 public class CreeCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -74,7 +74,7 @@ public class CreeCompteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/login.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
 		rs.forward(request, response);
 	
 		

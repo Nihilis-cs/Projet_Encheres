@@ -38,7 +38,7 @@
 
 			<c:if test="${not empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/to/gestion/profil"
+					href="${pageContext.request.contextPath}/navigation/gestionProfil"
 					alt="Mon profil">Mon profil</a></li>
 			</c:if>
 
@@ -51,16 +51,16 @@
 				href="#" alt="Vendre un article">Vendre un article</a></li>
 
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
-				href="${pageContext.request.contextPath}/Creer/Compte"
+				href="${pageContext.request.contextPath}/navigation/inscription"
 				alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
 			<c:if test="${empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/to/login"
+					href="${pageContext.request.contextPath}/navigation/login"
 					alt="Se connecter à ENI-Encheres">Me connecter</a></li>
 			</c:if>
 			<c:if test="${not empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/connection"
+					href="${pageContext.request.contextPath}/utilisateur/login"
 					alt="Me déconnecter">Me déconnecter</a></li>
 			</c:if>
 

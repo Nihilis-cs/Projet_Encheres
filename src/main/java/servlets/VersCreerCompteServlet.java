@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet("/Creer/Compte")
+@WebServlet("/navigation/inscription")
 public class VersCreerCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        

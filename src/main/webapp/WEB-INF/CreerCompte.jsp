@@ -53,7 +53,7 @@
                 </ul>
             </div>            
             <!--formulaire-->
-            <form action="${pageContext.request.contextPath}/creer" method="post" class="form-register needs-validation" novalidate>
+            <form action="${pageContext.request.contextPath}/utilisateur/inscription" method="post" class="form-register needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="pseudo">Pseudo</label>

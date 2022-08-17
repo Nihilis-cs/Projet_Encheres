@@ -30,17 +30,7 @@
 <body>
 	<div class="container-fluid">
 		<!--emptyHeader-->
-		<header>
-			<nav
-				class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
-				<!-- Brand/logo -->
-				<a class="navbar-brand" href="${pageContext.request.contextPath}/accueil"> <strong>ENI-Encheres</strong>
-				</a> <a class="navbar-brand" href="#" alt="Gérer mon profil"
-					title="Gérer mon profil"> <span class="align-middle text-muted">XXXXX
-						xxx, 0 crédit(s)</span>
-				</a>
-			</nav>
-		</header>
+		<%@ include file="fragments/header_fragment.jsp"%>
 
 		<!--main bloc-->
 		<main>
@@ -52,7 +42,7 @@
 			</div>
 			<!--formulaire-->
 			<form class="form-login"
-				action="${pageContext.request.contextPath}/connection" method="post">
+				action="${pageContext.request.contextPath}/utilisateur/login" method="post">
 				<label for="inputIdentifiant" class="sr-only">Identifiant</label> <input
 					type="text" id="inputIdentifiant" class="form-control"
 					name="pseudo" placeholder="Pseudo" required autofocus> <label
@@ -74,7 +64,7 @@
 					</div>
 				</div>
 			</form>
-			<form action="${pageContext.request.contextPath}/creer" method="post">
+			<form action="${pageContext.request.contextPath}/navigation/inscription" method="post">
 			 <button type="submit" name="create" value="create">Crée un compte</button>
 			 </form>
 		</main>

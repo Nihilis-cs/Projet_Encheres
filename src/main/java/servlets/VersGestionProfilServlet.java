@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class VersGestionProfilServlet
  */
-@WebServlet("/to/gestion/profil")
+@WebServlet("/navigation/gestionProfil")
 public class VersGestionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -28,7 +28,7 @@ public class VersGestionProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/GestionProfil.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
 		rs.forward(request, response);
 	}
 
