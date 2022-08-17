@@ -58,10 +58,10 @@
                         <a class="nav-link" href="#" alt="Me déconnecter">Me déconnecter</a>
                     </li>
                     <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" href="register.html" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/Creer/Compte" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
                     </li>
                     <li class="nav-item d-none d-lg-block">
-                        <a class="nav-link" href="${request.getRequestPath}/connection" alt="Se connecter à ENI-Encheres">Me connecter</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/to/login" alt="Se connecter à ENI-Encheres">Me connecter</a>
                     </li>
                 </ul>
             </nav>

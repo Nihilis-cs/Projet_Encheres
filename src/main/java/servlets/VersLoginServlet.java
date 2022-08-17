@@ -9,18 +9,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/accueil")
-public class AccueillirServlet extends HttpServlet {
+/**
+ * Servlet implementation class VersLoginServlet
+ */
+@WebServlet("/to/login")
+public class VersLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AccueillirServlet() {
+
+    public VersLoginServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 		rd.forward(request, response);
 	}
 
