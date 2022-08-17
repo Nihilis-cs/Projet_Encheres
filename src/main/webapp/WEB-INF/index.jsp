@@ -67,10 +67,20 @@
 								alt="Se connecter à ENI-Encheres">Me connecter</a>
 						</div></li> -->
 					<!-- Links for medium screen-->
+
+					<c:if test="${not empty utilisateurActif}">
+						<li class="nav-item d-none d-lg-block"><a class="nav-link"
+							href="${pageContext.request.contextPath}/gestion/profil"
+							alt="Mon profil">Mon profil</a></li>
+					</c:if>
+					<li class="nav-item d-none d-lg-block"><a class="nav-link"
+						href="#" alt="Administrer le site">Administrer</a></li>
+
 					<c:if test="${utilisateurActif.admin == '1'}">
 						<li class="nav-item d-none d-lg-block"><a class="nav-link"
 							href="#" alt="Administrer le site">Administrer</a></li>
 					</c:if>
+
 					<li class="nav-item d-none d-lg-block"><a class="nav-link"
 						href="#" alt="Vendre un article">Vendre un article</a></li>
 
@@ -87,6 +97,7 @@
 							href="${pageContext.request.contextPath}/connection"
 							alt="Me déconnecter">Me déconnecter</a></li>
 					</c:if>
+					
 
 				</ul>
 			</nav>
