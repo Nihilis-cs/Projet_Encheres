@@ -71,7 +71,7 @@
                 </ul>
             </div>            
             <!--formulaire-->
-            <form class="form-register needs-validation" novalidate>
+            <form action="${pageContext.request.contextPath}/creer" method="post" class="form-register needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="pseudo">Pseudo</label>
@@ -101,7 +101,7 @@
                 
                     <div class="col-md-6 mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="" maxlength="20" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="" maxlength="40" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
