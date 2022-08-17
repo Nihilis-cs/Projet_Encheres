@@ -110,9 +110,4 @@ public class UtilisateursManager {
 		return u;
 	}
 	
-	
-
-
-
-
 }
