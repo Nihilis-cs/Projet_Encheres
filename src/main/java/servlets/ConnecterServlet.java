@@ -29,7 +29,11 @@ public class ConnecterServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		HttpSession session = request.getSession();
+		session.setAttribute("utilisateurActif", null);
+		
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		rs.forward(request, response);
 	}
 
 
