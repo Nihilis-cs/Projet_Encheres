@@ -16,24 +16,6 @@
 
     <title>ENI-Encheres : Inscription</title>
 
-<!--[if gte mso 9]><xml>
-<mso:CustomDocumentProperties>
-<mso:xd_Signature msdt:dt="string"></mso:xd_Signature>
-<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor msdt:dt="string">Bruno MARTIN</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Editor>
-<mso:Order msdt:dt="string">493300.000000000</mso:Order>
-<mso:xd_ProgID msdt:dt="string"></mso:xd_ProgID>
-<mso:_ExtendedDescription msdt:dt="string"></mso:_ExtendedDescription>
-<mso:SharedWithUsers msdt:dt="string"></mso:SharedWithUsers>
-<mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author msdt:dt="string">Bruno MARTIN</mso:display_urn_x003a_schemas-microsoft-com_x003a_office_x003a_office_x0023_Author>
-<mso:ComplianceAssetId msdt:dt="string"></mso:ComplianceAssetId>
-<mso:TemplateUrl msdt:dt="string"></mso:TemplateUrl>
-<mso:ContentTypeId msdt:dt="string">0x010100263DB1995E0D954B97BE6C60AEAEE054</mso:ContentTypeId>
-<mso:TriggerFlowInfo msdt:dt="string"></mso:TriggerFlowInfo>
-<mso:_SourceUrl msdt:dt="string"></mso:_SourceUrl>
-<mso:_SharedFileIndex msdt:dt="string"></mso:_SharedFileIndex>
-<mso:MediaLengthInSeconds msdt:dt="string"></mso:MediaLengthInSeconds>
-</mso:CustomDocumentProperties>
-</xml><![endif]-->
 </head>
 <body>
     <div class="container-fluid">
@@ -41,7 +23,7 @@
         <header>
             <nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
                 <!-- Brand/logo -->
-                <a class="navbar-brand" href="index.html">
+                <a class="navbar-brand" href="${pageContext.request.contextPath}/accueil">
                     <img class="small-icon" src="images/trocenchere.svg" alt="Accueil ENI-Encheres">
                     <strong>ENI-Encheres</strong>
                 </a>
@@ -71,7 +53,7 @@
                 </ul>
             </div>            
             <!--formulaire-->
-            <form class="form-register needs-validation" novalidate>
+            <form action="${pageContext.request.contextPath}/creer" method="post" class="form-register needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="pseudo">Pseudo</label>
@@ -101,7 +83,7 @@
                 
                     <div class="col-md-6 mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="" maxlength="20" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="" maxlength="40" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>

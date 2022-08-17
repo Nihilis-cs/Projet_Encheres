@@ -56,22 +56,25 @@ public class CreeCompteServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String phone = request.getParameter("phone");
 		String rue = request.getParameter("rue");
-		String codePostal = request.getParameter("code_postal");
+		String codePostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
+		System.out.println(pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp);
 		//String confirmMdp = request.getParameter("confirm_mdp");
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		
 		try {
 			
 			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 0, (byte)0);
+			System.out.println(utilisateur.toString());
+			um.validerUtilisateur(utilisateur);
 			um.insertUtilisateur(utilisateur);
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/Connection.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/login.jsp");
 		rs.forward(request, response);
 	
 		

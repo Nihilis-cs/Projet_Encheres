@@ -9,18 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/accueil")
-public class AccueillirServlet extends HttpServlet {
+@WebServlet("/Creer/Compte")
+public class VersCreerCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AccueillirServlet() {
+    public VersCreerCompteServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerCompte.jsp");
 		rd.forward(request, response);
 	}
 
