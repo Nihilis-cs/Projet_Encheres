@@ -8,6 +8,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import bo.Utilisateurs;
 
 /**
  * Servlet implementation class GestionProfil
@@ -35,7 +38,12 @@ public class GestionProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session = request.getSession();
+		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateurActif");
+		System.out.println(utilisateur.toString());
+		
 
+		
 	}
 
 }

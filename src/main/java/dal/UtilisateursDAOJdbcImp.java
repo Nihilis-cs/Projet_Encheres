@@ -13,10 +13,13 @@ import bo.Utilisateurs;
 
 public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
-	private final String INSERT = "insert into utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
+	private final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 	
-	private final String SELECT_BY_PSEUDO = "select * from UTILISATEURS where pseudo = ? ";
+	private final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ? ";
+	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
+	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
+			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur = ?";
 
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
@@ -104,7 +107,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			user.setPrenom(rs.getString("prenom"));
 			user.setEmail(rs.getString("email"));
 			user.setTelephone(rs.getString("telephone"));
-			user.setRue(rs.getString("telephone"));
+			user.setRue(rs.getString("rue"));
 			user.setCodePostal(rs.getString("code_postal"));
 			user.setVille(rs.getString("ville"));
 			user.setMotDePasse(rs.getString("mot_de_passe"));

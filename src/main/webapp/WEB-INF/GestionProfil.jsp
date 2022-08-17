@@ -14,31 +14,21 @@
     <!--icons-->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
 
-    <title>ENI-Encheres :Gestion Profil</title>
+    <title>ENI-Encheres : Gestion Profil</title>
 
 </head>
 <body>
     <div class="container-fluid">
         <!--emptyHeader-->
         <header>
-            <nav class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
-                <!-- Brand/logo -->
-                <a class="navbar-brand" href="${pageContext.request.contextPath}/accueil">
-                    <img class="small-icon" src="images/trocenchere.svg" alt="Accueil ENI-Encheres">
-                    <strong>ENI-Encheres</strong>
-                </a>
-                <a class="navbar-brand" href="#" alt="Gérer mon profil" title="Gérer mon profil">
-                    <img class="small-icon" src="images/user.svg">
-                    <span class="align-middle text-muted">XXXXX xxx, 0 crédit(s)</span>
-                </a>
-            </nav>
+			<%@ include file="fragments/header_fragment.jsp"%>
         </header>
 
         <!--main bloc-->
         <main>
             <!--title-->
             <div class="mx-auto text-center">
-                <h1>Inscription</h1>
+                <h1>Gestion Profil</h1>
                 <img class="mb-4 large-icon rounded-circle" src="images/user.svg" alt="">
             </div>
             <!--erreur-->
@@ -53,11 +43,11 @@
                 </ul>
             </div>            
             <!--formulaire-->
-            <form action="${pageContext.request.contextPath}/creer" method="post" class="form-register needs-validation" novalidate>
+            <form action="${pageContext.request.contextPath}/utilisateur/gestion" method="post" class="form-register needs-validation" novalidate>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="pseudo">Pseudo</label>
-                        <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="" maxlength="30" required value="">
+                        <input type="text" class="form-control" id="pseudo" name="pseudo" placeholder="" maxlength="30" required value="${utilisateurActif.pseudo}">
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -65,7 +55,7 @@
                 
                     <div class="col-md-6 mb-3">
                         <label for="lastname">Nom</label>
-                        <input type="text" class="form-control" id="nom" name="nom" placeholder="" value="" maxlength="30" required>
+                        <input type="text" class="form-control" id="nom" name="nom" placeholder="" value="${utilisateurActif.nom}" maxlength="30" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -75,7 +65,7 @@
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="firstname">Prénom</label>
-                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="" value="" maxlength="30" required>
+                        <input type="text" class="form-control" id="prenom" name="prenom" placeholder="" value="${utilisateurActif.prenom}" maxlength="30" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -83,7 +73,7 @@
                 
                     <div class="col-md-6 mb-3">
                         <label for="email">Email</label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="" maxlength="40" required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="you@example.com" value="${utilisateurActif.email}" maxlength="40" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -93,11 +83,11 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="phone">Téléphone <span class="text-muted">(Optional)</span></label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="" maxlength="15">
+                        <input type="text" class="form-control" id="phone" name="phone" placeholder="" value="${utilisateurActif.telephone}" maxlength="15">
                     </div>
                     <div class="col-md-8 mb-3">
                         <label for="street">Rue</label>
-                        <input type="text" class="form-control" id="rue" name="rue" placeholder="" value="" maxlength="30" required>
+                        <input type="text" class="form-control" id="rue" name="rue" placeholder="" value="${utilisateurActif.rue}" maxlength="30" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -107,7 +97,7 @@
                 <div class="row">
                     <div class="col-md-4 mb-3">
                         <label for="zipcode">Code postal</label>
-                        <input type="number" class="form-control" id="codepostal" name="codepostal" placeholder="" min="01000" max="99999" value="" required>
+                        <input type="number" class="form-control" id="codepostal" name="codepostal" placeholder="" min="01000" max="99999" value="${utilisateurActif.codePostal}" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
@@ -124,7 +114,7 @@
 				<div class="row">
 				    <div class="col-md-6 mb-3">
 				        <label for="password">Mot de passe</label>
-				        <input type="password" class="form-control" id="mdp" name="mdp" placeholder="" minlength="6" maxlength="30" value="" required>
+				        <input type="password" class="form-control" id="mdp" name="mdp" placeholder="" minlength="6" maxlength="30" value="${utilisateurActif.motDePasse}" required>
 				        <div class="invalid-feedback">
 				            Ce champ est invalide !
 				        </div>
@@ -139,7 +129,7 @@
 				    </div>
 				</div>                
                 <hr class="mb-4">
-                <button class="btn btn-primary btn-lg btn-block" type="submit">Créer mon compte</button>
+                <button class="btn btn-primary btn-lg btn-block" type="submit">Modifier mon compte</button>
             </form>
         </main>
         <!--footer-->
