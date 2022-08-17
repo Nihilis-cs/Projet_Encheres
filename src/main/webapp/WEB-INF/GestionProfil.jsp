@@ -104,7 +104,7 @@
                     </div>
                     <div class="col-md-8 mb-3">
                         <label for="city">Ville</label>
-                        <input type="text" class="form-control" id="ville" name="ville" placeholder="" maxlength="30" value="" required>
+                        <input type="text" class="form-control" id="ville" name="ville" placeholder="" maxlength="30" value="${utilisateurActif.ville}" required>
                         <div class="invalid-feedback">
                             Ce champ est invalide !
                         </div>
