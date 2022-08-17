@@ -45,10 +45,10 @@ public class ConnecterServlet extends HttpServlet {
 
 			}else {
 				request.setAttribute("estConnecte", "1");
-
+				//Ouvrir session ici
 			}
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
+			//Gerer BLLException
 			e.printStackTrace();
 		}
 

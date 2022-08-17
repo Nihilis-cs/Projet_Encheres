@@ -38,9 +38,9 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 			if(rs.next()) {
 				int id = rs.getInt("no_utilisateur");
-				String nom = rs.getString("pseudo");
+				String pseudo2 = rs.getString("pseudo");
 				String motDePasse = rs.getString("mot_de_passe");
-				utilisateur = new Utilisateurs(id, nom, motDePasse);
+				utilisateur = new Utilisateurs(id, pseudo2, motDePasse);
 			}
 
 
@@ -56,6 +56,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 				}
 			} catch (SQLException e) {
 				System.out.println("Erreur dans la DAL : " + e.getMessage());
+				throw new DALException("Erreur lors de la fermeture ou du statement : "+ e.getMessage());
 			}
 		}
 		return utilisateur;
@@ -78,7 +79,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 				stmt.setString(9, u.getMotDePasse());
 				stmt.setInt(10, u.getCredit());
 				stmt.setByte(11, u.getAdmin());
-				
+
 				stmt.executeUpdate();
 				
 				con.commit();
