@@ -4,7 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+import java.sql.Statement;
 
 import bo.Utilisateurs;
 
@@ -58,7 +58,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	
 	public Utilisateurs insertUtilisateur(Utilisateurs u) throws DALException  {
 		try (Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(INSERT)){
+				PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
 			try {
 				con.setAutoCommit(false);
 				
@@ -76,8 +76,14 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 				stmt.executeUpdate();
 				
+				ResultSet rsId = stmt.getGeneratedKeys();
+				if(rsId.next()){
+					u.setId(rsId.getInt(1));
+				}
+				
 				con.commit();
 			}catch(SQLException e){
+				e.printStackTrace();
 				con.rollback();	
 			}
 		}catch(SQLException e){

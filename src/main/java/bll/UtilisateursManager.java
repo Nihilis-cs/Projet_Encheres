@@ -36,13 +36,13 @@ public class UtilisateursManager {
 	}
 
 	public Utilisateurs insertUtilisateur(Utilisateurs utilisateur) throws BLLException {
-		
+		Utilisateurs u=null;
 		try {
-			 this.utilisateurDao.insertUtilisateur(utilisateur);
+			u =  this.utilisateurDao.insertUtilisateur(utilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}
-		return utilisateur;
+		return u;
 	}
 
 	public void validerUtilisateur(Utilisateurs u) throws BLLException
