@@ -52,7 +52,7 @@
 
 				<ul class="navbar-nav ml-auto">
 					<!-- Dropdown for small screen -->
-					<li class="nav-item dropdown d-lg-none"><a
+					<!-- <li class="nav-item dropdown d-lg-none"><a
 						class="nav-link dropdown-toggle" href="#" id="navbardrop"
 						data-toggle="dropdown"> <img class="small-icon"
 							src="images/menu.svg" alt="Menu ENI-Encheres">
@@ -65,10 +65,12 @@
 								href="register.html" alt="S'inscrire à ENI-Encheres">M'inscrire</a>
 							<a class="dropdown-item" href="login.html"
 								alt="Se connecter à ENI-Encheres">Me connecter</a>
-						</div></li>
+						</div></li> -->
 					<!-- Links for medium screen-->
-					<li class="nav-item d-none d-lg-block"><a class="nav-link"
-						href="#" alt="Administrer le site">Administrer</a></li>
+					<c:if test="${utilisateurActif.admin == '1'}">
+						<li class="nav-item d-none d-lg-block"><a class="nav-link"
+							href="#" alt="Administrer le site">Administrer</a></li>
+					</c:if>
 					<li class="nav-item d-none d-lg-block"><a class="nav-link"
 						href="#" alt="Vendre un article">Vendre un article</a></li>
 
