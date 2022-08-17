@@ -12,14 +12,14 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * Servlet implementation class GestionProfil
  */
-@WebServlet("/gestion/profil")
-public class GestionProfil extends HttpServlet {
+@WebServlet("/utilisateur/gestion")
+public class GestionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GestionProfil() {
+    public GestionProfilServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,8 +35,7 @@ public class GestionProfil extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/GestionProfil.jsp");
-		rs.forward(request, response);
+
 	}
 
 }
