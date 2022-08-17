@@ -72,17 +72,6 @@
             <div class="mx-auto text-center">
                 <h1>Enchères</h1>
             </div>
-            <!--erreur-->
-            <div class="d-flex alert-danger">
-                <div class="col-3 p-2">
-                    <img class="small-icon" src="images/error.svg">
-                </div>
-            
-                <ul class="col-9 list-unstyled p-2">
-                    <li>un message d'erreur éventuellement !</li>
-                    <li>un autre message....</li>
-                </ul>
-            </div>
             <!--filtre-->
             <form class="form-filter border mb-3" action="#" method="">
                 <div class="row">
