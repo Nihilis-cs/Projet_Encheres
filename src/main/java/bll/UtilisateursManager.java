@@ -97,6 +97,19 @@ public class UtilisateursManager {
 
 	}
 	
+	public Utilisateurs selectByPseudo(String user) throws BLLException{
+		Utilisateurs u=null;
+		
+		try {
+			u = this.utilisateurDao.selectByPseudo(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+			//Documenter BLLException
+		}
+		return u;
+	}
+	
 	
 
 
