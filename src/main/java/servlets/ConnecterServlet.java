@@ -42,11 +42,10 @@ public class ConnecterServlet extends HttpServlet {
 			Utilisateurs utilisateur = um.getUtilisateurByMailMdp(pseudo, mdp);
 			if (utilisateur == null) {
 				request.setAttribute("estConnecte", "0");
-				
-				//response.getWriter().append("Erreur ");
+
 			}else {
 				request.setAttribute("estConnecte", "1");
-				//response.getWriter().append("Connecté ");
+
 			}
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
