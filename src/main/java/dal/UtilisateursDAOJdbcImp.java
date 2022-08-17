@@ -61,7 +61,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return utilisateur;
 	}
 	
-	public Utilisateurs insert(Utilisateurs u) throws DALException  {
+	public Utilisateurs insertUtilisateur(Utilisateurs u) throws DALException  {
 		try (Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT)){
 			try {
@@ -85,7 +85,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			}catch(SQLException e){
 				con.rollback();	
 			}
-		}catch(Exception e){
+		}catch(SQLException e){
 			e.printStackTrace();
 			throw new DALException("Erreur lors de l'insert : " + e.getMessage());
 		}

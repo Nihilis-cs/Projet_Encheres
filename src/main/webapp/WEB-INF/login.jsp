@@ -68,11 +68,15 @@
 					<button class="btn btn-lg btn-primary " type="submit"
 						title="Me connecter">Me connecter</button>
 					<div class="text-center">
-					  <input type="button" onclick="${pageContext.request.contextPath}/connection" value="Crée un compte" />
+					  <!-- <input type="button" name="create" value="Crée un compte" /> -->
+					 <%--  <input type="button" action="${pageContext.request.contextPath}/connection" value="Crée un compte" /> --%>
 						<a href="#">Mot de passe oublié</a>
 					</div>
 				</div>
 			</form>
+			<form action="${pageContext.request.contextPath}/creer" method="post">
+			 <button type="submit" name="create" value="create">Crée un compte</button>
+			 </form>
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">

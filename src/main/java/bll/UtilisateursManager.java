@@ -31,4 +31,21 @@ public class UtilisateursManager {
 		}
 		return u;
 	}
+
+	public Utilisateurs insertUtilisateur(Utilisateurs utilisateur) throws BLLException {
+		Utilisateurs u = null;
+		
+		try {
+			 u = this.utilisateurDao.insertUtilisateur(utilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return u;
+	}
+
+
+
+
+
+
 }
