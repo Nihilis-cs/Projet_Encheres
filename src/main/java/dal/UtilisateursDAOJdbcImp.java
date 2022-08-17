@@ -92,12 +92,26 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return u;
 	}
 
-
-
-
-
-
+	private Utilisateurs utilisateurBuilder(ResultSet rs) {
+		Utilisateurs user = new Utilisateurs();
+		try {
+			user.setId(rs.getInt("no_utilisateur"));
+			user.setPseudo(rs.getString("pseudo"));
+			user.setNom(rs.getString("nom"));
+			user.setPrenom(rs.getString("prenom"));
+			user.setEmail(rs.getString("email"));
+			user.setTelephone(rs.getString("telephone"));
+			user.setRue(rs.getString("telephone"));
+			user.setCodePostal(rs.getString("code_postal"));
+			user.setVille(rs.getString("ville"));
+			user.setMotDePasse(rs.getString("mot_de_passe"));
+			user.setCredit(rs.getInt("credit"));
+			user.setAdmin(rs.getByte("administrateur"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return user;
+	}
 
 }
-
-
