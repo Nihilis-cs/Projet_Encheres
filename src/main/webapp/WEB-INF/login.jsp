@@ -64,14 +64,15 @@
 				</div>
 			</form>
 			<form action="${pageContext.request.contextPath}/navigation/inscription" method="post">
-			 <button type="submit" name="create" value="create">Crée un compte</button>
+			<div class="text-center">
+				<button type="submit" name="create" value="create">Crée un compte</button>
+			</div>
 			 </form>
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">
 			<div class="mt-3">
-				<img class="small-icon" src="images/ateni.svg" alt="Eni Ecole">
-				<small class="d-block text-muted">&copy; ENI Ecole 2020</small>
+				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
 			</div>
 		</footer>
 	</div>
