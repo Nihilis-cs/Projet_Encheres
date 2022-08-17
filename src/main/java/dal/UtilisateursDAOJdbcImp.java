@@ -10,7 +10,7 @@ import bo.Utilisateurs;
 
 
 
-public class UtilisateursDAOJdbcImp  {
+public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 	private final String INSERT = "insert into utilisateurs (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
