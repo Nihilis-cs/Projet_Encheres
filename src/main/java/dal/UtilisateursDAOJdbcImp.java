@@ -130,7 +130,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			}
 			
 		} catch (SQLException e) {
-			throw new DALException("Erreur dans la selection par Mot de Passe et Pseudo : " + e.getMessage());
+			throw new DALException("Erreur dans la selection par le pseudo : " + e.getMessage());
 		}
 		
 		return utilisateur;
