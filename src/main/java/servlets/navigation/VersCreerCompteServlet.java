@@ -1,4 +1,4 @@
-package servlets;
+package servlets.navigation;
 
 import java.io.IOException;
 
@@ -9,18 +9,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
-@WebServlet("/navigation/accueil")
-public class AccueillirServlet extends HttpServlet {
+@WebServlet("/navigation/inscription")
+public class VersCreerCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public AccueillirServlet() {
+    public VersCreerCompteServlet() {
         super();
-
+        // TODO Auto-generated constructor stub
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/CreerCompte.jsp");
 		rd.forward(request, response);
 	}
 

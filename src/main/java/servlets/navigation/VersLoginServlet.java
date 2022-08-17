@@ -1,4 +1,4 @@
-package servlets;
+package servlets.navigation;
 
 import java.io.IOException;
 

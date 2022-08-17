@@ -1,4 +1,4 @@
-package servlets;
+package servlets.utilisateur;
 
 import java.io.IOException;
 
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class VersGestionProfilServlet
+ * Servlet implementation class GestionProfil
  */
-@WebServlet("/navigation/gestionProfil")
-public class VersGestionProfilServlet extends HttpServlet {
+@WebServlet("/utilisateur/gestion")
+public class GestionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public VersGestionProfilServlet() {
+    public GestionProfilServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,15 +28,14 @@ public class VersGestionProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
-		rs.forward(request, response);
+
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+
 	}
 
 }
