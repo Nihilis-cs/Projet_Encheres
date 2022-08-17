@@ -9,6 +9,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.BLLException;
+import bll.UtilisateursManager;
 import bo.Utilisateurs;
 import dal.DALException;
 import dal.UtilisateursDAOJdbcImp;
@@ -35,9 +37,9 @@ public class ConnecterServlet extends HttpServlet {
 		
 		String pseudo = request.getParameter("pseudo");
 		String mdp = request.getParameter("mdp");
-		UtilisateursDAOJdbcImp dao = new UtilisateursDAOJdbcImp();
+		UtilisateursManager um = UtilisateursManager.getInstance();
 		try {
-			Utilisateurs utilisateur = dao.getUtilisateurByMailMDP(pseudo, mdp);
+			Utilisateurs utilisateur = um.getUtilisateurByMailMdp(pseudo, mdp);
 			if (utilisateur == null) {
 				request.setAttribute("estConnecte", "0");
 				
@@ -46,7 +48,7 @@ public class ConnecterServlet extends HttpServlet {
 				request.setAttribute("estConnecte", "1");
 				//response.getWriter().append("Connecté ");
 			}
-		} catch (DALException e) {
+		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
