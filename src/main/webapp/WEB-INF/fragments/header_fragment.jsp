@@ -46,6 +46,10 @@
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
 					href="#" alt="Administrer le site">Administrer</a></li>
 			</c:if>
+			
+			<li class="nav-item d-none d-lg-block"><a class="nav-link"
+				href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur" 
+				alt="Chercher un utilisateur">Recherche d'un utilisateur</a></li>
 
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
 				href="#" alt="Vendre un article">Vendre un article</a></li>

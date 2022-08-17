@@ -1,4 +1,5 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="fr" xmlns:mso="urn:schemas-microsoft-com:office:office"
 	xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
@@ -24,47 +25,40 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Connexion</title>
+<title>ENI-Encheres : Rechercher Utilisateur</title>
 
 </head>
 <body>
 	<div class="container-fluid">
-		<!--Navbar-->
+		<!--emptyHeader-->
 		<%@ include file="fragments/header_fragment.jsp"%>
+
 		<!--main bloc-->
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Connexion</h1>
-				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
+				<h1>Recherche utilisateur</h1>
+					<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
 					alt="">
 			</div>
 			<!--formulaire-->
-			<form class="form-login"
-				action="${pageContext.request.contextPath}/utilisateur/login" method="post">
-				<label for="inputIdentifiant" class="sr-only">Identifiant</label> <input
-					type="text" id="inputIdentifiant" class="form-control"
-					name="pseudo" placeholder="Pseudo" required autofocus> <label
-					for="inputPassword" class="sr-only">Password</label> <input
-					type="password" id="inputPassword" class="form-control" name="mdp"
-					placeholder="Mot de passe" required>
-				<div class="checkbox mb-3">
-					<label> <input type="checkbox" name="remember"
-						value="remember"> Se souvenir de moi
-					</label>
-				</div>
+			<form class=""
+				action="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur" method="post">
+				<label for="inputIdentifiant" class="sr-only"></label><input
+					type="text" id="inputRecherchePseudo" class="form-control"
+					name="Recherche" placeholder="Pseudo utilisateur?" required autofocus>
 				<div class="text-center">
 					<button class="btn btn-lg btn-primary " type="submit"
 						title="Me connecter">Me connecter</button>
 					<div class="text-center">
-					  <!-- <input type="button" name="create" value="Crée un compte" /> -->
-					 <%--  <input type="button" action="${pageContext.request.contextPath}/connection" value="Crée un compte" /> --%>
-						<a href="#">Mot de passe oublié</a>
+					  <!-- <input type="button" name="create" value="CrÃ©e un compte" /> -->
+					 <%--  <input type="button" action="${pageContext.request.contextPath}/connection" value="CrÃ©e un compte" /> --%>
+						<a href="#">Mot de passe oubliÃ©</a>
 					</div>
 				</div>
 			</form>
 			<form action="${pageContext.request.contextPath}/navigation/inscription" method="post">
-			 <button type="submit" name="create" value="create">Crée un compte</button>
+			 <button type="submit" name="create" value="create">CrÃ©e un compte</button>
 			 </form>
 		</main>
 		<!--footer-->
@@ -89,5 +83,6 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+
 </body>
 </html>
