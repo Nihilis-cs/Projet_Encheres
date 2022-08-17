@@ -16,7 +16,7 @@ public class AccueillirServlet extends HttpServlet {
        
     public AccueillirServlet() {
         super();
-        // TODO Auto-generated constructor stub
+
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

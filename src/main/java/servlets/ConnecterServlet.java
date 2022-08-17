@@ -47,13 +47,14 @@ public class ConnecterServlet extends HttpServlet {
 				request.setAttribute("estConnecte", "1");
 				HttpSession session = request.getSession();
 				session.setAttribute("utilisateurActif", utilisateur);
+				session.setMaxInactiveInterval(150);
 			}
 		} catch (BLLException e) {
 			//Gerer BLLException
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/Connection.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		rs.forward(request, response);
 	}
 
