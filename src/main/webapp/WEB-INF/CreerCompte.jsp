@@ -30,18 +30,7 @@
             <div class="mx-auto text-center">
                 <h1>Inscription</h1>
                 <img class="mb-4 large-icon rounded-circle" src="images/user.svg" alt="">
-            </div>
-            <!--erreur-->
-            <div class="d-flex alert-danger">
-                <div class="col-3 p-2">
-                    <img class="small-icon" src="images/error.svg">
-                </div>
-            
-                <ul class="col-9 list-unstyled p-2">
-                    <li>un message d'erreur éventuellement !</li>
-                    <li>un autre message....</li>
-                </ul>
-            </div>            
+            </div>       
             <!--formulaire-->
             <form action="${pageContext.request.contextPath}/utilisateur/inscription" method="post" class="form-register needs-validation" novalidate>
                 <div class="row">
