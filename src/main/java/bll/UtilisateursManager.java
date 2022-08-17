@@ -29,7 +29,7 @@ public class UtilisateursManager {
 			u = this.utilisateurDao.getUtilisateurByMailMDP(pseudo, mdp);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException();
+			throw new BLLException(e.getMessage());
 			//Documenter BLLException
 		}
 		return u;
