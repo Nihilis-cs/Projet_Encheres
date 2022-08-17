@@ -38,7 +38,7 @@
 
 			<c:if test="${not empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/gestion/profil"
+					href="${pageContext.request.contextPath}/to/gestion/profil"
 					alt="Mon profil">Mon profil</a></li>
 			</c:if>
 
