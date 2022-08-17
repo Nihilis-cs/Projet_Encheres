@@ -31,16 +31,10 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			stmt.setString(1, pseudo);
 			stmt.setString(2, mdp);
 
-
 			ResultSet rs = stmt.executeQuery();
 
-
-
 			if(rs.next()) {
-				int id = rs.getInt("no_utilisateur");
-				String pseudo2 = rs.getString("pseudo");
-				String motDePasse = rs.getString("mot_de_passe");
-				utilisateur = new Utilisateurs(id, pseudo2, motDePasse);
+				utilisateur = utilisateurBuilder(rs);
 			}
 
 
@@ -93,7 +87,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return u;
 	}
 
-	private Utilisateurs utilisateurBuilder(ResultSet rs) {
+	private Utilisateurs utilisateurBuilder(ResultSet rs) throws DALException {
 		Utilisateurs user = new Utilisateurs();
 		try {
 			user.setId(rs.getInt("no_utilisateur"));
@@ -109,8 +103,8 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			user.setCredit(rs.getInt("credit"));
 			user.setAdmin(rs.getByte("administrateur"));
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			throw new DALException("Erreur lors de l'insert : " + e.getMessage());
 		}
 		return user;
 	}
