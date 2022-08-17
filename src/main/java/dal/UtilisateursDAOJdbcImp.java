@@ -107,7 +107,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			user.setPrenom(rs.getString("prenom"));
 			user.setEmail(rs.getString("email"));
 			user.setTelephone(rs.getString("telephone"));
-			user.setRue(rs.getString("telephone"));
+			user.setRue(rs.getString("rue"));
 			user.setCodePostal(rs.getString("code_postal"));
 			user.setVille(rs.getString("ville"));
 			user.setMotDePasse(rs.getString("mot_de_passe"));
