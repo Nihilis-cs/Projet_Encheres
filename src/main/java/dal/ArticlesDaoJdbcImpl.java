@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.List;
 
 import bo.Articles;
 
@@ -36,6 +37,12 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		}
 		
 		return a;
+	}
+
+	@Override
+	public List<Articles> selectAll() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
