@@ -14,7 +14,7 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 	private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
 
 	@Override
-	public Encheres insert(Encheres ench) {
+	public Encheres insert(Encheres ench) throws DALException {
 		try (Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
 			try {
@@ -22,11 +22,12 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 
 				stmt.setInt(1, ench.getEncherisseur().getId());
 				stmt.setInt(2, ench.getNoArticle());
-				stmt.setDate(3, ench.getDateEnchere());
+				//stmt.setDate(3, ench.getDateEnchere());
+				stmt.setTimestamp(3, java.sql.Timestamp.valueOf(ench.getDateEnchere()));
 				stmt.setInt(4, ench.getMontantEnchere());
 
 				stmt.executeUpdate();
-
+				
 
 				con.commit();
 			}catch(SQLException e){
