@@ -17,7 +17,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	
 	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?)" ;
-	private final String SELECT_EC="Select * from ARTICLES_VENDUS where etat_vente = 'EC' ";
+	private final String SELECT_EC= "Select * from ARTICLES_VENDUS where etat_vente = 'EC' ";
 	
 	public Articles insert(Articles a) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -65,12 +65,8 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			
 			while(rs.next()) {
 				Articles article = articleBuilder(rs);
+				listeArticlesEC.add(article);
 			}
-			
-			
-			
-			
-			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Problème lors de l'accès à la BDD");
@@ -93,8 +89,8 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			art.setDateFinEnchere(LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
 			art.setPrixInitial(rs.getInt("prix_initial"));
 			art.setPrixVente(rs.getInt("prix_vente"));
-			art.setVendeur(UtilisateursDAOJdbcImp.selectByID(rs.getInt("no_utilisateur")));
-			//art.setCategorie();
+			art.setVendeur(uDao.selectByID(rs.getInt("no_utilisateur")));
+			art.setCategorie(null); //A modifier quand les catégories seront gérées
 			switch(rs.getString("etat_vente")) {
 				case "CR" : art.setEtatVente(EtatsVente.CR);
 					break;

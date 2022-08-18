@@ -1,14 +1,17 @@
 package bll;
 
+import bo.Encheres;
+import bo.Utilisateurs;
+import dal.DALException;
 import dal.DAOFactory;
 import dal.EncheresDao;
 
 public class EncheresManager {
 	private static EncheresManager enchMngr;
-	private EncheresDao encheresDao;	
+	private EncheresDao EncheresDao;	
 	
 	private EncheresManager() {
-		this.encheresDao = DAOFactory.getEnchereDao();
+		this.EncheresDao = DAOFactory.getEnchereDao();
 	}
 	
 	public static EncheresManager getInstance() {
@@ -18,4 +21,16 @@ public class EncheresManager {
 		return enchMngr;
 	}
 
+	
+	public Encheres insertEnchere(Encheres enchere) throws BLLException {
+		Encheres ench=null;
+		try {
+			ench =  this.EncheresDao.insertEnchere(enchere);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return ench;
+	}
+	
+	
 }
