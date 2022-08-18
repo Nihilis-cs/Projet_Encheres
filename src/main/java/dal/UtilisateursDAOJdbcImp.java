@@ -11,6 +11,8 @@ import bo.Utilisateurs;
 
 public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
+	private final String SELECT_BY_ID = "SELECT * FROM UTILISATEURS WHERE no_utilisateur = ? ";
+
 	private final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
@@ -185,9 +187,25 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return utilisateur;
 	}
 
-	public Utilisateurs selectByID(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public Utilisateurs selectByID(int id) throws DALException {
+		Utilisateurs utilisateur = null;
+
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID)){
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				utilisateur = utilisateurBuilder(rs);
+			}else {
+				throw new DALException("Id introuvable ");
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Erreur dans la selection par l'Id : " + e.getMessage());
+		}
+
+		return utilisateur;
 	}
 
 
