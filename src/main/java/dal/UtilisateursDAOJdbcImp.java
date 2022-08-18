@@ -11,15 +11,16 @@ import bo.Utilisateurs;
 
 
 
+
 public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 	private final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-	
+
 	private final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ? ";
 	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
-			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur = ?";
+			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
@@ -60,13 +61,13 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		}
 		return utilisateur;
 	}
-	
+
 	public Utilisateurs insertUtilisateur(Utilisateurs u) throws DALException  {
 		try (Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
 			try {
 				con.setAutoCommit(false);
-				
+
 				stmt.setString(1, u.getPseudo());
 				stmt.setString(2, u.getNom());
 				stmt.setString(3, u.getPrenom());
@@ -80,12 +81,12 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 				stmt.setByte(11, u.getAdmin());
 
 				stmt.executeUpdate();
-				
+
 				ResultSet rsId = stmt.getGeneratedKeys();
 				if(rsId.next()){
 					u.setId(rsId.getInt(1));
 				}
-				
+
 				con.commit();
 			}catch(SQLException e){
 				e.printStackTrace();
@@ -122,23 +123,74 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 	public Utilisateurs selectByPseudo(String user) throws DALException{
 		Utilisateurs utilisateur = null;
-		
+
 		try(Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(SELECT_BY_PSEUDO)){
 			stmt.setString(1, user);
 			ResultSet rs = stmt.executeQuery();
-			
+
 			if(rs.next()) {
 				utilisateur = utilisateurBuilder(rs);
 			}else {
 				throw new DALException("Pseudo introuvable ");
 			}
-			
+
 		} catch (SQLException e) {
 			throw new DALException("Erreur dans la selection par le pseudo : " + e.getMessage());
 		}
-		
+
 		return utilisateur;
 	}
-	
+
+
+	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException {
+
+		try (
+				Connection  con = JdbcTools.getConnection();	
+				PreparedStatement stmt = con.prepareStatement(DELETE_USER);
+				){
+
+			stmt.setString(1, pseudo);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DALException("Delete user failed - pseudo=" + pseudo, e);
+		}
+		return null;
+	}
+
+	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws DALException {
+
+		try (
+				Connection  con = JdbcTools.getConnection();	
+				PreparedStatement stmt = con.prepareStatement(UPDATE_USER);
+				){
+			try {
+				con.setAutoCommit(false);
+
+				stmt.setString(1, utilisateur.getPseudo());
+				stmt.setString(2, utilisateur.getNom());
+				stmt.setString(3, utilisateur.getPrenom());
+				stmt.setString(4, utilisateur.getEmail());
+				stmt.setString(5, utilisateur.getTelephone());
+				stmt.setString(6, utilisateur.getRue());
+				stmt.setString(7, utilisateur.getCodePostal());
+				stmt.setString(8, utilisateur.getVille());
+				stmt.setString(9, utilisateur.getMotDePasse());
+				stmt.setInt(10, utilisateur.getId());
+				stmt.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				con.rollback();
+				new DALException("Données invalide =" +  e); }
+		} catch (SQLException e) {
+			new DALException("Connection Update user failed =" +  e);
+		}
+		return utilisateur;
+	}
+
+
+
+
+
+
 }

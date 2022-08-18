@@ -121,6 +121,11 @@
                 <hr class="mb-4">
                 <button class="btn btn-primary btn-lg btn-block" type="submit">Modifier mon compte</button>
             </form>
+            <form action="${pageContext.request.contextPath}/utilisateur/suppression" method="post">
+               	<div class="text-center">
+					<button type="submit" name="bouttonSupprimer" value="boutonSupprimer">Supprimer mon compte</button>
+				</div> 
+			</form>	           
         </main>
         <!--footer-->
         <footer class="border-top text-center align-bottom">
