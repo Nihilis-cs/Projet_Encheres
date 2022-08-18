@@ -36,11 +36,16 @@ public class RechecherProfilServlet extends HttpServlet {
 		UtilisateursManager um = UtilisateursManager.getInstance();
 		Utilisateurs userRech;
 		
+		
+		
+		
 		try {
 			userRech = um.selectByPseudo(pseudoSaisi);
 			request.setAttribute("utilisateurRecherche", userRech);
 		} catch (BLLException e) {
-			// gerer l'exception
+			String messErreur = "Le pseudo sélectionné n'est pas valide";
+			request.setAttribute("erreurRecherche",messErreur );
+			System.out.println("prout");
 			e.printStackTrace();
 		}
 		
