@@ -4,7 +4,7 @@ import java.util.List;
 
 import bo.Encheres;
 
-public class EncheresDA0JdbcImp implements EncheresDao {
+public class EncheresDAOJdbcImp implements EncheresDao {
 
 	@Override
 	public Encheres insert() {
