@@ -52,6 +52,16 @@
 						title="Recherche">Recherche</button>
 				</div>
 			</form>
+			
+			<p>Num utilisateur : ${utilisateurRecherche.id }</p>
+			<p>Prenom : ${utilisateurRecherche.prenom }</p>
+			<p>Nom : ${utilisateurRecherche.nom }</p>
+			<p>Mail : ${utilisateurRecherche.email }</p>
+			<p>telephone : ${utilisateurRecherche.telephone }</p>
+			<p>Adresse : ${utilisateurRecherche.rue } ${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
+			
+			<p> ${requestScope.erreurRecherche }</p>
+			
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">

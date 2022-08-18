@@ -21,26 +21,22 @@ import bo.Utilisateurs;
 public class GestionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public GestionProfilServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
+    public GestionProfilServlet() {
+        super();
+        // TODO Auto-generated constructor stub
+    }
+
+
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
+
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+
 		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
 		System.out.println(utilisateurActif.toString());
 		//SUPPRESSION UTILISATEUR
@@ -73,6 +69,10 @@ public class GestionProfilServlet extends HttpServlet {
 		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
 		rs.forward(request, response);
 
+
+
+		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateurActif");
+		System.out.println(utilisateur.toString());
 
 	}
 

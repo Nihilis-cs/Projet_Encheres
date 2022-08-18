@@ -10,7 +10,7 @@ public class UtilisateursManager {
 	private static UtilisateursManager usrMngr;
 	private UtilisateursDao utilisateurDao;	
 	
-	public UtilisateursManager() {
+	private UtilisateursManager() {
 		this.utilisateurDao = DAOFactory.getUtilisateurDAO();
 	}
 	

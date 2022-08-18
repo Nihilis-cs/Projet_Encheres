@@ -131,6 +131,8 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 			if(rs.next()) {
 				utilisateur = utilisateurBuilder(rs);
+			}else {
+				throw new DALException("Pseudo introuvable ");
 			}
 
 		} catch (SQLException e) {

@@ -8,6 +8,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import bll.BLLException;
+import bll.UtilisateursManager;
+import bo.Utilisateurs;
 
 
 @WebServlet("/utilisateur/rechercheUtilisateur")
@@ -27,8 +32,25 @@ public class RechecherProfilServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+		String pseudoSaisi = request.getParameter("Recherche");
+		UtilisateursManager um = UtilisateursManager.getInstance();
+		Utilisateurs userRech;
+		
+		
+		
+		
+		try {
+			userRech = um.selectByPseudo(pseudoSaisi);
+			request.setAttribute("utilisateurRecherche", userRech);
+		} catch (BLLException e) {
+			String messErreur = "Le pseudo sélectionné n'est pas valide";
+			request.setAttribute("erreurRecherche",messErreur );
+			System.out.println("prout");
+			e.printStackTrace();
+		}
+		
 		doGet(request, response);
+		
 	}
 
 }
