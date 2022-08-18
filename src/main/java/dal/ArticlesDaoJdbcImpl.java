@@ -80,7 +80,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	private Articles articleBuilder(ResultSet rs) throws DALException {
 		Articles art = new Articles();
-		UtilisateursDao uDao = new UtilisateursDAOJdbcImp(); 
+		ArticlesDao uDao = new ArticlesDaoJdbcImpl(); 
 		try {
 			art.setNoArticle(rs.getInt("no_article"));
 			art.setNomArticle(rs.getString("nom_article"));
