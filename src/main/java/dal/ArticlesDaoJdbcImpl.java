@@ -10,7 +10,7 @@ import bo.Articles;
 
 public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	
-	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente, image)"
+	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?)" ;
 	
 	public Articles insert(Articles a) throws DALException {
@@ -26,6 +26,8 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(5, a.getPrixInitial());
 				stmt.setInt(6, a.getPrixVente());
 				stmt.setInt(7, a.getVendeur().getId());
+				stmt.setInt(8, a.getCategorie().getNoCategorie());
+				stmt.setString(9, a.getEtatVente().toString());
 			}catch(SQLException e){
 				e.printStackTrace();
 				con.rollback();	

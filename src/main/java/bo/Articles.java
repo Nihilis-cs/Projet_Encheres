@@ -12,7 +12,7 @@ public class Articles {
 	private int prixVente;
 	private Utilisateurs vendeur;
 	private Categories categorie;
-	private String etatVente;
+	private EtatsVente etatVente;
 	private String image;
 	
 	public Articles() {
@@ -20,7 +20,7 @@ public class Articles {
 	}
 
 	public Articles(String nomArticle, String description, LocalDateTime dateDebutEnchere, LocalDateTime dateFinEnchere,
-			int prixInitial, int prixVente, Utilisateurs vendeur, Categories categorie, String etatVente) {
+			int prixInitial, int prixVente, Utilisateurs vendeur, Categories categorie, EtatsVente etatVente) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -35,7 +35,7 @@ public class Articles {
 
 	public Articles(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
 			LocalDateTime dateFinEnchere, int prixInitial, int prixVente, Utilisateurs vendeur, Categories categorie,
-			String etatVente) {
+			EtatsVente etatVente) {
 		super();
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
@@ -121,11 +121,11 @@ public class Articles {
 		this.categorie = categorie;
 	}
 
-	public String getEtatVente() {
+	public EtatsVente getEtatVente() {
 		return etatVente;
 	}
 
-	public void setEtatVente(String etatVente) {
+	public void setEtatVente(EtatsVente etatVente) {
 		this.etatVente = etatVente;
 	}
 
