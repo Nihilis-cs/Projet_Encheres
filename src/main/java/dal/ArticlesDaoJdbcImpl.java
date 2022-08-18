@@ -1,5 +1,6 @@
 package dal;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -28,6 +29,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
+		
 			}catch(SQLException e){
 				e.printStackTrace();
 				con.rollback();	
@@ -46,5 +48,5 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	//CallableStatement cstmt = con.prepareCall("updateArticle");
 }
