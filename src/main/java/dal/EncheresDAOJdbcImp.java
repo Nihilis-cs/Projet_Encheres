@@ -12,11 +12,6 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 		return null;
 	}
 
-	@Override
-	public List<Encheres> selectAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Encheres selectByNoArticle() {
