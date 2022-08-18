@@ -6,4 +6,13 @@ public abstract class DAOFactory {
 	{
 		return new UtilisateursDAOJdbcImp();
 	}
+	
+	public static EncheresDao getEnchereDao() {
+		return new EncheresDAOJdbcImp();
+	}
+	
+	public static ArticlesDao getArticleDao() {
+		return new ArticlesDaoJdbcImpl();
+		
+	}
 }
