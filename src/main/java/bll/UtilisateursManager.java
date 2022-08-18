@@ -110,4 +110,23 @@ public class UtilisateursManager {
 		return u;
 	}
 	
+	public Utilisateurs deleteUtilisateur(String pseudo) throws BLLException {
+		Utilisateurs u=null;
+		try {
+			u =  this.utilisateurDao.deleteUtilisateur(pseudo);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return u;
+	}
+	
+	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws BLLException {
+		try {
+			utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+	
 }
