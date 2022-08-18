@@ -54,6 +54,21 @@ public class Utilisateurs {
 		this.pseudo = pseudo;
 		this.motDePasse = motDePasse;
 	}
+	//TEST CEST POUR LUPDATE 
+	public Utilisateurs(String pseudo, String nom, String prenom, String email, String telephone, String rue,
+			String codePostal, String ville, String motDePasse, int id) {
+		super();
+		this.pseudo = pseudo;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.email = email;
+		this.telephone = telephone;
+		this.rue = rue;
+		this.codePostal = codePostal;
+		this.ville = ville;
+		this.motDePasse = motDePasse;
+		this.id = id;
+	}
 
 	public Utilisateurs() {
 

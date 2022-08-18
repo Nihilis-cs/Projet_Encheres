@@ -15,16 +15,16 @@ import bll.UtilisateursManager;
 import bo.Utilisateurs;
 
 /**
- * Servlet implementation class GestionProfil
+ * Servlet implementation class SuppressionProfilServlet
  */
-@WebServlet("/utilisateur/gestion")
-public class GestionProfilServlet extends HttpServlet {
+@WebServlet("/utilisateur/suppression")
+public class SuppressionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public GestionProfilServlet() {
+	public SuppressionProfilServlet() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -33,7 +33,8 @@ public class GestionProfilServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
@@ -46,32 +47,20 @@ public class GestionProfilServlet extends HttpServlet {
 		//SUPPRESSION UTILISATEUR
 		String boutonSupprimer = request.getParameter("boutonSupprimer");
 		System.out.println(boutonSupprimer);
-
-
-		//MODIFICATION UTILISASTEUR
-		String pseudo = request.getParameter("pseudo");
-		String nom = request.getParameter("nom");
-		String prenom = request.getParameter("prenom");
-		String email = request.getParameter("email");
-		String phone = request.getParameter("phone");
-		String rue = request.getParameter("rue");
-		String codePostal = request.getParameter("codepostal");
-		String ville = request.getParameter("ville");
-		String mdp = request.getParameter("mdp");
-		int id = utilisateurActif.getId();
+		//Récuperation du pseudo et supression du compte dans la base de donnée
+		String pseudo = utilisateurActif.getPseudo();
+		System.out.println(pseudo);
 		UtilisateursManager um =UtilisateursManager.getInstance();
-		System.out.println("Données saisi par l'user pour modification dans la BDD = "+pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp+id);
 		try {
-			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, id);
-			System.out.println(utilisateur);
-			um.updateUtilisateur(utilisateur);
-			session.setAttribute("utilisateurActif", utilisateur);
+			System.out.println(pseudo);
+			um.deleteUtilisateur(pseudo);
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
 		rs.forward(request, response);
+
 
 
 	}
