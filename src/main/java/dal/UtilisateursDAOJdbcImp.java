@@ -185,6 +185,11 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return utilisateur;
 	}
 
+	public static Utilisateurs selectByID(int int1) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 

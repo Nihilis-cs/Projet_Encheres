@@ -50,8 +50,8 @@
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
-							<label for="categories-select">Catégories</label> <select
-								class="form-control" id="categories-select" name="categorie">
+							<label for="categories-select">Catégories</label>
+							 <select class="form-control" id="categories-select" name="categorie">
 								<option selected>Toutes</option>
 								<option name="categorie" value="">Informatique</option>
 								<option name="categorie" value="">Ameublement</option>
