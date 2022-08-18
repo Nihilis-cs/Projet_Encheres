@@ -13,8 +13,11 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 	
 	private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
 
-	@Override
-	public Encheres insert(Encheres ench) throws DALException {
+//
+// PAS AU BON ENDROIT MAIS DELETE PAS LOL 
+//PAS AU BON ENDROIT MAIS DELETE PAS LOL 
+//PAS AU BON ENDROIT MAIS DELETE PAS LOL 
+	public Encheres insertEnchere(Encheres ench) throws DALException {
 		try (Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
 			try {
@@ -36,7 +39,7 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 			}
 		}catch(SQLException e){
 			e.printStackTrace();
-			throw new DALException("Erreur lors de l'insert : " + e.getMessage());
+			throw new DALException("Erreur lors de l'insert de l'enchere : " + e.getMessage());
 		}
 		return ench;
 	}
