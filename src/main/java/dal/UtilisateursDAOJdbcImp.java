@@ -9,9 +9,6 @@ import java.sql.Statement;
 import bo.Utilisateurs;
 
 
-
-
-
 public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 	private final String INSERT = "INSERT INTO UTILISATEURS (pseudo, nom, prenom, email, telephone, rue, code_postal, ville, "
