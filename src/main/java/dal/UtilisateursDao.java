@@ -8,4 +8,5 @@ public interface UtilisateursDao {
 	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException;
 	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws DALException;
 	public Utilisateurs selectByPseudo(String user) throws DALException;
+	public Utilisateurs selectByID(int id) throws DALException;
 }

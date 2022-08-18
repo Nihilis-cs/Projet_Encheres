@@ -80,7 +80,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	private Articles articleBuilder(ResultSet rs) throws DALException {
 		Articles art = new Articles();
-		ArticlesDao uDao = new ArticlesDaoJdbcImpl(); 
+		UtilisateursDao uDao = new UtilisateursDAOJdbcImp(); 
 		try {
 			art.setNoArticle(rs.getInt("no_article"));
 			art.setNomArticle(rs.getString("nom_article"));
@@ -89,7 +89,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			art.setDateFinEnchere(LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
 			art.setPrixInitial(rs.getInt("prix_initial"));
 			art.setPrixVente(rs.getInt("prix_vente"));
-			art.setVendeur(UtilisateursDAOJdbcImp.selectByID(rs.getInt("no_utilisateur")));
+			art.setVendeur(uDao.selectByID(rs.getInt("no_utilisateur")));
 			art.setCategorie(null); //A modifier quand les catégories seront gérées
 			switch(rs.getString("etat_vente")) {
 				case "CR" : art.setEtatVente(EtatsVente.CR);
