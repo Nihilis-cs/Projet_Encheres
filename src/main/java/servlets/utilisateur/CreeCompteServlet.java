@@ -41,14 +41,7 @@ public class CreeCompteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//Envoyer l'user à la page de création de compte lorsqu'il appuie sur le bouton
-		
-		String bouttonCreer = request.getParameter("create");
-		System.out.println(bouttonCreer);
-		if (bouttonCreer != null) {
-			RequestDispatcher rs = request.getRequestDispatcher("WEB-INF/CreerCompte.jsp");
-			rs.forward(request, response);
-		}
+
 		//Récuperation des données saisie par l'utilisateur et création d'un nouveau user dans la BDD
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
