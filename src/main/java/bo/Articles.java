@@ -62,10 +62,7 @@ public class Articles {
 		this.prixInitial = prixInit;
 	}
 
-	public Articles(String nomArticle2, String categorie2, String description2, String dateDebut, String dateFin,
-			String prixInit) {
-		// TODO Auto-generated constructor stub
-	}
+
 
 	public int getNoArticle() {
 		return noArticle;

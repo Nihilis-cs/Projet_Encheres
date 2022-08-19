@@ -1,16 +1,23 @@
 package servlets.utilisateur;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bll.UtilisateursManager;
 import bo.Articles;
+import bo.Categories;
+import bo.Encheres;
+import bo.EtatsVente;
+import bo.Utilisateurs;
 
 /**
  * Servlet implementation class AjouterArticleServlet
@@ -33,18 +40,49 @@ public class AjouterArticleServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession session  =request.getSession();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		
 		//Recuperation des données de l'article
 		String nomArticle = request.getParameter("nomArticle");
-		String categorie = request.getParameter("categorie");
 		String description = request.getParameter("description");
+		String categorie = request.getParameter("categorie");
 		String dateDebut = request.getParameter("dateDebut");
 		String dateFin = request.getParameter("dateFin");
 		String prixInit = request.getParameter("prixInit");
 		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit);
 		
-		UtilisateursManager um =UtilisateursManager.getInstance();
+		//Conversion des infos de l'article
+		LocalDateTime dateDebutParse = LocalDateTime.parse(dateDebut, formatter);
+		LocalDateTime dateFinParse	 = LocalDateTime.parse(dateFin, formatter);
+		int prixInitParse 		 	 = Integer.parseInt(prixInit);
+		Utilisateurs user 		 	 = (Utilisateurs) session;
+		Encheres ench 			 	 = null;
+		int prixVente 				 =0;
+		Categories cat 				 = null;
 		
-//		Articles article = new Articles(nomArticle, categorie, description, dateDebut, dateFin, prixInit);
+		switch(categorie) {
+		case "Informatique": 
+			cat= new Categories(1, categorie);
+			break;
+		case "Ameublement":
+			cat= new Categories(2, categorie);
+			break;
+		case "Vêtements":
+			cat= new Categories(3, categorie);
+			break;
+		case "Sports & loisirs":
+			cat= new Categories(4, categorie);
+			break;
+		default:
+			cat= new Categories(0, "Categorie inexistante");
+		}
+		
+		UtilisateursManager um =UtilisateursManager.getInstance();
+		Articles article = new Articles(nomArticle, description, dateDebutParse, dateFinParse, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
+		System.out.println(article.toString());
+		
+		
 	}
 
 }

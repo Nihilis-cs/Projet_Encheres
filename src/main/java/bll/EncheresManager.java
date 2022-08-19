@@ -32,5 +32,14 @@ public class EncheresManager {
 		return ench;
 	}
 	
+	public Encheres updateEnchere(Encheres enchere) throws BLLException {
+		Encheres ench=null;
+		try {
+			ench =  this.EncheresDao.updateEnchere(enchere);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return ench;
+	}
 	
 }
