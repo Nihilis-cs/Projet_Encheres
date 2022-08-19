@@ -148,6 +148,7 @@
 						</form>
 					</div>
 				</div>
+			</div>
 		</main>
 
 		<!--footer-->
