@@ -57,10 +57,10 @@
 						<label for="categories-select">Catégories</label> <select
 							class="form-control" id="categories-select" name="categorie">
 							<option selected>Toutes</option>
-							<option name="categorie" value="">Informatique</option>
-							<option name="categorie" value="">Ameublement</option>
-							<option name="categorie" value="">Vêtement</option>
-							<option name="categorie" value="">Sport & Loisirs</option>
+							<option value="Informatique">Informatique</option>
+							<option value="Ameublement">Ameublement</option>
+							<option value="Vêtement">Vêtement</option>
+							<option value="Sport & Loisirs">Sport & Loisirs</option>
 						</select>
 					</div>
 				</div>

@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -87,7 +88,7 @@ public class AjouterArticleServlet extends HttpServlet {
 			cat= new Categories(4, categorie);
 			break;
 		default:
-			cat= new Categories(0, "Categorie inexistante");
+			cat= new Categories(1, "Informatique");
 		}
 		
 		
@@ -100,6 +101,9 @@ public class AjouterArticleServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		rs.forward(request, response);
 		
 	}
 

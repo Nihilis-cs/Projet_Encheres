@@ -26,6 +26,7 @@ public class ArticlesManager {
 			a = this.articleDao.insert(article);
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException("insert de merde ta capté");
 		}
 		return a;
 	}

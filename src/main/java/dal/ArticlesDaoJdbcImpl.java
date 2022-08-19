@@ -17,7 +17,7 @@ import bo.Utilisateurs;
 public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	
 	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente)"
-			+ " VALUES (?,?,?,?,?,?,?,?,?,?)" ;
+			+ " VALUES (?,?,?,?,?,?,?,?,?)" ;
 	private final String SELECT_EC= " SELECT  a.no_article,nom_article,description,date_debut_enchere,date_fin_enchere,prix_initial,prix_vente,\r\n"
 			+ "			a.no_utilisateur as no_vendeur,a.no_categorie,etat_vente,image,r.rue as arue,r.code_postal as acp,r.ville as aville, c.libelle, u.*,\r\n"
 			+ "			e.no_utilisateur as no_encherisseur, e.date_enchere, e.montant_enchere \r\n"
@@ -43,12 +43,13 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
-		
+				stmt.executeUpdate();
+				con.commit();
 			}catch(SQLException e){
 				e.printStackTrace();
 				con.rollback();	
 			}
-			con.commit();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Erreur lors de l'insert de l'article : " + e.getMessage());
