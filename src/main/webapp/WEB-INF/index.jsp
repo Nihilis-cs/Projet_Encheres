@@ -50,8 +50,8 @@
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
-							<label for="categories-select">Catégories</label>
-							 <select class="form-control" id="categories-select" name="categorie">
+							<label for="categories-select">Catégories</label> <select
+								class="form-control" id="categories-select" name="categorie">
 								<option selected>Toutes</option>
 								<option name="categorie" value="">Informatique</option>
 								<option name="categorie" value="">Ameublement</option>
@@ -155,13 +155,11 @@
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">
 			<div class="mt-3">
-				<img class="small-icon" src="images/ateni.svg" alt="Eni Ecole">
-				<small class="d-block text-muted">&copy; ENI Ecole 2020</small>
-				<div>
-					Icons made by <a href="https://www.flaticon.com/authors/freepik"
-						title="Freepik">Freepik</a> from <a
-						href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-				</div>
+				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
+<<<<<<< HEAD
+
+=======
+>>>>>>> branch 'main' of https://github.com/Nihilix420/ENI_ENCHERES.git
 			</div>
 		</footer>
 	</div>

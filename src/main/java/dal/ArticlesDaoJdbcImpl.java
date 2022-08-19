@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 import bo.Articles;
@@ -43,8 +44,10 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
+
 				stmt.executeUpdate();
 				con.commit();
+
 			}catch(SQLException e){
 				e.printStackTrace();
 				con.rollback();	
@@ -60,8 +63,22 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	@Override
 	public List<Articles> selectAll() throws DALException{
-		// TODO Auto-generated method stub
-		return null;
+		List<Articles> liste = new ArrayList<Articles>();
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_EC, PreparedStatement.RETURN_GENERATED_KEYS)){
+			
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Articles article = articleBuilder(rs);
+				liste.add(article);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Problème lors de l'accès à la BDD");
+		}
+	
+		return liste;
 	}
 	//CallableStatement cstmt = con.prepareCall("updateArticle");
 
@@ -69,7 +86,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	public List<Articles> selectAllEC() throws DALException {
 		List<Articles> listeArticlesEC = null; 
 		try(Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(SELECT_EC, Statement.RETURN_GENERATED_KEYS)){
+				PreparedStatement stmt = con.prepareStatement(SELECT_EC)){
 			
 			ResultSet rs = stmt.executeQuery();
 			
@@ -124,11 +141,14 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 					break;
 			}
 			Encheres e = new Encheres();
+				if (rs.getDate("date_enchere") != null) {
 				e.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
+				
 				Utilisateurs encherisseur = uDao.selectByID(rs.getInt("no_encherisseur"));	
 				e.setEncherisseur(encherisseur);
 				e.setMontantEnchere(rs.getInt("montant_enchere"));
 				e.setNoArticle(rs.getInt("no_article"));
+				}
 			art.setEnchere(e);
 			
 

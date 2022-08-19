@@ -1,5 +1,7 @@
 package bll;
 
+import java.util.List;
+
 import bo.Articles;
 import dal.ArticlesDao;
 import dal.DALException;
@@ -29,6 +31,17 @@ public class ArticlesManager {
 			throw new BLLException("insert de merde ta capté");
 		}
 		return a;
+	}
+	
+	public List<Articles> selectAll() throws BLLException{
+		List<Articles> liste = null;
+		try {
+			liste = this.articleDao.selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		return liste;
 	}
 	
 	

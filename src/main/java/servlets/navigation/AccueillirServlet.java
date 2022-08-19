@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.ArticlesManager;
+import bll.BLLException;
+
 
 @WebServlet("/navigation/accueil")
 public class AccueillirServlet extends HttpServlet {
@@ -20,6 +23,12 @@ public class AccueillirServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		try {
+			request.setAttribute("liste", ArticlesManager.getInstance().selectAll());
+		} catch (BLLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		rd.forward(request, response);
 	}
