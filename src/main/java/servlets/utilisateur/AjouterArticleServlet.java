@@ -104,7 +104,7 @@ public class AjouterArticleServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 		
 	}

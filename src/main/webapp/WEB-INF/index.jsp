@@ -121,7 +121,7 @@
 					<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
 				</button>
 			</form>
-
+			<h3>${creditErreur}</h3>
 			<!--enchères-->
 			<div class="row justify-content-center border-top card-deck">
 				<c:forEach var="article" items="${liste}">

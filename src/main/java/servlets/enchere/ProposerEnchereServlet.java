@@ -57,7 +57,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 		 
 		 if (enchereUtilisateurI >  creditUtilisateurI) {
 			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit ! (t'es pauvre ?)");
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
 		 } else {
 			 EncheresManager em =EncheresManager.getInstance();
@@ -78,7 +78,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 				rs.forward(request, response);
 			}
 		 }

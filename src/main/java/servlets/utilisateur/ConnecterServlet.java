@@ -32,7 +32,7 @@ public class ConnecterServlet extends HttpServlet {
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateurActif", null);
 		
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 	}
 
@@ -58,7 +58,7 @@ public class ConnecterServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 	}
 

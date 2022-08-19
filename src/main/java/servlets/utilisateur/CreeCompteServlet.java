@@ -67,7 +67,7 @@ public class CreeCompteServlet extends HttpServlet {
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
+		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 	
 		
