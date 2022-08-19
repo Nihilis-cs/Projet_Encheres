@@ -72,17 +72,6 @@
 						name="description"></textarea>
 				</div>
 
-				<!--                     <div class="col-md-6 mb-3">
-                        <label for="lastname">Description</label>
-                        <input type="text" class="form-control" id="nom" name="description" placeholder="" value="" maxlength="" required>
-                        <div class="invalid-feedback">
-                            Ce champ est invalide !
-                        </div>
-                    </div>
-                </div>
--->
-
-
 				<div class="row">
 					<div class="col-md-6 mb-3">
 						<label for="miseEnVente">Date mise en vente</label><input type="date"
