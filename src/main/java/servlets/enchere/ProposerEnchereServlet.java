@@ -52,12 +52,11 @@ public class ProposerEnchereServlet extends HttpServlet {
 		
 	int	creditUtilisateurI = utilisateurActif.getCredit();
 		
-		
 		System.out.println("Je suis dans la servlet proposer une enchere");
 		String enchereUtilisateurS = request.getParameter("enchere");
 		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
 		int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
-		 
+		 		
 		if (enchereUtilisateurI >  creditUtilisateurI   ) {
 			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit/le montant de l'enchère est infèrieur à l'enchère actuel !");
 			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
