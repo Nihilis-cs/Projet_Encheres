@@ -59,4 +59,19 @@
 
 		</ul>
 	</nav>
+	
+<%-- 	
+	<c:if test="${ }">
+		<div class="d-flex alert-danger">
+			<div class="col-3 p-2">
+				<img class="small-icon" src="images/error.svg">
+			</div>
+			<ul class="col-9 list-unstyled p-2">
+				<li>erreur !</li>
+			</ul>
+		</div>
+	</c:if>
+ --%>
+
+
 </header>

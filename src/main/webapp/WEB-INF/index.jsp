@@ -123,9 +123,8 @@
 			</form>
 
 			<!--enchères-->
-
-			<c:forEach var="article" items="${liste}">
-				<div class="row justify-content-center border-top card-deck">
+			<div class="row justify-content-center border-top card-deck">
+				<c:forEach var="article" items="${liste}">
 					<div class="col-12 col-sm-6 p-2">
 						<div class="card">
 							<div class="card-header text-center">
@@ -139,7 +138,7 @@
 									<img class="img-fluid img-thumbnail" src="images/photo.svg"
 										alt="pas de photo" />
 								</div>
-								<ul class="col-6 list-unstyled p-2">
+								<ul class="col-9 list-unstyled p-2">
 									<li>Prix : ${article.prixInitial})</li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchere}</li>
@@ -150,7 +149,7 @@
 								action="${pageContext.request.contextPath}/enchere/proposer"
 								method="post">
 								<input type="number" class="form-control" id="enchere"
-									name="enchere" placeholder="Votre enchère" min="0"
+									name="enchere" placeholder="Votre enchère" min="${(article.enchere.montantEnchere) + 1 }"
 									max="99999999" value="" required>
 								<button class="btn btn-primary btn-lg" type="submit">
 									Enchérir <img class="small-icon" src="images/bid.svg">
@@ -158,11 +157,8 @@
 							</form>
 						</div>
 					</div>
-				</div>
-
-			</c:forEach>
-
-
+				</c:forEach>
+			</div>
 		</main>
 
 		<!--footer-->
