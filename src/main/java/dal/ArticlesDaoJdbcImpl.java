@@ -27,7 +27,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "			LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
 			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
 			+ "			WHERE (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
-	
+	//private final String UPDATE_ETAT_VENTE
 	
 	public Articles insert(Articles a) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -157,5 +157,14 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			throw new DALException("Erreur lors de l'insert : " + e.getMessage());
 		}
 		return art;
+	}
+	
+	public void updateEtatVente() throws DALException {
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareCall("{call updateArticle()}")){
+			stmt.execute();
+		}catch(SQLException e) {
+			throw new DALException("la procédure stockée a merdé");
+		}
 	}
 }

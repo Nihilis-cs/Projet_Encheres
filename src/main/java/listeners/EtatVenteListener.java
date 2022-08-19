@@ -11,7 +11,7 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public class EtatVenteListener implements ServletContextListener {
 	
-	private final static long TEMPS_ACTUALISATION_MS = 30000; //30 secondes
+	private final static long TEMPS_ACTUALISATION_MS = 5000; //5 secondes
 	private Thread asyncTask = null;
     /**
      * Default constructor. 
