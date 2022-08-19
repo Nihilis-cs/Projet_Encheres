@@ -125,4 +125,23 @@ public class UtilisateursManager {
 		return utilisateur;
 	}
 	
+//	public Utilisateurs updateCreditUtilisateur(int credit, String pseudo) throws BLLException {
+//		Utilisateurs u=null;
+//		try {
+//			u =  this.utilisateurDao.updateCreditUtilisateur(credit, pseudo);
+//		} catch (DALException e) {
+//			e.printStackTrace();
+//		}
+//		return u;
+//	}
+
+	public Utilisateurs updateCreditUtilisateur(Utilisateurs utilisateur) throws BLLException {
+		try {
+			utilisateur =  this.utilisateurDao.updateCreditUtilisateur(utilisateur);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return utilisateur;
+	}
+	
 }

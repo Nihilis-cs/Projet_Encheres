@@ -169,10 +169,6 @@
 		<footer class="border-top text-center align-bottom">
 			<div class="mt-3">
 				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
-<<<<<<< HEAD
-
-=======
->>>>>>> branch 'main' of https://github.com/Nihilix420/ENI_ENCHERES.git
 			</div>
 		</footer>
 	</div>

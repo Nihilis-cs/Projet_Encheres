@@ -69,10 +69,15 @@ public class Utilisateurs {
 		this.motDePasse = motDePasse;
 		this.id = id;
 	}
-
+	//CONSTRUCTEUR UPDATE CREDIT USER
+	public Utilisateurs(int credit, String pseudo) {
+		this.credit = credit;
+		this.pseudo = pseudo;
+	}
 	public Utilisateurs() {
 
 	}
+
 
 	public int getId() {
 		return id;

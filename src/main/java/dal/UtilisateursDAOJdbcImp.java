@@ -20,6 +20,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
+	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
 
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
@@ -183,6 +184,29 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 				new DALException("Données invalide =" +  e); }
 		} catch (SQLException e) {
 			new DALException("Connection Update user failed =" +  e);
+		}
+		return utilisateur;
+	}
+	
+	public Utilisateurs updateCreditUtilisateur(Utilisateurs utilisateur) throws DALException {
+
+ 		try (
+				Connection  con = JdbcTools.getConnection();	
+				PreparedStatement stmt = con.prepareStatement(UPDATE_CREDIT);
+				){
+			try {
+				con.setAutoCommit(false);
+				
+				stmt.setInt(1,  utilisateur.getCredit());
+				stmt.setString(2,  utilisateur.getPseudo());
+				
+				stmt.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				con.rollback();
+				new DALException("Données invalide =" +  e); }
+		} catch (SQLException e) {
+			new DALException("Connection Update Credit user failed =" +  e);
 		}
 		return utilisateur;
 	}

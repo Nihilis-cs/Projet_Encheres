@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import bll.BLLException;
 import bll.EncheresManager;
@@ -41,22 +42,50 @@ public class ProposerEnchereServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Je suis dans la servlet proposer une enchere dans la page principale");
+		HttpSession session = request.getSession();
+		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
+		System.out.println(utilisateurActif.toString());
+		System.out.println(utilisateurActif.getCredit());
+		
+	int	creditUtilisateurI = utilisateurActif.getCredit();
+		
+		
+		System.out.println("Je suis dans la servlet proposer une enchere");
 		String enchereUtilisateurS = request.getParameter("enchere");
 		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
 		 int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
-		EncheresManager em =EncheresManager.getInstance();
+		 
+		 if (enchereUtilisateurI >  creditUtilisateurI) {
+			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit ! (t'es pauvre ?)");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+			rs.forward(request, response);
+		 } else {
+			 EncheresManager em =EncheresManager.getInstance();
+			 UtilisateursManager um =UtilisateursManager.getInstance();
+			 creditUtilisateurI = creditUtilisateurI - enchereUtilisateurI;
+			 System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurI);
+				try {
+					Encheres enchere = new Encheres(enchereUtilisateurI, 2);
+					System.out.println(enchere);
+					em.updateEnchere(enchere);
+					utilisateurActif.setCredit(creditUtilisateurI);
+					um.updateCreditUtilisateur(utilisateurActif);
+					System.out.println(utilisateurActif.toString());
+					//Utilisateurs utilisateur = new Utilisateurs(creditUtilisateurI, utilisateurActif.getPseudo());
+					//um.updateCreditUtilisateur(utilisateur);
+					request.setAttribute("creditErreur", "Enchere effectué !");
+				} catch (BLLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
+				rs.forward(request, response);
+			}
+		 }
+		 
+		 
+		 
+		 
 		
-		try {
-			Encheres enchere = new Encheres(enchereUtilisateurI, 2);
-			System.out.println(enchere);
-			em.updateEnchere(enchere);
-		} catch (BLLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
-		rs.forward(request, response);
-	}
 
 }
