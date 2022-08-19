@@ -44,13 +44,10 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
-<<<<<<< HEAD
-				
-				
-=======
+
 				stmt.executeUpdate();
 				con.commit();
->>>>>>> branch 'main' of https://github.com/Nihilix420/ENI_ENCHERES.git
+
 			}catch(SQLException e){
 				e.printStackTrace();
 				con.rollback();	
