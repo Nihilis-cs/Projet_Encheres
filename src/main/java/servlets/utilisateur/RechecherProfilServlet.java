@@ -36,7 +36,6 @@ public class RechecherProfilServlet extends HttpServlet {
 		UtilisateursManager um = UtilisateursManager.getInstance();
 		Utilisateurs userRech;
 		
-				
 		try {
 			userRech = um.selectByPseudo(pseudoSaisi);
 			request.setAttribute("utilisateurRecherche", userRech);
