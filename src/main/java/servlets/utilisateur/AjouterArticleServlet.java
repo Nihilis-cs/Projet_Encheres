@@ -81,7 +81,7 @@ public class AjouterArticleServlet extends HttpServlet {
 			case "Vêtements":
 				cat= new Categories(3, categorie);
 				break;
-			case "Sports & loisirs":
+			case "Sports & Loisirs":
 				cat= new Categories(4, categorie);
 				break;
 			default: 
