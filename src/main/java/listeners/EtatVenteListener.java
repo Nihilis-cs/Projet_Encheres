@@ -4,6 +4,10 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
 
+import dal.ArticlesDao;
+import dal.ArticlesDaoJdbcImpl;
+import dal.DALException;
+
 /**
  * Application Lifecycle Listener implementation class EtatVenteListener
  *
@@ -37,11 +41,12 @@ public class EtatVenteListener implements ServletContextListener {
 				try {
 					//System.out.println("Un traitement asynchrone et récurrent est en cours d'executions !");
 					while(!asyncTask.isInterrupted()) {
-						//Ici procedure stockée
+						ArticlesDao dao = new ArticlesDaoJdbcImpl();
+						dao.updateEtatVente();
 						System.out.println("Actualisation des etats de vente");
 						Thread.sleep(TEMPS_ACTUALISATION_MS);
 					}
-				} catch (InterruptedException e) {
+				} catch (InterruptedException | DALException e) {
 					System.out.println("Interruption des actualisations !");
 				}
 				
