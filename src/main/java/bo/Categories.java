@@ -21,6 +21,10 @@ public class Categories {
 	public void setLibelle(String libelle) {
 		this.libelle = libelle;
 	}
+	@Override
+	public String toString() {
+		return "Categories [noCategorie=" + noCategorie + ", libelle=" + libelle + "]";
+	}
 	
 	
 }

@@ -3,6 +3,7 @@ package servlets.utilisateur;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletException;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.ArticlesManager;
+import bll.BLLException;
 import bll.UtilisateursManager;
 import bo.Articles;
 import bo.Categories;
@@ -40,23 +43,32 @@ public class AjouterArticleServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session  =request.getSession();
-		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d/MM/yyyy");
+		HttpSession session  		= request.getSession();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
+		ArticlesManager artmngr 	= ArticlesManager.getInstance();
 		
 		//Recuperation des données de l'article
-		String nomArticle = request.getParameter("nomArticle");
-		String description = request.getParameter("description");
-		String categorie = request.getParameter("categorie");
-		String dateDebut = request.getParameter("dateDebut");
-		String dateFin = request.getParameter("dateFin");
-		String prixInit = request.getParameter("prixInit");
+		String nomArticle	= request.getParameter("nomArticle");
+		String description 	= request.getParameter("description");
+		String categorie 	= request.getParameter("categorie");
+		String dateDebut 	= request.getParameter("dateDebut");
+		String dateFin 		= request.getParameter("dateFin");
+		String prixInit 	= request.getParameter("prixInit");
 		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit);
 		
 		//Conversion des infos de l'article
-		LocalDateTime dateDebutParse = LocalDateTime.parse(dateDebut, formatter);
-		LocalDateTime dateFinParse	 = LocalDateTime.parse(dateFin, formatter);
+		
+		
+		String Debut[] = dateDebut.split("T");		
+		LocalDateTime debutDate = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
+		
+		String Fin[] = dateFin.split("T");
+		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
+					
+//		LocalDateTime dateDebutParse = LocalDateTime.(debutDate, formatter);
+//		LocalDateTime dateFinParse	 = LocalDateTime.parse(dateFin, formatter);
 		int prixInitParse 		 	 = Integer.parseInt(prixInit);
-		Utilisateurs user 		 	 = (Utilisateurs) session;
+		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
 		Encheres ench 			 	 = null;
 		int prixVente 				 =0;
 		Categories cat 				 = null;
@@ -78,10 +90,16 @@ public class AjouterArticleServlet extends HttpServlet {
 			cat= new Categories(0, "Categorie inexistante");
 		}
 		
-		UtilisateursManager um =UtilisateursManager.getInstance();
-		Articles article = new Articles(nomArticle, description, dateDebutParse, dateFinParse, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
+		
+		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
 		
+		try {
+			artmngr.insert(article);
+		} catch (BLLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 

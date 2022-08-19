@@ -112,6 +112,14 @@ public class Articles {
 		this.prixInitial = prixInitial;
 	}
 
+	@Override
+	public String toString() {
+		return "Articles [noArticle=" + noArticle + ", nomArticle=" + nomArticle + ", description=" + description
+				+ ", dateDebutEnchere=" + dateDebutEnchere + ", dateFinEnchere=" + dateFinEnchere + ", prixInitial="
+				+ prixInitial + ", prixVente=" + prixVente + ", vendeur=" + vendeur + ", categorie=" + categorie
+				+ ", etatVente=" + etatVente + ", image=" + image + ", enchere=" + enchere + "]";
+	}
+
 	public int getPrixVente() {
 		return prixVente;
 	}

@@ -1,6 +1,8 @@
 package bll;
 
+import bo.Articles;
 import dal.ArticlesDao;
+import dal.DALException;
 import dal.DAOFactory;
 
 public class ArticlesManager {
@@ -18,7 +20,15 @@ public class ArticlesManager {
 		return artmngr;
 	}
 	
-	
+	public Articles insert(Articles article) throws BLLException{
+		Articles a =null;
+		try {
+			a = this.articleDao.insert(article);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return a;
+	}
 	
 	
 }

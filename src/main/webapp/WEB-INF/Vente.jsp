@@ -41,7 +41,7 @@
 			</div>
 			<!--formulaire-->
 			<form
-				action="${pageContext.request.contextPath}/utilisateur/inscription"
+				action="${pageContext.request.contextPath}/article/ajout"
 				method="post" class="form-register needs-validation" novalidate>
 
 			<div class="row">
@@ -74,13 +74,13 @@
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
-						<label for="miseEnVente">Date mise en vente</label><input type="date"
+						<label for="miseEnVente">Date mise en vente</label><input type="datetime-local"
 							class="form-control" id="dateDebut" name="dateDebut" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="finDeVente">Date fin de vente</label> <input type="date"
+						<label for="finDeVente">Date fin de vente</label> <input type="datetime-local"
 							class="form-control" id="dateFin" name="dateFin" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
