@@ -12,7 +12,7 @@ import bo.Encheres;
 public class EncheresDAOJdbcImp implements EncheresDao {
 	
 	private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
-
+	private final String SELECT_BY_ARTICLE = "SELECT * FROM ENCHERES WHERE no_article = ?";
 //
 // PAS AU BON ENDROIT MAIS DELETE PAS LOL 
 //PAS AU BON ENDROIT MAIS DELETE PAS LOL 
@@ -46,9 +46,26 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 
 
 	@Override
-	public Encheres selectByNoArticle() {
-		// TODO Auto-generated method stub
-		return null;
+	public Encheres selectByNoArticle(int id) throws DALException {
+		Encheres ench = null;
+		try (Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_ARTICLE, Statement.RETURN_GENERATED_KEYS)){
+				stmt.setInt(1, id);
+				ResultSet rs = stmt.executeQuery();
+				if (rs.next()) {
+					ench = new Encheres();
+					ench.setDateEnchere(null);
+					ench.setEncherisseur(null);
+					ench.setMontantEnchere(0);
+					ench.setNoArticle(id);
+				}else {
+					throw new DALException ("Il n'y a pas d'enchère correspondant à cet article.");
+				}
+		} catch(SQLException e){
+			e.printStackTrace();
+			throw new DALException("Erreur lors du select de l'enchere : " + e.getMessage());
+		}
+		return ench;
 	}
 
 }
