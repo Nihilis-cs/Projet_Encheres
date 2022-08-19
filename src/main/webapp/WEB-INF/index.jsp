@@ -146,6 +146,7 @@
 							<button class="btn btn-primary btn-lg" type="submit">Enchérir <img class="small-icon"
                             src="images/bid.svg"></button>
 						</form>
+						<p style="colo:red;">${creditErreur}</p>
 					</div>
 				</div>
 			</div>
