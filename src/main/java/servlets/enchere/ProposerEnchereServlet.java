@@ -1,6 +1,7 @@
 package servlets.enchere;
 
 import java.io.IOException;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import bll.ArticlesManager;
 import bll.BLLException;
 import bll.EncheresManager;
 import bll.UtilisateursManager;
+import bo.Articles;
 import bo.Encheres;
 import bo.Utilisateurs;
 
@@ -53,10 +56,10 @@ public class ProposerEnchereServlet extends HttpServlet {
 		System.out.println("Je suis dans la servlet proposer une enchere");
 		String enchereUtilisateurS = request.getParameter("enchere");
 		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
-		 int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
+		int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
 		 
-		 if (enchereUtilisateurI >  creditUtilisateurI) {
-			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit ! (t'es pauvre ?)");
+		if (enchereUtilisateurI >  creditUtilisateurI   ) {
+			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit/le montant de l'enchère est infèrieur à l'enchère actuel !");
 			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
 		 } else {
@@ -71,8 +74,6 @@ public class ProposerEnchereServlet extends HttpServlet {
 					utilisateurActif.setCredit(creditUtilisateurI);
 					um.updateCreditUtilisateur(utilisateurActif);
 					System.out.println(utilisateurActif.toString());
-					//Utilisateurs utilisateur = new Utilisateurs(creditUtilisateurI, utilisateurActif.getPseudo());
-					//um.updateCreditUtilisateur(utilisateur);
 					request.setAttribute("creditErreur", "Enchere effectué !");
 				} catch (BLLException e) {
 					// TODO Auto-generated catch block
