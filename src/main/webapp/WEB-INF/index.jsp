@@ -40,7 +40,7 @@
 				<h1>Enchères</h1>
 			</div>
 			<!--filtre-->
-			<form class="form-filter border mb-3" action="#" method="">
+			<form class="form-filter border mb-3" action="#" method="post">
 				<div class="row">
 					<!--Partie gauche-->
 					<div class="col-md-6 mb-3">
@@ -127,7 +127,7 @@
 				<div class="col-12 col-sm-6 p-2">
 					<div class="card">
 						<div class="card-header text-center">
-							<h4 class="my-0 font-weight-normal">Article 1</h4>
+							<h4 class="my-0 font-weight-normal"><a href="${pageContext.request.contextPath}/navigation/detailsEnchere">Article 1</a></h4>
 						</div>
 						<div class="d-flex">
 							<div class="col-3 p-2">
@@ -141,58 +141,14 @@
 								<li>Vendeur : xxxxxxxxx</li>
 							</ul>
 						</div>
-						<a class="mt-3 btn btn-lg btn-block btn-primary" href="#"
-							title="faire une enchère"> <img class="small-icon"
-							src="images/bid.svg">
-						</a>
+						<form action="${pageContext.request.contextPath}/enchere/proposer" method="post">
+							<input type="number" class="form-control" id="enchere" name="enchere" placeholder="Votre enchère" min="0" max="99999999" value="" required>
+							<button class="btn btn-primary btn-lg" type="submit">Enchérir <img class="small-icon"
+                            src="images/bid.svg"></button>
+						</form>
 					</div>
 				</div>
-				<div class="col-12 col-sm-6 p-2">
-					<div class="card">
-						<div class="card-header text-center">
-							<h4 class="my-0 font-weight-normal">Article 2</h4>
-						</div>
-						<div class="d-flex">
-							<div class="col-3 p-2">
-								<img class="img-fluid img-thumbnail" src="images/photo.svg"
-									alt="pas de photo" />
-							</div>
-							<ul class="col-9 list-unstyled p-2">
-								<li>Prix : 0 point(s)</li>
-								<li>Meilleure enchère : 0 point(s)</li>
-								<li>Fin de l'enchère : dd-MM-yyyy HH:mm</li>
-								<li>Vendeur : xxxxxxxxx</li>
-							</ul>
-						</div>
-						<a class="mt-3 btn btn-lg btn-block btn-primary" href="#"
-							title="faire une enchère"> <img class="small-icon"
-							src="images/bid.svg">
-						</a>
-					</div>
-				</div>
-				<div class="col-12 col-sm-6 p-2">
-					<div class="card">
-						<div class="card-header text-center">
-							<h4 class="my-0 font-weight-normal">Article 3</h4>
-						</div>
-						<div class="d-flex">
-							<div class="col-3 p-2">
-								<img class="img-fluid img-thumbnail" src="images/photo.svg"
-									alt="pas de photo" />
-							</div>
-							<ul class="col-9 list-unstyled p-2">
-								<li>Prix : 0 point(s)</li>
-								<li>Meilleure enchère : 0 point(s)</li>
-								<li>Fin de l'enchère : dd-MM-yyyy HH:mm</li>
-								<li>Vendeur : xxxxxxxxx</li>
-							</ul>
-						</div>
-						<a class="mt-3 btn btn-lg btn-block btn-primary" href="#"
-							title="faire une enchère"> <img class="small-icon"
-							src="images/bid.svg">
-						</a>
-					</div>
-				</div>
+			</div>
 		</main>
 
 		<!--footer-->

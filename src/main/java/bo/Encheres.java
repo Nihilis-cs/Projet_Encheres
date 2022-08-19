@@ -15,6 +15,11 @@ public class Encheres {
 		this.montantEnchere = montantEnchere;
 	}
 	
+	public Encheres(int montantEnchere, int noArticle) {
+		this.noArticle = noArticle;
+		this.montantEnchere = montantEnchere;
+	}
+	
 	public Encheres() {
 
 	}
