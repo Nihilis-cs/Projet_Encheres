@@ -70,10 +70,6 @@ public class UtilisateursManager {
 			sb.append("L'email de l'utilisateur est obligatoire.\n");
 			valide = false;
 		}
-		if(u.getTelephone()==null || u.getTelephone().trim().length()==0){
-			sb.append("Le téléphone est obligatoire.\n");
-			valide = false;
-		}
 		if(u.getRue()==null || u.getRue().trim().length()==0){
 			sb.append("La rue de l'utilisateur  est obligatoire.\n");
 			valide = false;

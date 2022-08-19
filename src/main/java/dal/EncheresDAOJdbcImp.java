@@ -11,15 +11,16 @@ import bo.Encheres;
 
 public class EncheresDAOJdbcImp implements EncheresDao {
 	
-	private final String INSERT = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
+	private final String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
+	private final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere = ? WHERE no_article = ?";
 
-//
-// PAS AU BON ENDROIT MAIS DELETE PAS LOL 
-//PAS AU BON ENDROIT MAIS DELETE PAS LOL 
-//PAS AU BON ENDROIT MAIS DELETE PAS LOL 
+// PEUT ETRE INUTILE CAR PEUT ETRE PRESENT DANS LA PROCEDURE STOCKE
+// PEUT ETRE INUTILE CAR PEUT ETRE PRESENT DANS LA PROCEDURE STOCKE
+// PEUT ETRE INUTILE CAR PEUT ETRE PRESENT DANS LA PROCEDURE STOCKE
+// PEUT ETRE INUTILE CAR PEUT ETRE PRESENT DANS LA PROCEDURE STOCKE
 	public Encheres insertEnchere(Encheres ench) throws DALException {
 		try (Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(INSERT, Statement.RETURN_GENERATED_KEYS)){
+				PreparedStatement stmt = con.prepareStatement(INSERT_ENCHERE, Statement.RETURN_GENERATED_KEYS)){
 			try {
 				con.setAutoCommit(false);
 
@@ -49,6 +50,29 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 	public Encheres selectByNoArticle() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public Encheres updateEnchere(Encheres enchere) throws DALException {
+		try (
+				Connection  con = JdbcTools.getConnection();	
+				PreparedStatement stmt = con.prepareStatement(UPDATE_ENCHERE);
+				){
+			try {
+				con.setAutoCommit(false);
+
+				stmt.setInt(1, enchere.getMontantEnchere());
+				stmt.setInt(2, enchere.getNoArticle());
+				stmt.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				con.rollback();
+				new DALException("Données invalide =" +  e); }
+		} catch (SQLException e) {
+			new DALException("Connection Update enchere failed =" +  e);
+		}
+		return enchere;
 	}
 
 }
