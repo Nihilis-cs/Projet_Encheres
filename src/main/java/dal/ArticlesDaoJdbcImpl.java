@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import bo.Articles;
+import bo.Encheres;
 import bo.EtatsVente;
 import bo.Utilisateurs;
 
@@ -17,7 +18,15 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	
 	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?,?)" ;
-	private final String SELECT_EC= "Select * from ARTICLES_VENDUS where etat_vente = 'EC' ";
+	private final String SELECT_EC= " SELECT  a.no_article,nom_article,description,date_debut_enchere,date_fin_enchere,prix_initial,prix_vente,\r\n"
+			+ "			a.no_utilisateur as no_vendeur,a.no_categorie,etat_vente,image,r.rue as arue,r.code_postal as acp,r.ville as aville, c.libelle, u.*,\r\n"
+			+ "			e.no_utilisateur as no_encherisseur, e.date_enchere, e.montant_enchere \r\n"
+			+ "			FROM  (((ARTICLES_VENDUS a LEFT JOIN RETRAITS r ON a.no_article = r.no_article) \r\n"
+			+ "			LEFT JOIN CATEGORIES c ON c.no_categorie = a.no_categorie)\r\n"
+			+ "			LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
+			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
+			+ "			WHERE (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
+	
 	
 	public Articles insert(Articles a) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -80,16 +89,26 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	private Articles articleBuilder(ResultSet rs) throws DALException {
 		Articles art = new Articles();
-		UtilisateursDao uDao = new UtilisateursDAOJdbcImp(); 
+		UtilisateursDao uDao = new UtilisateursDAOJdbcImp();
 		try {
 			art.setNoArticle(rs.getInt("no_article"));
 			art.setNomArticle(rs.getString("nom_article"));
 			art.setDescription(rs.getString("description"));
-			art.setDateDebutEnchere(LocalDateTime.of((rs.getDate("date_debut_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime())); 
-			art.setDateFinEnchere(LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
+			art.setDateDebutEnchere(LocalDateTime.of((rs.getDate("date_debut_enchere").toLocalDate()),rs.getTime("date_debut_enchere").toLocalTime())); 
+			art.setDateFinEnchere(LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()),rs.getTime("date_fin_enchere").toLocalTime()));
 			art.setPrixInitial(rs.getInt("prix_initial"));
 			art.setPrixVente(rs.getInt("prix_vente"));
-			art.setVendeur(uDao.selectByID(rs.getInt("no_utilisateur")));
+			Utilisateurs u = new Utilisateurs();
+				u.setId(rs.getInt("no_vendeur"));
+				u.setPseudo(rs.getString("pseudo"));
+				u.setNom(rs.getString("nom"));
+				u.setPrenom(rs.getString("prenom"));
+				u.setEmail(rs.getString("email"));
+				u.setTelephone(rs.getString("telephone"));
+				u.setRue(rs.getString("rue"));
+				u.setCodePostal(rs.getString("code_postal"));
+				u.setVille(rs.getString("ville"));
+			art.setVendeur(u);
 			art.setCategorie(null); //A modifier quand les catégories seront gérées
 			switch(rs.getString("etat_vente")) {
 				case "CR" : art.setEtatVente(EtatsVente.CR);
@@ -103,6 +122,13 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				default : art.setEtatVente(null); 
 					break;
 			}
+			Encheres e = new Encheres();
+				e.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
+				Utilisateurs encherisseur = uDao.selectByID(rs.getInt("no_encherisseur"));	
+				e.setEncherisseur(encherisseur);
+				e.setMontantEnchere(rs.getInt("montant_enchere"));
+				e.setNoArticle(rs.getInt("no_article"));
+			art.setEnchere(e);
 			
 
 		} catch (SQLException e) {

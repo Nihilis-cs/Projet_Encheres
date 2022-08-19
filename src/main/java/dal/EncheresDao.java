@@ -1,6 +1,5 @@
 package dal;
 
-import java.util.List;
 
 import bo.Encheres;
 

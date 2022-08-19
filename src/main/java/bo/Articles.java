@@ -151,5 +151,15 @@ public class Articles {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public Encheres getEnchere() {
+		return enchere;
+	}
+
+	public void setEnchere(Encheres enchere) {
+		this.enchere = enchere;
+	}
+	
+	
 	
 }
