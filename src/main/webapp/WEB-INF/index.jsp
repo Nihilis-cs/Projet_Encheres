@@ -50,8 +50,8 @@
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
-							<label for="categories-select">Catégories</label>
-							 <select class="form-control" id="categories-select" name="categorie">
+							<label for="categories-select">Catégories</label> <select
+								class="form-control" id="categories-select" name="categorie">
 								<option selected>Toutes</option>
 								<option name="categorie" value="">Informatique</option>
 								<option name="categorie" value="">Ameublement</option>
@@ -123,44 +123,53 @@
 			</form>
 
 			<!--enchères-->
-			<div class="row justify-content-center border-top card-deck">
-				<div class="col-12 col-sm-6 p-2">
-					<div class="card">
-						<div class="card-header text-center">
-							<h4 class="my-0 font-weight-normal"><a href="${pageContext.request.contextPath}/navigation/detailsEnchere">Article 1</a></h4>
-						</div>
-						<div class="d-flex">
-							<div class="col-3 p-2">
-								<img class="img-fluid img-thumbnail" src="images/photo.svg"
-									alt="pas de photo" />
+
+			<c:forEach var="article" items="${liste}">
+				<div class="row justify-content-center border-top card-deck">
+					<div class="col-12 col-sm-6 p-2">
+						<div class="card">
+							<div class="card-header text-center">
+								<h4 class="my-0 font-weight-normal">
+									<a
+										href="${pageContext.request.contextPath}/navigation/detailsEnchere">${article.nomArticle}</a>
+								</h4>
 							</div>
-							<ul class="col-9 list-unstyled p-2">
-								<li>Prix : 0 point(s)</li>
-								<li>Meilleure enchère : 0 point(s)</li>
-								<li>Fin de l'enchère : dd-MM-yyyy HH:mm</li>
-								<li>Vendeur : xxxxxxxxx</li>
-							</ul>
+							<div class="d-flex">
+								<div class="col-3 p-2">
+									<img class="img-fluid img-thumbnail" src="images/photo.svg"
+										alt="pas de photo" />
+								</div>
+								<ul class="col-6 list-unstyled p-2">
+									<li>Prix : ${article.prixInitial})</li>
+									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
+									<li>Fin de l'enchère : ${article.dateFinEnchere}</li>
+									<li>Vendeur : ${article.vendeur.pseudo}</li>
+								</ul>
+							</div>
+							<form
+								action="${pageContext.request.contextPath}/enchere/proposer"
+								method="post">
+								<input type="number" class="form-control" id="enchere"
+									name="enchere" placeholder="Votre enchère" min="0"
+									max="99999999" value="" required>
+								<button class="btn btn-primary btn-lg" type="submit">
+									Enchérir <img class="small-icon" src="images/bid.svg">
+								</button>
+							</form>
 						</div>
-						<form action="${pageContext.request.contextPath}/enchere/proposer" method="post">
-							<input type="number" class="form-control" id="enchere" name="enchere" placeholder="Votre enchère" min="0" max="99999999" value="" required>
-							<button class="btn btn-primary btn-lg" type="submit">Enchérir <img class="small-icon"
-                            src="images/bid.svg"></button>
-						</form>
 					</div>
 				</div>
-			</div>
+
+			</c:forEach>
+
+
 		</main>
 
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">
 			<div class="mt-3">
-				<img class="small-icon" src="images/ateni.svg" alt="Eni Ecole">
-				<small class="d-block text-muted">&copy; ENI Ecole 2020</small>
-				<div>
-					Icons made by <a href="https://www.flaticon.com/authors/freepik"
-						title="Freepik">Freepik</a> from <a
-						href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-				</div>
+				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
+
 			</div>
 		</footer>
 	</div>
