@@ -21,7 +21,9 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
-
+	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
+	
+	
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -230,6 +232,27 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		}
 
 		return utilisateur;
+	}
+	
+	public boolean utilisateurAEnchere(int id) throws DALException {
+		boolean aEnchere = true;
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(A_ENCHERE)){
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				aEnchere = true;
+			}else {
+				aEnchere = false;;
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Problème lors de la requête 'utilisateurAEnchere' : " + e.getMessage());
+		}
+
+		
+		return aEnchere;
 	}
 
 

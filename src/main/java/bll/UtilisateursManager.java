@@ -140,8 +140,20 @@ public class UtilisateursManager {
 			utilisateur =  this.utilisateurDao.updateCreditUtilisateur(utilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException(e.getMessage());
 		}
 		return utilisateur;
+	}
+
+	public boolean utilisateurAEnchere(int id) throws BLLException {
+		boolean reponse = true;
+		try {
+			reponse = this.utilisateurDao.utilisateurAEnchere(id);
+		}catch(DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+		}
+		return reponse;
 	}
 	
 }
