@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
+import servlets.utilisateur.IHMException;
 import bll.ArticlesManager;
 import bll.BLLException;
 import bll.UtilisateursManager;
@@ -57,40 +57,42 @@ public class AjouterArticleServlet extends HttpServlet {
 		String prixInit 	= request.getParameter("prixInit");
 		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit);
 		
-		//Conversion des infos de l'article
-		
-		
+		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
 		LocalDateTime debutDate = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
 		
 		String Fin[] = dateFin.split("T");
 		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
 					
-//		LocalDateTime dateDebutParse = LocalDateTime.(debutDate, formatter);
-//		LocalDateTime dateFinParse	 = LocalDateTime.parse(dateFin, formatter);
 		int prixInitParse 		 	 = Integer.parseInt(prixInit);
 		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
 		Encheres ench 			 	 = null;
-		int prixVente 				 =0;
+		int prixVente 			 	 =0;
 		Categories cat 				 = null;
 		
-		switch(categorie) {
-		case "Informatique": 
-			cat= new Categories(1, categorie);
-			break;
-		case "Ameublement":
-			cat= new Categories(2, categorie);
-			break;
-		case "Vêtements":
-			cat= new Categories(3, categorie);
-			break;
-		case "Sports & loisirs":
-			cat= new Categories(4, categorie);
-			break;
-		default:
-			cat= new Categories(1, "Informatique");
+		try {
+			switch(categorie) {
+			case "Informatique": 
+				cat= new Categories(1, categorie);
+				break;
+			case "Ameublement":
+				cat= new Categories(2, categorie);
+				break;
+			case "Vêtements":
+				cat= new Categories(3, categorie);
+				break;
+			case "Sports & loisirs":
+				cat= new Categories(4, categorie);
+				break;
+			default: 
+				throw new IHMException("Veuillez choisir une categorie");
+			}
+
+		} catch (Exception e) {
+			System.out.println("hello");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+			rs.forward(request, response);
 		}
-		
 		
 		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
