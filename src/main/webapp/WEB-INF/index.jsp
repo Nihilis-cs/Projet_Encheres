@@ -127,7 +127,7 @@
 				<div class="col-12 col-sm-6 p-2">
 					<div class="card">
 						<div class="card-header text-center">
-							<h4 class="my-0 font-weight-normal">Article 1</h4>
+							<h4 class="my-0 font-weight-normal"><a href="${pageContext.request.contextPath}/navigation/detailsEnchere">Article 1</a></h4>
 						</div>
 						<div class="d-flex">
 							<div class="col-3 p-2">
