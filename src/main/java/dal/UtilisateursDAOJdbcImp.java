@@ -244,7 +244,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			if(rs.next()) {
 				aEnchere = true;
 			}else {
-				aEnchere = false;;
+				aEnchere = false;
 			}
 
 		} catch (SQLException e) {
