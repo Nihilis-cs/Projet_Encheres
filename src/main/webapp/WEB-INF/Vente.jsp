@@ -39,6 +39,20 @@
 				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
 					alt="">
 			</div>
+			
+			<!--erreur-->
+			
+<!-- 		
+			<div class="d-flex alert-danger">
+				<div class="col-3 p-2">
+					<img class="small-icon" src="images/error.svg">
+				</div>
+				<ul class="col-9 list-unstyled p-2">
+					<li>Choisissez une catgorie SVP !</li>
+				</ul>
+			</div>
+-->
+			
 			<!--formulaire-->
 			<form
 				action="${pageContext.request.contextPath}/article/ajout"
@@ -57,10 +71,10 @@
 						<label for="categories-select">Catégories</label> <select
 							class="form-control" id="categories-select" name="categorie">
 							<option selected>Toutes</option>
-							<option name="categorie" value="">Informatique</option>
-							<option name="categorie" value="">Ameublement</option>
-							<option name="categorie" value="">Vêtement</option>
-							<option name="categorie" value="">Sport & Loisirs</option>
+							<option value="Informatique">Informatique</option>
+							<option value="Ameublement">Ameublement</option>
+							<option value="Vêtement">Vêtement</option>
+							<option value="Sport & Loisirs">Sport & Loisirs</option>
 						</select>
 					</div>
 				</div>
