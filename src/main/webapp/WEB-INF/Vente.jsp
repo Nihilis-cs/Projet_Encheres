@@ -112,7 +112,7 @@
 					<div class="col-md-4 mb-3">
 						<label for="image">photo de l'article</label><input type="file"
 							class="form-control" id="uploadPhoto" name="uploadPhoto"
-							accept="image/png, image/jpg">
+							accept="image/png, image/jpg" onchange="PreviewImage();">
 							<img id="uploadPreview" style="width: 100px; height: 100px;" >
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
