@@ -34,7 +34,39 @@
 		<%@ include file="fragments/header_fragment.jsp"%>
 		<!--main bloc-->
 		<main>
-			<!--title-->
+			<div class="row justify-content-center border-top card-deck">
+				<div class="col-12 p-2">
+					<div class="card">
+						<div class="card-header text-center">
+							<h4 class="my-0 font-weight-normal">${article.nomArticle }</h4>
+						</div>
+						<div class="d-flex">
+							<div class="col-3 p-2"></div>
+							<ul class="col-9 list-unstyled p-2">
+								<li>Description : ${article.description }</li>
+								<li>Enchere en cours : ${article.enchere.montantEnchere }</li>
+								<li>Fin de l'enchere le : ${article.dateFinEnchere }</li>
+								<li>Ajouté par : ${article.vendeur.pseudo }</li>
+								<li>Mis en vente le: ${article.dateDebutEnchere }</li>
+							</ul>
+						</div>
+						<form action="${pageContext.request.contextPath}/enchere/proposer"
+							method="post">
+							<input type="number" class="form-control" id="enchere"
+								name="enchere" placeholder="Votre enchère"
+								min="${(article.enchere.montantEnchere) + 1 }" max="99999999"
+								value="" required>
+							<div class="text-center">
+								<button class="btn btn-primary btn-lg" name="noArticle"
+									value="${article.noArticle}" type="submit">Enchérir</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+<%--
+ 			<!--title-->
 			<div class="mx-auto ">
 				<div class="text-center">
 					<h1>${article.nomArticle }</h1>
@@ -42,7 +74,6 @@
 
 				<p>Description : ${article.description }</p>
 				<p>Ajouté par : ${article.vendeur.pseudo }</p>
-				<p>Email : ${article.vendeur.email }</p>
 				<p>Mis en vente le: ${article.dateDebutEnchere }</p>
 				<p>Fin de l'enchere le : ${article.dateFinEnchere }</p>
 				<p>Prix initial : ${article.prixInitial }</p>
@@ -62,13 +93,15 @@
 					Enchérir <img class="small-icon" src="images/bid.svg">
 				</button>
 			</form>
+			 --%>
+
+			<!--footer-->
+			<footer class="border-top text-center align-bottom">
+				<div class="mt-3">
+					<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
+				</div>
+			</footer>
 		</main>
-		<!--footer-->
-		<footer class="border-top text-center align-bottom">
-			<div class="mt-3">
-				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
-			</div>
-		</footer>
 	</div>
 
 	<!-- Optional JavaScript -->
