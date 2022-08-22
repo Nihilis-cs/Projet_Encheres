@@ -1,6 +1,6 @@
 package dal;
 
-import java.sql.CallableStatement;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -27,6 +27,12 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "			LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
 			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
 			+ "			WHERE (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
+	
+	private final String SELECT_BY_ID = "Select * , a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"
+			+ "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
+			+ "Where no_article = ?";
+	
+	
 	//private final String UPDATE_ETAT_VENTE
 	
 	public Articles insert(Articles a) throws DALException {
@@ -158,7 +164,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		}
 		return art;
 	}
-	
+ 
 	public void updateEtatVente() throws DALException {
 		try(Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareCall("{call updateArticle()}")){
@@ -166,5 +172,57 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		}catch(SQLException e) {
 			throw new DALException("la procédure stockée a merdé");
 		}
+	}
+	
+	public Articles SelectById(int id) throws DALException{
+		Articles article = new Articles();
+		
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_ID)){
+			stmt.setInt(1, id);			
+			ResultSet rs = stmt.executeQuery();
+			
+			if(rs.next()) {
+				article.setNoArticle(id);
+				article.setNomArticle(rs.getString("nom_article"));
+				article.setDescription(rs.getString("description"));
+				article.setDateDebutEnchere(LocalDateTime.of((rs.getDate("date_debut_enchere").toLocalDate()),rs.getTime("date_debut_enchere").toLocalTime()));
+				article.setDateFinEnchere(LocalDateTime.of((rs.getDate("date_fin_enchere").toLocalDate()),rs.getTime("date_fin_enchere").toLocalTime()));
+				article.setPrixInitial(rs.getInt("prix_initial"));
+				article.setPrixVente(rs.getInt("prix_vente"));
+				Utilisateurs u = new Utilisateurs();
+					u.setId(rs.getInt("no_vendeur"));
+					u.setPseudo(rs.getString("pseudo"));
+					u.setNom(rs.getString("nom"));
+					u.setPrenom(rs.getString("prenom"));
+					u.setEmail(rs.getString("email"));
+					u.setTelephone(rs.getString("telephone"));
+					u.setRue(rs.getString("rue"));
+					u.setCodePostal(rs.getString("code_postal"));
+					u.setVille(rs.getString("ville"));
+					u.setCredit(rs.getInt("credit"));
+					u.setAdmin(rs.getByte("administrateur"));
+				article.setVendeur(u);
+				article.setCategorie(null); //A modifier quand les catégories seront gérées
+				switch(rs.getString("etat_vente")) {
+					case "CR" : article.setEtatVente(EtatsVente.CR);
+						break;
+					case "EC" : article.setEtatVente(EtatsVente.EC);
+						break;
+					case "VD" : article.setEtatVente(EtatsVente.VD);
+						break;
+					case "RT" : article.setEtatVente(EtatsVente.RT);
+						break;
+					default : article.setEtatVente(null); 
+						break;
+				}
+			
+			}else {
+				throw new DALException("Id introuvable ");
+			}
+		} catch (SQLException e) {
+			throw new DALException("Erreur dans la selection par l'Id : " + e.getMessage());
+		}
+		return article;
 	}
 }

@@ -30,10 +30,8 @@ public class ArticlesDetailsServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
-		response.getWriter().append("");
-		
+
+		doGet(request, response);
 	}
 
 }
