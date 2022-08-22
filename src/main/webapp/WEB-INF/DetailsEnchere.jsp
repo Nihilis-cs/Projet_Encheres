@@ -37,22 +37,22 @@
 			<!--title-->
 			<div class="mx-auto ">
 				<div class="text-center">
-					<h1>Article : ${article.nomArticle } </h1>
+					<h1>${article.nomArticle }</h1>
 				</div>
-					<p>Article : ${article.nomArticle }</p>
-					<p>Description article: ${utilisateurRecherche.prenom }</p>
-					<p>Ajouté par : ${utilisateurRecherche.id }</p>
-					<p>Mis en vente le: ${utilisateurRecherche.nom }</p>
-					<p>Fin de l'enchere le : ${utilisateurRecherche.email }</p>
-					<p>Prix initial : ${utilisateurRecherche.telephone }</p>
-					<p>Enchere en cours : ${utilisateurRecherche.rue }
-						${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
-	
+
+					<p>Description : ${article.description }</p>
+					<p>Ajouté par : ${article.vendeur.pseudo }</p>
+					<p>Email : ${article.vendeur.email }</p>
+					<p>Mis en vente le: ${article.dateDebutEnchere }</p>
+					<p>Fin de l'enchere le : ${article.dateFinEnchere }</p>
+					<p>Prix initial : ${article.prixInitial }</p>
+					<p>Enchere en cours : ${article.prixVente }</p>
+					
 					<p>${requestScope.erreurRecherche }</p>
 			</div>
 			<!--formulaire-->
 			<form class=""
-				action="${pageContext.request.contextPath}/articles/details" method="post">
+				action="${pageContext.request.contextPath}/enchere/proposer" method="post">
 				<label for="inputIdentifiant" class="sr-only"></label><input
 					type="number" id="inputEncherir" class="form-control"
 					name="inputEncherir" placeholder="montant?" required autofocus>

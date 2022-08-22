@@ -2,6 +2,7 @@ package servlets.utilisateur;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,6 +27,8 @@ public class ArticlesDetailsServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		//Idée Fonctionalité : celui qui a mit l'article en vente ne peux pas encherir dessus
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/index.jsp");
+		rd.forward(request, response);
 	}
 
 
