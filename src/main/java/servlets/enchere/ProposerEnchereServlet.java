@@ -26,20 +26,20 @@ import bo.Utilisateurs;
 @WebServlet("/enchere/proposer")
 public class ProposerEnchereServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public ProposerEnchereServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public ProposerEnchereServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	
+
 	}
 
 	/**
@@ -50,46 +50,58 @@ public class ProposerEnchereServlet extends HttpServlet {
 		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
 		System.out.println(utilisateurActif.toString());
 		System.out.println(utilisateurActif.getCredit());
-		
-	int	creditUtilisateurI = utilisateurActif.getCredit();
-		
+
+		int	creditUtilisateurI = utilisateurActif.getCredit();
+
 		System.out.println("Je suis dans la servlet proposer une enchere");
-		String enchereUtilisateurS = request.getParameter("enchere");
-		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
-		int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
-		 		
-		if (enchereUtilisateurI >  creditUtilisateurI   ) {
+		String enchereUtilisateurStr = request.getParameter("enchere");
+
+		System.out.println("Enchere de l'user : " + enchereUtilisateurStr);
+		int enchereUtilisateur = Integer.parseInt(enchereUtilisateurStr);
+
+		if (enchereUtilisateur >  creditUtilisateurI   ) {
 			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit/le montant de l'enchère est infèrieur à l'enchère actuel !");
 			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
-		 } else {
-			 EncheresManager em =EncheresManager.getInstance();
-			 UtilisateursManager um =UtilisateursManager.getInstance();
-			 creditUtilisateurI = creditUtilisateurI - enchereUtilisateurI;
-			 System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurI);
-				String noArticleS = request.getParameter("noArticle");
-				int noArticleI = Integer.parseInt(noArticleS);
-				System.out.println(noArticleI);
-			 	try {
-			 		Encheres enchere = new Encheres(utilisateurActif, noArticleI, LocalDateTime.now(), enchereUtilisateurI);
-					System.out.println(enchere);
-					em.updateEnchere(enchere);
-					utilisateurActif.setCredit(creditUtilisateurI);
-					um.updateCreditUtilisateur(utilisateurActif);
-					System.out.println(utilisateurActif.toString());
-					request.setAttribute("creditErreur", "Enchere effectué !");
-				} catch (BLLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-				rs.forward(request, response);
-			}
-		 }
-		 
-		 
-		 
-		 
-		
+		} else {
+			//Appeler la BLL
+			EncheresManager em =EncheresManager.getInstance();
+			UtilisateursManager um =UtilisateursManager.getInstance();
+			//Recuperer les parametres
+			
+			
+//			EncheresManager em =EncheresManager.getInstance();
+//			UtilisateursManager um =UtilisateursManager.getInstance();
+//			String noArticleS = request.getParameter("noArticle");
+//			int noArticleI = Integer.parseInt(noArticleS);
+//			
+//			//Retourner le crédit du précédent encherisseur
+//			
+//			//Calculer le crédit de l'encherisseur après l'enchere
+//			creditUtilisateurI = creditUtilisateurI - enchereUtilisateurI;
+//			System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurI);
+//			
+//			System.out.println(noArticleI);
+//			try {
+//				Encheres enchere = new Encheres(utilisateurActif, noArticleI, LocalDateTime.now(), enchereUtilisateurI);
+//				System.out.println(enchere);
+//				em.updateEnchere(enchere);
+//				utilisateurActif.setCredit(creditUtilisateurI);
+//				um.updateCreditUtilisateur(utilisateurActif);
+//				System.out.println(utilisateurActif.toString());
+//				request.setAttribute("creditErreur", "Enchere effectué !");
+//			} catch (BLLException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
+			rs.forward(request, response);
+		}
+	}
+
+
+
+
+
 
 }
