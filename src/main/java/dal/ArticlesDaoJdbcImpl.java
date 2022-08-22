@@ -16,7 +16,6 @@ import bo.EtatsVente;
 import bo.Utilisateurs;
 
 public class ArticlesDaoJdbcImpl implements ArticlesDao {
-	
 	private final String INSERT_Article= "insert into ARTICLES_VENDUS (nom_article, description, date_debut_enchere, date_fin_enchere, prix_initial, prix_vente, no_utilisateur, no_categorie, etat_vente)"
 			+ " VALUES (?,?,?,?,?,?,?,?,?)" ;
 	private final String SELECT_EC= " SELECT  a.no_article,nom_article,description,date_debut_enchere,date_fin_enchere,prix_initial,prix_vente,\r\n"
@@ -30,10 +29,15 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	
 	private final String SELECT_BY_ID = "Select *, a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"
 			+ "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
-			+ "inner join ENCHERES e on a.no_article = e.no_article\r\n"
-			+ "Where a.no_article = ?";
+			+ "Where no_article = ?";
 	
+	private final String enchereEC = "(GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
+	private final String enchereUser = "etat_vente = 'EC'  AND e.no_utilisateur = ?" ; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
+	private final String enchereWin = "etat_vente = 'VD' AND e.no_utilisateur = ?"; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
 	
+	private final String venteUserEC = "a.no_utilisateur = ? AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
+	private final String venteUserCR = "a.no_utilisateur = ? AND etat_vente = 'CR'";
+	private final String venteUserVD = "a.no_utilisateur = ? AND etat_vente = 'VD'";
 	//private final String UPDATE_ETAT_VENTE
 	
 	public Articles insert(Articles a) throws DALException {

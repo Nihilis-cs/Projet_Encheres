@@ -58,7 +58,7 @@ public class CreeCompteServlet extends HttpServlet {
 		
 		try {
 			
-			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 0, (byte)0);
+			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
 			System.out.println(utilisateur.toString());
 			um.validerUtilisateur(utilisateur);
 			um.insertUtilisateur(utilisateur);
