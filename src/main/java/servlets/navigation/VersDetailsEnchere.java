@@ -40,7 +40,7 @@ public class VersDetailsEnchere extends HttpServlet {
 		try {
 			art = ArticlesManager.getInstance().selectById(noArticle);
 			request.setAttribute("article", art);
-			System.out.println(noArticle);
+			System.out.println(art);
 		} catch (BLLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

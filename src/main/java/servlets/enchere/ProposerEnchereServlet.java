@@ -55,6 +55,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 		
 		System.out.println("Je suis dans la servlet proposer une enchere");
 		String enchereUtilisateurS = request.getParameter("enchere");
+		
 		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
 		int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
 		 		
