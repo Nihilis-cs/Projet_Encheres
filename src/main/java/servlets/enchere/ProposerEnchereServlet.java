@@ -1,6 +1,7 @@
 package servlets.enchere;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -70,7 +71,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 				int noArticleI = Integer.parseInt(noArticleS);
 				System.out.println(noArticleI);
 			 	try {
-					Encheres enchere = new Encheres(enchereUtilisateurI, noArticleI);
+			 		Encheres enchere = new Encheres(utilisateurActif, noArticleI, LocalDateTime.now(), enchereUtilisateurI);
 					System.out.println(enchere);
 					em.updateEnchere(enchere);
 					utilisateurActif.setCredit(creditUtilisateurI);

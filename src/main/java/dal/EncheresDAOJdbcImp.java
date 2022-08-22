@@ -1,10 +1,13 @@
 package dal;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import bo.Encheres;
@@ -12,7 +15,7 @@ import bo.Encheres;
 public class EncheresDAOJdbcImp implements EncheresDao {
 	
 	private final String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
-	private final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere = ? WHERE no_article = ?";
+	private final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere = ?, date_enchere = ?, no_utilisateur = ? WHERE no_article = ?";
 	private final String SELECT_BY_ARTICLE = "SELECT * FROM ENCHERES WHERE no_article = ?";
 	
 	public Encheres insertEnchere(Encheres ench) throws DALException {
@@ -60,7 +63,10 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 				con.setAutoCommit(false);
 
 				stmt.setInt(1, enchere.getMontantEnchere());
-				stmt.setInt(2, enchere.getNoArticle());
+				stmt.setTimestamp(2, java.sql.Timestamp.valueOf(enchere.getDateEnchere()));
+				stmt.setInt(3, enchere.getEncherisseur().getId());
+				stmt.setInt(4, enchere.getNoArticle());
+				
 				stmt.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {
