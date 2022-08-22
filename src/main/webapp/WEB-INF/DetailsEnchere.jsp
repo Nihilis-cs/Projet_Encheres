@@ -39,7 +39,7 @@
 				<div class="text-center">
 					<h1>Article : </h1>
 				</div>
-					<p>Article : ${utilisateurRecherche.id }</p>
+					<p>Article : ${article.nomArticle }</p>
 					<p>Description article: ${utilisateurRecherche.prenom }</p>
 					<p>Ajouté par : ${utilisateurRecherche.id }</p>
 					<p>Mis en vente le: ${utilisateurRecherche.nom }</p>
