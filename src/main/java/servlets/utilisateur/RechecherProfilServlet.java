@@ -26,6 +26,19 @@ public class RechecherProfilServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UtilisateursManager um = UtilisateursManager.getInstance();
+		Utilisateurs userRech;
+		if (request.getParameter("pseudoVendeur") != null) {
+			try {
+				userRech = um.selectByPseudo(request.getParameter("pseudoVendeur"));
+				request.setAttribute("utilisateurRecherche", userRech);
+			} catch (BLLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/consultationProfils.jsp");
 		rd.forward(request, response);
 	}

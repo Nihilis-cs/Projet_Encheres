@@ -61,6 +61,7 @@
 						</div>
 					</div>
 					<!--Partie droite-->
+					<c:if test="${utilisateurActif != null }">
 					<div class="col-md-6 mb-3">
 						<div class="form-check">
 							<label class="form-check-label"> <input type="radio"
@@ -114,8 +115,8 @@
 								</label>
 							</div>
 						</div>
-
 					</div>
+					</c:if>
 				</div>
 				<button class="btn btn-primary btn-lg btn-block" type="submit">
 					<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
@@ -141,8 +142,8 @@
 								<ul class="col-9 list-unstyled p-2">
 									<li>Prix : ${article.prixInitial})</li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
-									<li>Fin de l'enchère : ${article.dateFinEnchere}</li>
-									<li>Vendeur : ${article.vendeur.pseudo}</li>
+									<li>Fin de l'enchère : ${article.dateFinEnchere} </li>
+									<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 								</ul>
 							</div>
 							<form
