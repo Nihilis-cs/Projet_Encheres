@@ -37,7 +37,7 @@
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Article</h1>
+				<h1>Article = ${article.nomArticle}</h1>
 					<img class="mb-4 large-icon rounded-circle" src="images/user.svg" alt="">
 			
 			
