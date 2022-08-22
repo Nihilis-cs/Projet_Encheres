@@ -32,23 +32,23 @@
 	<div class="container-fluid">
 		<!--emptyHeader-->
 		<%@ include file="fragments/header_fragment.jsp"%>
-
 		<!--main bloc-->
 		<main>
 			<!--title-->
-			<div class="mx-auto text-center">
-				<h1>Article</h1>
-					<img class="mb-4 large-icon rounded-circle" src="images/user.svg" alt="">
-			
-			
-			<p>Num utilisateur : ${utilisateurRecherche.id }</p>
-			<p>Prenom : ${utilisateurRecherche.prenom }</p>
-			<p>Nom : ${utilisateurRecherche.nom }</p>
-			<p>Mail : ${utilisateurRecherche.email }</p>
-			<p>telephone : ${utilisateurRecherche.telephone }</p>
-			<p>Adresse : ${utilisateurRecherche.rue } ${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
-			
-			<p> ${requestScope.erreurRecherche }</p>
+			<div class="mx-auto ">
+				<div class="text-center">
+					<h1>Article : </h1>
+				</div>
+					<p>Article : ${utilisateurRecherche.id }</p>
+					<p>Description article: ${utilisateurRecherche.prenom }</p>
+					<p>Ajouté par : ${utilisateurRecherche.id }</p>
+					<p>Mis en vente le: ${utilisateurRecherche.nom }</p>
+					<p>Fin de l'enchere le : ${utilisateurRecherche.email }</p>
+					<p>Prix initial : ${utilisateurRecherche.telephone }</p>
+					<p>Enchere en cours : ${utilisateurRecherche.rue }
+						${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
+	
+					<p>${requestScope.erreurRecherche }</p>
 			</div>
 			<!--formulaire-->
 			<form class=""
