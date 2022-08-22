@@ -130,7 +130,7 @@
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
 									<a
-										href="${pageContext.request.contextPath}/navigation/detailsEnchere?idArticle=${article}">${article.nomArticle}</a>
+										href="${pageContext.request.contextPath}/navigation/detailsEnchere">${article.nomArticle}</a>
 								</h4>
 							</div>
 							<div class="d-flex">
