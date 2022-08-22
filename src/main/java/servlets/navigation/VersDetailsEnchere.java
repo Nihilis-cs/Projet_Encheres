@@ -34,21 +34,22 @@ public class VersDetailsEnchere extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		int noArticle= Integer.parseInt(request.getParameter("article")); 		
+		Articles art;
 		
 		try {
-			request.setAttribute("liste", ArticlesManager.getInstance().selectAll());
-		} catch (BLLException e) {
+			art = ArticlesManager.getInstance().selectById(noArticle);
+			request.setAttribute("article", art);
+			System.out.println(noArticle);
+		} catch (BLLException e1) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();
+			e1.printStackTrace();
 		}
 		
 		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/DetailsEnchere.jsp");
 		rs.forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 	}

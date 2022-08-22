@@ -44,5 +44,17 @@ public class ArticlesManager {
 		return liste;
 	}
 	
+	public Articles selectById(int id) throws BLLException{
+		Articles a = null;
+		try {
+			a= this.articleDao.SelectById(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		
+		return a;
+		
+	}
+	
 	
 }
