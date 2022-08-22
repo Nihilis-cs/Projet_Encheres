@@ -42,4 +42,14 @@ public class EncheresManager {
 		return ench;
 	}
 	
+	public Encheres selectByNoArticle(int id) throws BLLException{
+		Encheres ench=null;
+		try {
+			ench =  this.EncheresDao.selectByNoArticle(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+		return ench;
+	}
+	
 }
