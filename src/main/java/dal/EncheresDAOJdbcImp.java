@@ -10,6 +10,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import bo.Articles;
 import bo.Encheres;
 
 public class EncheresDAOJdbcImp implements EncheresDao {
@@ -50,14 +51,16 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 	public Encheres selectByNoArticle(int id)throws DALException {
 		Encheres enchere = null;
 		try (Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(SELECT_BY_ARTICLE, Statement.RETURN_GENERATED_KEYS)){
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_ARTICLE)){
 			stmt.setInt(1, id);
 			ResultSet rs = stmt.executeQuery();
 			
 			if (rs.next()) {
 				enchere = new Encheres();
 				enchere.setNoArticle(id);
-				//enchere.setDateEnchere(rs.get);
+				enchere.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime())); 
+				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
+				enchere.setNoArticle(rs.getInt("no_article"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
