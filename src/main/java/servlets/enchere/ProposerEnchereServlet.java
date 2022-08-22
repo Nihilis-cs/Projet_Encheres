@@ -66,8 +66,11 @@ public class ProposerEnchereServlet extends HttpServlet {
 			 UtilisateursManager um =UtilisateursManager.getInstance();
 			 creditUtilisateurI = creditUtilisateurI - enchereUtilisateurI;
 			 System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurI);
-				try {
-					Encheres enchere = new Encheres(enchereUtilisateurI, 2);
+				String noArticleS = request.getParameter("noArticle");
+				int noArticleI = Integer.parseInt(noArticleS);
+				System.out.println(noArticleI);
+			 	try {
+					Encheres enchere = new Encheres(enchereUtilisateurI, noArticleI);
 					System.out.println(enchere);
 					em.updateEnchere(enchere);
 					utilisateurActif.setCredit(creditUtilisateurI);

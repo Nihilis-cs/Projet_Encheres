@@ -151,7 +151,7 @@
 								<input type="number" class="form-control" id="enchere"
 									name="enchere" placeholder="Votre enchère" min="${(article.enchere.montantEnchere) + 1 }"
 									max="99999999" value="" required>
-								<button class="btn btn-primary btn-lg" type="submit">
+								<button class="btn btn-primary btn-lg" name="noArticle" value="${article.noArticle}" type="submit">
 									Enchérir <img class="small-icon" src="images/bid.svg">
 								</button>
 							</form>
