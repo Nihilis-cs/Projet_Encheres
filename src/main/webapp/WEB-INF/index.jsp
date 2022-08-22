@@ -124,13 +124,13 @@
 			<h3>${creditErreur}</h3>
 			<!--enchères-->
 			<div class="row justify-content-center border-top card-deck">
-				<c:forEach var="article" items="${liste}" varStatus="loop">
+				<c:forEach var="article" items="${liste}" >
 					<div class="col-12 col-sm-6 p-2">
 						<div class="card">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
-									<a onclick="getCategoryIndex(${loop.index})"
-										href="${pageContext.request.contextPath}/navigation/detailsEnchere">${article.nomArticle}</a>
+									<a 
+										href="${pageContext.request.contextPath}/navigation/detailsEnchere?article=${article.noArticle}">${article.nomArticle}</a>
 								</h4>
 							</div>
 							<div class="d-flex">
