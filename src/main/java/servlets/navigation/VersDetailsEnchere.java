@@ -9,8 +9,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
 import bll.ArticlesManager;
 import bll.BLLException;
+
+import bo.Articles;
 
 /**
  * Servlet implementation class VersDetailsEnchere
