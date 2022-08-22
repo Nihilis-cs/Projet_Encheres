@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import bll.ArticlesManager;
+import bll.BLLException;
+
 /**
  * Servlet implementation class VersDetailsEnchere
  */
@@ -28,6 +31,14 @@ public class VersDetailsEnchere extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		try {
+			request.setAttribute("liste", ArticlesManager.getInstance().selectAll());
+		} catch (BLLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/DetailsEnchere.jsp");
 		rs.forward(request, response);
 	}
