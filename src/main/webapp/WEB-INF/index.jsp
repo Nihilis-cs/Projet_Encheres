@@ -40,7 +40,7 @@
 				<h1>Enchères</h1>
 			</div>
 			<!--filtre-->
-			<form class="form-filter border mb-3" action="#" method="post">
+			<form class="form-filter border mb-3" action="${pageContext.request.contextPath}/article/filtrer" method="post">
 				<div class="row">
 					<!--Partie gauche-->
 					<div class="col-md-6 mb-3">
@@ -72,19 +72,19 @@
 						<div class="form-group">
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" checked name="encheres"
+									class="form-check-input" checked name="encheres1"
 									value="ouvertes" id="ouvertes">Enchères ouvertes
 								</label>
 							</div>
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="encheres" value="encours"
+									class="form-check-input" name="encheres2" value="encours"
 									id="encours">Mes enchères en cours
 								</label>
 							</div>
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="encheres" value="remportees"
+									class="form-check-input" name="encheres3" value="remportees"
 									id="remportees">Mes enchères remportées
 								</label>
 							</div>
@@ -98,19 +98,19 @@
 						<div class="form-group">
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes" value="venteencours"
+									class="form-check-input" name="ventes1" value="venteencours"
 									id="venteencours">Mes ventes en cours
 								</label>
 							</div>
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes" value="nondebutees"
+									class="form-check-input" name="ventes2" value="nondebutees"
 									id="nondebutees">Mes ventes non débutées
 								</label>
 							</div>
 							<div class="form-check">
 								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes" value="terminees"
+									class="form-check-input" name="ventes3" value="terminees"
 									id="terminees">Mes ventes terminées
 								</label>
 							</div>

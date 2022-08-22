@@ -43,7 +43,7 @@ public class EtatVenteListener implements ServletContextListener {
 					while(!asyncTask.isInterrupted()) {
 						ArticlesDao dao = new ArticlesDaoJdbcImpl();
 						dao.updateEtatVente();
-						System.out.println("Actualisation des etats de vente");
+						//System.out.println("Actualisation des etats de vente");
 						Thread.sleep(TEMPS_ACTUALISATION_MS);
 					}
 				} catch (InterruptedException | DALException e) {

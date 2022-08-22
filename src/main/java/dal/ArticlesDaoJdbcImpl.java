@@ -27,17 +27,26 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
 			+ "			WHERE (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
 	
+	private final String SELECT_FILTER= " SELECT  a.no_article,nom_article,description,date_debut_enchere,date_fin_enchere,prix_initial,prix_vente,\r\n"
+			+ "			a.no_utilisateur as no_vendeur,a.no_categorie,etat_vente,image,r.rue as arue,r.code_postal as acp,r.ville as aville, c.libelle, u.*,\r\n"
+			+ "			e.no_utilisateur as no_encherisseur, e.date_enchere, e.montant_enchere \r\n"
+			+ "			FROM  (((ARTICLES_VENDUS a LEFT JOIN RETRAITS r ON a.no_article = r.no_article) \r\n"
+			+ "			LEFT JOIN CATEGORIES c ON c.no_categorie = a.no_categorie)\r\n"
+			+ "			LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
+			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
+			+ "			?";
+	
 	private final String SELECT_BY_ID = "Select *, a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"
 			+ "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
 			+ "Where no_article = ?";
 	
-	private final String enchereEC = "(GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
-	private final String enchereUser = "etat_vente = 'EC'  AND e.no_utilisateur = ?" ; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-	private final String enchereWin = "etat_vente = 'VD' AND e.no_utilisateur = ?"; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-	
-	private final String venteUserEC = "a.no_utilisateur = ? AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
-	private final String venteUserCR = "a.no_utilisateur = ? AND etat_vente = 'CR'";
-	private final String venteUserVD = "a.no_utilisateur = ? AND etat_vente = 'VD'";
+	private final String enchereEC = " (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
+	//private final String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = ?" ; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
+//	private final String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = ?"; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
+//	
+//	private final String venteUserEC = " a.no_utilisateur = ? AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
+//	private final String venteUserCR = " a.no_utilisateur = ? AND etat_vente = 'CR'";
+//	private final String venteUserVD = " a.no_utilisateur = ? AND etat_vente = 'VD'";
 	//private final String UPDATE_ETAT_VENTE
 	
 	public Articles insert(Articles a) throws DALException {
@@ -94,16 +103,72 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	//CallableStatement cstmt = con.prepareCall("updateArticle");
 
 	@Override
-	public List<Articles> selectAllEC() throws DALException {
-		List<Articles> listeArticlesEC = null; 
+	public List<Articles> selectAllFilter(String filter, int idUser) throws DALException {
+		List<Articles> listeArticlesFilter = new ArrayList<Articles>(); 
+		int cpt = 0;
 		try(Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(SELECT_EC)){
+				PreparedStatement stmt = con.prepareStatement(SELECT_FILTER)){
 			
+			String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
+			String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
+			String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
+			String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
+			String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
+			
+			
+			String requete = "";
+			
+			if (filter.contains("achats")) {
+				if (filter.contains("ouvertes")) {
+					requete += " WHERE" +  enchereEC;
+					cpt ++;
+				} 
+				if (filter.contains("encours")) {
+					if (cpt != 0) {
+						requete += " AND " + enchereUser;
+					} else {
+						requete += " WHERE" + enchereUser;
+					}			
+					cpt ++;
+				}
+				if (filter.contains("remportees")) {
+					if (cpt != 0) {
+						requete += " AND " + enchereWin;
+					} else {
+						requete += " WHERE" +  enchereWin;
+					}	
+				}
+			} else if (filter.contains("ventes")) {
+				if (filter.contains("venteencours")) {	
+					requete += " WHERE" +  venteUserEC;
+					cpt ++;
+				} 
+				if (filter.contains("nondebutees")) {
+					if (cpt != 0) {
+						requete += " AND " + venteUserCR;
+					} else {
+						requete += " WHERE" +  venteUserCR;
+					}
+					cpt ++;
+				}
+				if (filter.contains("terminees")) {
+					if (cpt != 0) {
+						requete += " AND " + venteUserVD;
+					} else {
+						requete += " WHERE" +  venteUserVD;
+					}
+				}
+				System.out.println(requete);
+			}
+			
+			stmt.setString(1, requete);
+			
+			System.out.println(SELECT_FILTER+requete);
 			ResultSet rs = stmt.executeQuery();
 			
 			while(rs.next()) {
 				Articles article = articleBuilder(rs);
-				listeArticlesEC.add(article);
+				listeArticlesFilter.add(article);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -113,7 +178,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		
 		
 		
-		return listeArticlesEC;
+		return listeArticlesFilter;
 	}
 
 	private Articles articleBuilder(ResultSet rs) throws DALException {
