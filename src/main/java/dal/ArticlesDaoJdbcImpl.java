@@ -106,61 +106,9 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	public List<Articles> selectAllFilter(String filter, int idUser) throws DALException {
 		List<Articles> listeArticlesFilter = new ArrayList<Articles>(); 
 		int cpt = 0;
-<<<<<<< HEAD
-		try(Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(SELECT_FILTER)){
-			
-			String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
-			String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; 
-			String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; 
-			String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
-			String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
-			
-			
-			String requete = " ";
-			
-			if (filter.contains("achats")) {
-				if (filter.contains("ouvertes")) {
-					requete += " WHERE" +  enchereEC;
-					cpt ++;
-				} 
-				if (filter.contains("encours")) {
-					if (cpt != 0) {
-						requete += " AND " + enchereUser;
-					} else {
-						requete += " WHERE" + enchereUser;
-					}			
-					cpt ++;
-				}
-				if (filter.contains("remportees")) {
-					if (cpt != 0) {
-						requete += " AND " + enchereWin;
-					} else {
-						requete += " WHERE" +  enchereWin;
-					}	
-				}
-			} else if (filter.contains("ventes")) {
-				if (filter.contains("venteencours")) {	
-					requete += " WHERE" +  venteUserEC;
-					cpt ++;
-				} 
-				if (filter.contains("nondebutees")) {
-					if (cpt != 0) {
-						requete += " AND " + venteUserCR;
-					} else {
-						requete += " WHERE" +  venteUserCR;
-					}
-					cpt ++;
-				}
-				if (filter.contains("terminees")) {
-					if (cpt != 0) {
-						requete += " AND " + venteUserVD;
-					} else {
-						requete += " WHERE" +  venteUserVD;
-					}
-				}
-				//System.out.println(requete);
-=======
+
+
+		//System.out.println(requete);
 		String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
 		String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
 		String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
@@ -182,7 +130,6 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 					requete += " WHERE" + enchereUser;
 				}			
 				cpt ++;
->>>>>>> branch 'main' of https://github.com/Nihilix420/ENI_ENCHERES.git
 			}
 			if (filter.contains("remportees")) {
 				if (cpt != 0) {
@@ -212,12 +159,12 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				}
 			}
 			System.out.println(requete);
-		}		try(Connection con = JdbcTools.getConnection();
-				){
+		}		
+		try(Connection con = JdbcTools.getConnection();){
 			String requeteCompl=SELECT_FILTER + requete;
 			PreparedStatement stmt = con.prepareStatement(requeteCompl);
 
-			
+
 
 			System.out.println(requeteCompl);
 			ResultSet rs = stmt.executeQuery();
