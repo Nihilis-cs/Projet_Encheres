@@ -57,7 +57,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 
 		String noArticleStr = request.getParameter("noArticle");// JE RECUPERE LE NO ARTICLE DE LENCHERE LORSQUE Q'UN USER BET
 		int noArticle = Integer.parseInt(noArticleStr); // JE RECUPERE LE NO ARTICLE DE LENCHERE LORSQUE Q'UN USER BET
-		int ancienUserIdEnch; 
+		int ancienUserIdEnch = 0; 
 		Articles article;
 		try {
 			article = am.selectById(noArticle);
@@ -94,7 +94,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 				//CALCUL POUR LE REMBOURSEMENT
 				//System.out.println("Avant calcul credit actuel de l'encherisseur :"+creditNouvelEncherisseur);		
 				int ancienEnchere = article.getEnchere().getMontantEnchere();
-				Utilisateurs ancienEncherisseur = um.selectById(ancienUserIdEnch);
+				Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
 				System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
 				int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
 				//System.out.println("Credit de l'ancien encherisseur" + creditAncEnch);
