@@ -11,4 +11,5 @@ public interface UtilisateursDao {
 	public Utilisateurs selectByPseudo(String user) throws DALException;
 	public Utilisateurs selectByID(int id) throws DALException;
 	public boolean utilisateurAEnchere(int id)throws DALException;
+	public boolean utilisateurAArticle(int id)throws DALException;
 }

@@ -52,17 +52,22 @@ public class SuppressionProfilServlet extends HttpServlet {
 		System.out.println(pseudo);
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
-			if(!um.utilisateurAEnchere(utilisateurActif.getId())) {
+			if(!um.utilisateurAEnchere(utilisateurActif.getId()) && (!um.utilisateurAArticle(utilisateurActif.getId()))) {
 				System.out.println("suppression");
 				um.deleteUtilisateur(pseudo);
 				session.setAttribute("utilisateurActif", null);
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
+				rs.forward(request, response);
+			} else {
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
+				request.setAttribute("messageErreur", "Suppression impossible" );
+				rs.forward(request, response);
 			}
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
-		rs.forward(request, response);
+		
 
 
 
