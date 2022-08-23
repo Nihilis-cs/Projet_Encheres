@@ -140,7 +140,7 @@
 										alt="pas de photo" />
 								</div>
 								<ul class="col-9 list-unstyled p-2">
-									<li>Prix : ${article.prixInitial})</li>
+									<li>Prix : ${article.prixInitial}</li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchere} </li>
 									<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
