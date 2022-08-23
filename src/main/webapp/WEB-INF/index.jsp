@@ -30,9 +30,10 @@
 
 </head>
 <body>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--fullHeader-->
-		<%@ include file="fragments/header_fragment.jsp"%>
+
 		<!--main bloc-->
 		<main>
 			<!--title-->
@@ -40,7 +41,9 @@
 				<h1>Enchères</h1>
 			</div>
 			<!--filtre-->
-			<form class="form-filter border mb-3" action="${pageContext.request.contextPath}/article/filtrer" method="post">
+			<form class="form-filter border mb-3"
+				action="${pageContext.request.contextPath}/article/filtrer"
+				method="post">
 				<div class="row">
 					<!--Partie gauche-->
 					<div class="col-md-6 mb-3">
@@ -62,60 +65,60 @@
 					</div>
 					<!--Partie droite-->
 					<c:if test="${utilisateurActif != null }">
-					<div class="col-md-6 mb-3">
-						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" checked name="type-encheres"
-								value="achats" id="achats">Achats
-							</label>
+						<div class="col-md-6 mb-3">
+							<div class="form-check">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" checked name="type-encheres"
+									value="achats" id="achats">Achats
+								</label>
+							</div>
+							<div class="form-group">
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" checked name="encheres1"
+										value="ouvertes" id="ouvertes">Enchères ouvertes
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" name="encheres2" value="encours"
+										id="encours">Mes enchères en cours
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" name="encheres3" value="remportees"
+										id="remportees">Mes enchères remportées
+									</label>
+								</div>
+							</div>
+							<div class="form-check">
+								<label class="form-check-label"> <input type="radio"
+									class="form-check-input" name="type-encheres" value="ventes"
+									id="ventes">Ventes
+								</label>
+							</div>
+							<div class="form-group">
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" name="ventes1" value="venteencours"
+										id="venteencours">Mes ventes en cours
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" name="ventes2" value="nondebutees"
+										id="nondebutees">Mes ventes non débutées
+									</label>
+								</div>
+								<div class="form-check">
+									<label class="form-check-label"> <input type="checkbox"
+										class="form-check-input" name="ventes3" value="terminees"
+										id="terminees">Mes ventes terminées
+									</label>
+								</div>
+							</div>
 						</div>
-						<div class="form-group">
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" checked name="encheres1"
-									value="ouvertes" id="ouvertes">Enchères ouvertes
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="encheres2" value="encours"
-									id="encours">Mes enchères en cours
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="encheres3" value="remportees"
-									id="remportees">Mes enchères remportées
-								</label>
-							</div>
-						</div>
-						<div class="form-check">
-							<label class="form-check-label"> <input type="radio"
-								class="form-check-input" name="type-encheres" value="ventes"
-								id="ventes">Ventes
-							</label>
-						</div>
-						<div class="form-group">
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes1" value="venteencours"
-									id="venteencours">Mes ventes en cours
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes2" value="nondebutees"
-									id="nondebutees">Mes ventes non débutées
-								</label>
-							</div>
-							<div class="form-check">
-								<label class="form-check-label"> <input type="checkbox"
-									class="form-check-input" name="ventes3" value="terminees"
-									id="terminees">Mes ventes terminées
-								</label>
-							</div>
-						</div>
-					</div>
 					</c:if>
 				</div>
 				<button class="btn btn-primary btn-lg btn-block" type="submit">
@@ -125,12 +128,12 @@
 			<h3>${creditErreur}</h3>
 			<!--enchères-->
 			<div class="row justify-content-center border-top card-deck">
-				<c:forEach var="article" items="${liste}" >
+				<c:forEach var="article" items="${liste}">
 					<div class="col-12 col-sm-6 p-2">
 						<div class="card">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
-									<a 
+									<a
 										href="${pageContext.request.contextPath}/navigation/detailsEnchere?article=${article.noArticle}">${article.nomArticle}</a>
 								</h4>
 							</div>
@@ -142,17 +145,20 @@
 								<ul class="col-9 list-unstyled p-2">
 									<li>Prix : ${article.prixInitial}</li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
-									<li>Fin de l'enchère : ${article.dateFinEnchere} </li>
-									<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+									<li>Fin de l'enchère : ${article.dateFinEnchere}</li>
+									<li>Vendeur : <a
+										href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 								</ul>
 							</div>
 							<form
 								action="${pageContext.request.contextPath}/enchere/proposer"
 								method="post">
 								<input type="number" class="form-control" id="enchere"
-									name="enchere" placeholder="Votre enchère" min="${(article.enchere.montantEnchere) + 1 }"
-									max="99999999" value="" required>
-								<button class="btn btn-primary btn-lg" name="noArticle" value="${article.noArticle}" type="submit">
+									name="enchere" placeholder="Votre enchère"
+									min="${(article.enchere.montantEnchere) + 1 }" max="99999999"
+									value="" required>
+								<button class="btn btn-primary btn-lg" name="noArticle"
+									value="${article.noArticle}" type="submit">
 									Enchérir <img class="small-icon" src="images/bid.svg">
 								</button>
 							</form>

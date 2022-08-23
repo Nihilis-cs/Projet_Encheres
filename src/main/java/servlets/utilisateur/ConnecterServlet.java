@@ -31,6 +31,7 @@ public class ConnecterServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		session.setAttribute("utilisateurActif", null);
+		request.setAttribute("messageSucces", "Vous avez été déconnecté. Bonne journée!");
 		
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
@@ -45,21 +46,24 @@ public class ConnecterServlet extends HttpServlet {
 		try {
 			Utilisateurs utilisateur = um.getUtilisateurByMailMdp(pseudo, mdp);
 			if (utilisateur == null) {
-				request.setAttribute("estConnecte", "0");
+				request.setAttribute("messageErreur", "Pseudo ou mot de passe invalide");
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
+				rs.forward(request, response);
 
 			}else {
-				request.setAttribute("estConnecte", "1");
+				request.setAttribute("messageSucces", "Bienvenue " + utilisateur.getPseudo() + "!" );
 				HttpSession session = request.getSession();
 				session.setAttribute("utilisateurActif", utilisateur);
 				session.setMaxInactiveInterval(150);
+				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
+				rs.forward(request, response);
 			}
 		} catch (BLLException e) {
 			//Gerer BLLException
 			e.printStackTrace();
 		}
 
-		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-		rs.forward(request, response);
+		
 	}
 
 }

@@ -19,6 +19,47 @@
 		</a>
 
 		<ul class="navbar-nav ml-auto">
+			<li class="nav-item dropdown d-lg-none"><a
+				class="nav-link dropdown-toggle" href="#" id="navbardrop"
+				data-toggle="dropdown"> <img class="small-icon"
+					src="images/menu.svg" alt="Menu ENI-Encheres">
+			</a>
+				<div class="dropdown-menu">
+					<c:if test="${not empty utilisateurActif}">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath}/navigation/gestionProfil"
+							alt="Mon profil">Mon profil</a>
+					</c:if>
+
+					<c:if test="${utilisateurActif.admin == '1'}">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath}/navigation/accueilAdmin"
+							alt="Administrer le site">Administrer</a>
+					</c:if>
+
+					<a class="dropdown-item"
+						href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur"
+						alt="Chercher un utilisateur">Recherche d'un utilisateur</a> 
+						
+					<a class="dropdown-item" href="${pageContext.request.contextPath}/navigation/vente">Vendre un article</a>
+
+					<c:if test="${empty utilisateurActif}">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath}/navigation/inscription">M'inscrire</a>
+					</c:if>
+
+					<c:if test="${empty utilisateurActif}">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath}/navigation/login">Me
+							connecter</a>
+					</c:if>
+
+					<c:if test="${not empty utilisateurActif}">
+						<a class="dropdown-item"
+							href="${pageContext.request.contextPath}/utilisateur/login">Me
+							déconnecter</a>
+					</c:if>
+				</div></li>
 
 			<c:if test="${not empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
@@ -28,7 +69,8 @@
 
 			<c:if test="${utilisateurActif.admin == '1'}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/navigation/admin" alt="Administrer le site">Administrer</a></li>
+					href="${pageContext.request.contextPath}/navigation/accueilAdmin"
+					alt="Administrer le site">Administrer</a></li>
 			</c:if>
 
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
@@ -38,10 +80,11 @@
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
 				href="${pageContext.request.contextPath}/navigation/vente"
 				alt="Vendre un article">Vendre un article</a></li>
-
-			<li class="nav-item d-none d-lg-block"><a class="nav-link"
-				href="${pageContext.request.contextPath}/navigation/inscription"
-				alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
+			<c:if test="${empty utilisateurActif}">
+				<li class="nav-item d-none d-lg-block"><a class="nav-link"
+					href="${pageContext.request.contextPath}/navigation/inscription"
+					alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
+			</c:if>
 
 			<c:if test="${empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
@@ -73,19 +116,4 @@
 			</ul>
 		</div>
 	</c:if>
-
-	<%-- 	
-	<c:if test="${ }">
-		<div class="d-flex alert-danger">
-			<div class="col-3 p-2">
-				<img class="small-icon" src="images/error.svg">
-			</div>
-			<ul class="col-9 list-unstyled p-2">
-				<li>erreur !</li>
-			</ul>
-		</div>
-	</c:if>
- --%>
-
-
 </header>

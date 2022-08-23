@@ -27,7 +27,6 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 
 				stmt.setInt(1, ench.getEncherisseur().getId());
 				stmt.setInt(2, ench.getNoArticle());
-				//stmt.setDate(3, ench.getDateEnchere());
 				stmt.setTimestamp(3, java.sql.Timestamp.valueOf(ench.getDateEnchere()));
 				stmt.setInt(4, ench.getMontantEnchere());
 

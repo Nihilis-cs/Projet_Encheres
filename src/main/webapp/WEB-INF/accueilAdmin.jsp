@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<html lang="fr" xmlns:mso="urn:schemas-microsoft-com:office:office"
-	xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
-<head>
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<html lang="fr" xmlns:mso="urn:schemas-microsoft-com:office:office"
+	xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -25,7 +26,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Rechercher Utilisateur</title>
+<title>ENI-Encheres : Admin</title>
 
 </head>
 <body>
@@ -35,34 +36,18 @@
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Recherche utilisateur</h1>
-				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
-					alt="">
+				<h1>Accueil Administrateur</h1>
 			</div>
-			<!--formulaire-->
-			<form class=""
-				action="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur"
-				method="post">
-				<label for="inputIdentifiant" class="sr-only"></label><input
-					type="text" id="inputRecherchePseudo" class="form-control"
-					name="Recherche" placeholder="Pseudo utilisateur?" required
-					autofocus>
-				<div class="text-center">
-					<button class="btn btn-lg btn-primary " type="submit"
-						title="Recherche">Recherche</button>
+
+			<div class="row justify-content-center border-top card-deck">
+				<div class="col-12 col-sm-6 col-lg-4 p-2">
+					<div class="card">
+						<form action="${pageContext.request.contextPath }/navigation/admin">
+							<button>Utilisateurs</button>
+						</form>
+					</div>
 				</div>
-			</form>
-
-			<p>Num utilisateur : ${utilisateurRecherche.id }</p>
-			<p>Prenom : ${utilisateurRecherche.prenom }</p>
-			<p>Nom : ${utilisateurRecherche.nom }</p>
-			<p>Mail : ${utilisateurRecherche.email }</p>
-			<p>telephone : ${utilisateurRecherche.telephone }</p>
-			<p>Adresse : ${utilisateurRecherche.rue }
-				${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
-
-			<p>${requestScope.erreurRecherche }</p>
-
+			</div>
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">

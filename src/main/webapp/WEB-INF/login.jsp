@@ -28,9 +28,10 @@
 
 </head>
 <body>
+	<!--Navbar-->
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
-		<!--Navbar-->
-		<%@ include file="fragments/header_fragment.jsp"%>
+
 		<!--main bloc-->
 		<main>
 			<!--title-->
@@ -41,7 +42,8 @@
 			</div>
 			<!--formulaire-->
 			<form class="form-login"
-				action="${pageContext.request.contextPath}/utilisateur/login" method="post">
+				action="${pageContext.request.contextPath}/utilisateur/login"
+				method="post">
 				<label for="inputIdentifiant" class="sr-only">Identifiant</label> <input
 					type="text" id="inputIdentifiant" class="form-control"
 					name="pseudo" placeholder="Pseudo" required autofocus> <label
@@ -57,17 +59,20 @@
 					<button class="btn btn-lg btn-primary " type="submit"
 						title="Me connecter">Me connecter</button>
 					<div class="text-center">
-					  <!-- <input type="button" name="create" value="Crée un compte" /> -->
-					 <%--  <input type="button" action="${pageContext.request.contextPath}/connection" value="Crée un compte" /> --%>
+						<!-- <input type="button" name="create" value="Crée un compte" /> -->
+						<%--  <input type="button" action="${pageContext.request.contextPath}/connection" value="Crée un compte" /> --%>
 						<a href="#">Mot de passe oublié</a>
 					</div>
 				</div>
 			</form>
-			<form action="${pageContext.request.contextPath}/navigation/inscription" method="post">
-			<div class="text-center">
-				<button type="submit" name="create" value="create">Crée un compte</button>
-			</div>
-			 </form>
+			<form
+				action="${pageContext.request.contextPath}/navigation/inscription"
+				method="post">
+				<div class="text-center">
+					<button type="submit" name="create" value="create">Crée un
+						compte</button>
+				</div>
+			</form>
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">

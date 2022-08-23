@@ -25,7 +25,7 @@
 
 </head>
 <body>
-<%@ include file="fragments/header_fragment.jsp"%>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--main bloc-->
 		<main>
@@ -37,20 +37,21 @@
 			</div>
 
 			<!--formulaire-->
-			<form action="${pageContext.request.contextPath}/utilisateur/gestion"
+			<form
+				action="${pageContext.request.contextPath}/utilisateur/modierProfilAdmin"
 				method="post" class="form-register needs-validation" novalidate>
 				<div class="row">
 					<div class="col-md-6 mb-3">
 						<label for="pseudo">Pseudo</label> <input type="text"
 							class="form-control" id="pseudo" name="pseudo" placeholder=""
-							maxlength="30" required value="${utilisateurActif.pseudo}">
+							maxlength="30" required value="${user.pseudo}">
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
 						<label for="lastname">Nom</label> <input type="text"
 							class="form-control" id="nom" name="nom" placeholder=""
-							value="${utilisateurActif.nom}" maxlength="30" required>
+							value="${user.nom}" maxlength="30" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
@@ -59,14 +60,14 @@
 					<div class="col-md-6 mb-3">
 						<label for="firstname">Prénom</label> <input type="text"
 							class="form-control" id="prenom" name="prenom" placeholder=""
-							value="${utilisateurActif.prenom}" maxlength="30" required>
+							value="${user.prenom}" maxlength="30" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
 						<label for="email">Email</label> <input type="email"
 							class="form-control" id="email" name="email"
-							placeholder="you@example.com" value="${utilisateurActif.email}"
+							placeholder="you@example.com" value="${user.email}"
 							maxlength="40" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
@@ -76,8 +77,7 @@
 					<div class="col-md-4 mb-3">
 						<label for="phone">Téléphone <span class="text-muted">(Optional)</span></label>
 						<input type="text" class="form-control" id="phone" name="phone"
-							placeholder="" value="${utilisateurActif.telephone}"
-							maxlength="15">
+							placeholder="" value="${user.telephone}" maxlength="15">
 					</div>
 					<div class="col-md-8 mb-3">
 						<label for="street">Rue</label> <input type="text"
@@ -91,45 +91,30 @@
 					<div class="col-md-4 mb-3">
 						<label for="zipcode">Code postal</label> <input type="number"
 							class="form-control" id="codepostal" name="codepostal"
-							placeholder="" min="01000" max="99999"
-							value="${utilisateurActif.codePostal}" required>
+							placeholder="" min="01000" max="99999" value="${user.codePostal}"
+							required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 					<div class="col-md-8 mb-3">
 						<label for="city">Ville</label> <input type="text"
 							class="form-control" id="ville" name="ville" placeholder=""
-							maxlength="30" value="${utilisateurActif.ville}" required>
+							maxlength="30" value="${user.ville}" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-6 mb-3">
-						<label for="password">Mot de passe</label> <input type="password"
-							class="form-control" id="mdp" name="mdp" placeholder=""
-							minlength="6" maxlength="30"
-							value="${utilisateurActif.motDePasse}" required>
-						<div class="invalid-feedback">Ce champ est invalide !</div>
-					</div>
-
-					<div class="col-md-6 mb-3">
-						<label for="confirm_password">Confirmation</label> <input
-							type="password" class="form-control" id="confirm_mdp"
-							name="confirm_mdp" placeholder="" required>
-						<div class="invalid-feedback">Ce champ est invalide ou les
-							mots de passe sont différents !</div>
-					</div>
-				</div>
 				<hr class="mb-4">
-				<button class="btn btn-primary btn-lg btn-block" type="submit">Modifier
-					mon compte</button>
+				<div class="text-center">
+					<button class="btn btn-primary btn-lg" type="submit">Modifier
+						le compte</button>
+				</div>
 			</form>
 			<form
 				action="${pageContext.request.contextPath}/utilisateur/suppression"
 				method="post">
 				<div class="text-center">
 					<button type="submit" name="bouttonSupprimer"
-						value="boutonSupprimer">Supprimer mon compte</button>
+						value="boutonSupprimer">Supprimer le compte</button>
 				</div>
 			</form>
 		</main>
@@ -155,38 +140,58 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
 
-        window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
+			window
+					.addEventListener(
+							'load',
+							function() {
+								// Fetch all the forms we want to apply custom Bootstrap validation styles to
+								var forms = document
+										.getElementsByClassName('needs-validation');
 
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-                //validation du mot de passe
-                var password = document.getElementById("password")
-                , confirm_password = document.getElementById("confirm_password");
-                if(password.value != confirm_password.value) {
-                    confirm_password.setCustomValidity("Les mots de passe sont différents");
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    confirm_password.setCustomValidity('');
-                }
-                //validations des saisies obligatoires
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });            
-    }, false);
-    })();
-    </script>
+								// Loop over them and prevent submission
+								var validation = Array.prototype.filter
+										.call(
+												forms,
+												function(form) {
+													form
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		//validation du mot de passe
+																		var password = document
+																				.getElementById("password"), confirm_password = document
+																				.getElementById("confirm_password");
+																		if (password.value != confirm_password.value) {
+																			confirm_password
+																					.setCustomValidity("Les mots de passe sont différents");
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		} else {
+																			confirm_password
+																					.setCustomValidity('');
+																		}
+																		//validations des saisies obligatoires
+																		if (form
+																				.checkValidity() === false) {
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		}
+																		form.classList
+																				.add('was-validated');
+																	}, false);
+												});
+							}, false);
+		})();
+	</script>
 </body>
 
 </html>

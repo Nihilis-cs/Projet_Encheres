@@ -62,8 +62,9 @@ public class GestionProfilServlet extends HttpServlet {
 			System.out.println(utilisateur);
 			um.updateUtilisateur(utilisateur);
 			session.setAttribute("utilisateurActif", utilisateur);
+			request.setAttribute("messageSucces", "Modifications bien prises en compte!");
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
+			request.setAttribute("messageErreur", "Modifications invalides.");
 			e.printStackTrace();
 		}
 		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");

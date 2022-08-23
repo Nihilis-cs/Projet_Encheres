@@ -1,7 +1,6 @@
 package servlets.navigation;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -14,30 +13,33 @@ import bll.BLLException;
 import bll.UtilisateursManager;
 import bo.Utilisateurs;
 
-
-@WebServlet("/navigation/admin")
-public class VersAdminServlet extends HttpServlet {
+/**
+ * Servlet implementation class VersModifierProfilAdmin
+ */
+@WebServlet("/navigation/modifierProfilAdmin")
+public class VersModifierProfilAdmin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-
-    public VersAdminServlet() {
+    public VersModifierProfilAdmin() {
         super();
         // TODO Auto-generated constructor stub
     }
 
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		List<Utilisateurs> listeUsers;
+		int noUser = Integer.parseInt(request.getParameter("user"));
+		Utilisateurs user;
 		
 		try {
-//			listeUsers = UtilisateursManager.getInstance().selectAll();
-			request.setAttribute("liste", UtilisateursManager.getInstance().selectAll());
+			user = UtilisateursManager.getInstance().selectByID(noUser);
+			request.setAttribute("user", user);
+			System.out.println(user);
 		} catch (BLLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/adminUser.jsp");
+		
+		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/adminModifierUser.jsp");
 		rd.forward(request, response);
 	}
 
