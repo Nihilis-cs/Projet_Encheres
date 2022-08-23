@@ -26,7 +26,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Liste des enchères</title>
+<title>ENI-Encheres : Admin</title>
 
 </head>
 <body>
@@ -36,12 +36,15 @@
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Administrer</h1>
+				<h1>Accueil Administrateur</h1>
 			</div>
+
 			<div class="row justify-content-center border-top card-deck">
 				<div class="col-12 col-sm-6 col-lg-4 p-2">
 					<div class="card">
-						<button>pouet</button>
+						<form action="${pageContext.request.contextPath }/navigation/admin">
+							<button>Utilisateurs</button>
+						</form>
 					</div>
 				</div>
 			</div>

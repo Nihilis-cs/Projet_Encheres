@@ -182,4 +182,18 @@ public class UtilisateursManager {
 		return u;
 	}
 
+	public Utilisateurs selectByID(int id) throws BLLException{
+		Utilisateurs u = null;
+		
+		try {
+			u = this.utilisateurDao.selectByID(id);
+		} catch (DALException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+			//Documenter BLLException
+		}
+		return u;
+	}
+
 }

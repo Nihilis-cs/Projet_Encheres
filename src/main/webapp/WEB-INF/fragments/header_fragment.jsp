@@ -33,7 +33,7 @@
 
 					<c:if test="${utilisateurActif.admin == '1'}">
 						<a class="dropdown-item"
-							href="${pageContext.request.contextPath}/navigation/admin"
+							href="${pageContext.request.contextPath}/navigation/accueilAdmin"
 							alt="Administrer le site">Administrer</a>
 					</c:if>
 
@@ -69,7 +69,7 @@
 
 			<c:if test="${utilisateurActif.admin == '1'}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/navigation/admin"
+					href="${pageContext.request.contextPath}/navigation/accueilAdmin"
 					alt="Administrer le site">Administrer</a></li>
 			</c:if>
 

@@ -26,7 +26,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Liste des enchères</title>
+<title>ENI-Encheres : Admin / Users</title>
 
 </head>
 <body>
@@ -36,7 +36,7 @@
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Administrer</h1>
+				<h1>Utilisateurs</h1>
 			</div>
 			<div class="row justify-content-center border-top card-deck">
 				<c:forEach var="user" items="${liste}" >
@@ -44,12 +44,13 @@
 						<div class="card">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
-									<a href="${pageContext.request.contextPath}/navigation/admin?user=${user.pseudo}">
+									<a href="${pageContext.request.contextPath}/navigation/modifierProfilAdmin?user=${user.id}">
 										${user.pseudo}</a>	
 								</h4>
 							</div>
 							<div class="d-flex">
 								<ul class="col-9 list-unstyled p-2">
+									<li>Id : ${user.id }</li>
 									<li>Prenom : ${user.prenom}</li>
 									<li>Nom : ${user.nom}</li>
 									<li>Mail : ${user.email}</li>
