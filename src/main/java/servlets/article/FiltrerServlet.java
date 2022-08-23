@@ -74,7 +74,7 @@ public class FiltrerServlet extends HttpServlet {
 			// TODO Auto-generated catch block
 				e.printStackTrace();
 		}
-		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/index.jsp");
 		rs.forward(request, response);
 	}
 
