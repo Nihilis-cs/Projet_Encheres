@@ -28,13 +28,12 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "			WHERE (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
 	
 	private final String SELECT_FILTER= " SELECT  a.no_article,nom_article,description,date_debut_enchere,date_fin_enchere,prix_initial,prix_vente,\r\n"
-			+ "			a.no_utilisateur as no_vendeur,a.no_categorie,etat_vente,image,r.rue as arue,r.code_postal as acp,r.ville as aville, c.libelle, u.*,\r\n"
-			+ "			e.no_utilisateur as no_encherisseur, e.date_enchere, e.montant_enchere \r\n"
-			+ "			FROM  (((ARTICLES_VENDUS a LEFT JOIN RETRAITS r ON a.no_article = r.no_article) \r\n"
-			+ "			LEFT JOIN CATEGORIES c ON c.no_categorie = a.no_categorie)\r\n"
-			+ "			LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
-			+ "			LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))\r\n"
-			+ "			?";
+            + "            a.no_utilisateur as no_vendeur,a.no_categorie,etat_vente,image,r.rue as arue,r.code_postal as acp,r.ville as aville, c.libelle, u.*,\r\n"
+            + "            e.no_utilisateur as no_encherisseur, e.date_enchere, e.montant_enchere \r\n"
+            + "            FROM  (((ARTICLES_VENDUS a LEFT JOIN RETRAITS r ON a.no_article = r.no_article) \r\n"
+            + "            LEFT JOIN CATEGORIES c ON c.no_categorie = a.no_categorie)\r\n"
+            + "            LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
+            + "            LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))";
 	
 	private final String SELECT_BY_ID = "Select *, a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"
 			+ "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
@@ -104,82 +103,95 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	@Override
 	public List<Articles> selectAllFilter(String filter, int idUser) throws DALException {
-		List<Articles> listeArticlesFilter = new ArrayList<Articles>(); 
-		int cpt = 0;
-		try(Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(SELECT_FILTER)){
-			
-			String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
-			String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-			String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
-			String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
-			String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
-			
-			
-			String requete = "";
-			
-			if (filter.contains("achats")) {
-				if (filter.contains("ouvertes")) {
-					requete += " WHERE" +  enchereEC;
-					cpt ++;
-				} 
-				if (filter.contains("encours")) {
-					if (cpt != 0) {
-						requete += " AND " + enchereUser;
-					} else {
-						requete += " WHERE" + enchereUser;
-					}			
-					cpt ++;
-				}
-				if (filter.contains("remportees")) {
-					if (cpt != 0) {
-						requete += " AND " + enchereWin;
-					} else {
-						requete += " WHERE" +  enchereWin;
-					}	
-				}
-			} else if (filter.contains("ventes")) {
-				if (filter.contains("venteencours")) {	
-					requete += " WHERE" +  venteUserEC;
-					cpt ++;
-				} 
-				if (filter.contains("nondebutees")) {
-					if (cpt != 0) {
-						requete += " AND " + venteUserCR;
-					} else {
-						requete += " WHERE" +  venteUserCR;
-					}
-					cpt ++;
-				}
-				if (filter.contains("terminees")) {
-					if (cpt != 0) {
-						requete += " AND " + venteUserVD;
-					} else {
-						requete += " WHERE" +  venteUserVD;
-					}
-				}
-				System.out.println(requete);
-			}
-			
-			stmt.setString(1, requete);
-			
-			System.out.println(SELECT_FILTER+requete);
-			ResultSet rs = stmt.executeQuery();
-			
-			while(rs.next()) {
-				Articles article = articleBuilder(rs);
-				listeArticlesFilter.add(article);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new DALException("Problème lors de l'accès à la BDD");
-		}
-		
-		
-		
-		
-		return listeArticlesFilter;
-	}
+        List<Articles> listeArticlesFilter = new ArrayList<Articles>();
+        int cpt = 0;
+
+
+
+
+        //System.out.println(requete);
+        String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
+        String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE
+        String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
+        String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
+        String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
+
+
+
+
+        String requete = "";
+
+
+
+       if (filter.contains("achats")) {
+            if (filter.contains("ouvertes")) {
+                requete += " WHERE" +  enchereEC;
+                cpt ++;
+            }
+            if (filter.contains("encours")) {
+                if (cpt != 0) {
+                    requete += " AND " + enchereUser;
+                } else {
+                    requete += " WHERE" + enchereUser;
+                }            
+                cpt ++;
+            }
+            if (filter.contains("remportees")) {
+                if (cpt != 0) {
+                    requete += " AND " + enchereWin;
+                } else {
+                    requete += " WHERE" +  enchereWin;
+                }    
+            }
+        } else if (filter.contains("ventes")) {
+            if (filter.contains("venteencours")) {    
+                requete += " WHERE" +  venteUserEC;
+                cpt ++;
+            }
+            if (filter.contains("nondebutees")) {
+                if (cpt != 0) {
+                    requete += " AND " + venteUserCR;
+                } else {
+                    requete += " WHERE" +  venteUserCR;
+                }
+                cpt ++;
+            }
+            if (filter.contains("terminees")) {
+                if (cpt != 0) {
+                    requete += " AND " + venteUserVD;
+                } else {
+                    requete += " WHERE" +  venteUserVD;
+                }
+            }
+            System.out.println(requete);
+        }        
+        try(Connection con = JdbcTools.getConnection();){
+            String requeteCompl=SELECT_FILTER + requete;
+            PreparedStatement stmt = con.prepareStatement(requeteCompl);
+
+
+
+
+
+           System.out.println(requeteCompl);
+            ResultSet rs = stmt.executeQuery();
+
+
+
+           while(rs.next()) {
+                Articles article = articleBuilder(rs);
+                listeArticlesFilter.add(article);
+            }
+            stmt.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new DALException("Problème lors de l'accès à la BDD");
+        }
+
+
+
+       return listeArticlesFilter;
+    }
 
 	private Articles articleBuilder(ResultSet rs) throws DALException {
 		Articles art = new Articles();
