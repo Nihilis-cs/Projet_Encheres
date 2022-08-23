@@ -25,7 +25,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Details article</title>
+<title>ENI-Encheres : Administrer</title>
 
 </head>
 <body>
@@ -44,7 +44,7 @@
 							<div class="col-3 p-2"></div>
 							<ul class="col-9 list-unstyled p-2">
 								<li>Description : ${article.description }</li>
-								<c:if test="${empty article.enchere.montantEnchere }"><li>Prix : ${article.prixInitial}</li></c:if>
+								<c:if test="${empty article.enchere.montantEnchere }"><li>Prix : ${article.prixInitial})</li></c:if>
 								<c:if test="${not empty article.enchere.montantEnchere }"><li>Enchere en cours : ${article.enchere.montantEnchere }</li></c:if>
 								<li>Fin de l'enchere le : ${article.dateFinEnchere }</li>
 								<li>Ajouté par : ${article.vendeur.pseudo }</li>

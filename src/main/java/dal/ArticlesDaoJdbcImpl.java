@@ -35,11 +35,11 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "            LEFT JOIN UTILISATEURS u ON u.no_utilisateur = a.no_utilisateur)\r\n"
 			+ "            LEFT JOIN ENCHERES e ON (a.no_article = e.no_article AND e.no_utilisateur = (SELECT TOP(1) ec.no_utilisateur FROM ENCHERES ec WHERE ec.no_article = a.no_article ORDER BY date_enchere DESC))";
 
-    private final String SELECT_BY_ID = "Select *, a.no_article as ref_article, a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"            
-            + "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
-            + "inner join ENCHERES e on e.no_article = a.no_article \r\n"
-            + "Where a.no_article = ?";
-    
+	private final String SELECT_BY_ID = "Select *, a.no_article as ref_article, a.no_utilisateur as no_vendeur from Articles_vendus a\r\n"            
+			+ "inner Join UTILISATEURS u on a.no_utilisateur = u.no_utilisateur\r\n"
+			+ "left outer join ENCHERES e on e.no_article = a.no_article \r\n"
+			+ "Where a.no_article = ?";
+
 	private final String enchereEC = " (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
 	//private final String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = ?" ; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
 	//	private final String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = ?"; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
@@ -286,18 +286,20 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				default : article.setEtatVente(null); 
 				break;
 				}
-
-				Encheres e = new Encheres();
+				
 				if (rs.getDate("date_enchere") != null) {
+					Encheres e = new Encheres();
 					e.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
 
 					Utilisateurs encherisseur = uDao.selectByID(rs.getInt("no_vendeur"));	
 					e.setEncherisseur(encherisseur);
 					e.setMontantEnchere(rs.getInt("montant_enchere"));
 					e.setNoArticle(rs.getInt("no_article"));
+					article.setEnchere(e);
+				} else {
+					article.setEnchere(null);
 				}
-				article.setEnchere(e);
-
+				
 			}else {
 				throw new DALException("Id introuvable ");
 			}

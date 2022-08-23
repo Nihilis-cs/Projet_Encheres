@@ -155,5 +155,16 @@ public class UtilisateursManager {
 		}
 		return reponse;
 	}
+
+	public boolean utilisateurAArticle(int id) throws BLLException  {
+		boolean reponse = true;
+		try {
+			reponse = this.utilisateurDao.utilisateurAArticle(id);
+		}catch(DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+		}
+		return reponse;
+	}
 	
 }
