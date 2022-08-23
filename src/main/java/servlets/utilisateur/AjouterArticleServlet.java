@@ -89,7 +89,6 @@ public class AjouterArticleServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			System.out.println("hello");
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
@@ -99,9 +98,12 @@ public class AjouterArticleServlet extends HttpServlet {
 		
 		try {
 			artmngr.insert(article);
+			request.setAttribute("messageSucces", "Article enregistré!");
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
+			request.setAttribute("messageErreur", "Article non valide!");
 			e.printStackTrace();
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+			rs.forward(request, response);
 		}
 		
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
