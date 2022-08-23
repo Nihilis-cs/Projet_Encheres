@@ -78,7 +78,6 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 				PreparedStatement stmt = con.prepareStatement(UPDATE_ENCHERE);
 				){
 			try {
-				int nbLignes = 0;
 				con.setAutoCommit(false);
 
 				stmt.setInt(1, enchere.getMontantEnchere());
@@ -86,11 +85,11 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 				stmt.setInt(3, enchere.getEncherisseur().getId());
 				stmt.setInt(4, enchere.getNoArticle());
 				
-				nbLignes = stmt.executeUpdate();
+				stmt.executeUpdate();
 				
-				if (nbLignes == 0) {
-					insertEnchere(enchere);
-				}
+//				if (nbLignes == 0) {
+//					insertEnchere(enchere);
+//				}
 				
 				con.commit();
 			} catch (SQLException e) {
