@@ -47,7 +47,9 @@ public class RetraitsDaoJdbcImp {
 			if(rs.next()) {
 				retrait = new Retraits();
 				retrait.setNoArticle(no);
-				
+				retrait.setRue(rs.getString("rue"));
+				retrait.setCode_postal(rs.getString("code_postal"));
+				retrait.setVille(rs.getString("ville"));
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
