@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import bo.Utilisateurs;
 
@@ -24,6 +26,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
 	private final String A_ARTICLE = 
 			"Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
+	private final String SELECT_ALL = "select *  from UTILISATEURS"; 
 	
 	
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
@@ -145,7 +148,6 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 		return utilisateur;
 	}
-
 
 	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException {
 		
@@ -278,8 +280,24 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return aArticle;
 	}
 
-
-
+	public List<Utilisateurs> selectAll() throws DALException{
+		List<Utilisateurs> liste = new ArrayList<Utilisateurs>();
+		
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_ALL)){
+			ResultSet rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Utilisateurs utilisateur = utilisateurBuilder(rs);
+				liste.add(utilisateur);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Probleme lors de la selection d'un utilisateur");	
+		}
+		return liste;	
+	}
+	
 
 
 

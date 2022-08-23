@@ -44,8 +44,14 @@
 							<div class="col-3 p-2"></div>
 							<ul class="col-9 list-unstyled p-2">
 								<li>Description : ${article.description }</li>
-								<c:if test="${empty article.enchere.montantEnchere }"><li>Prix : ${article.prixInitial}</li></c:if>
-								<c:if test="${not empty article.enchere.montantEnchere }"><li>Enchere en cours : ${article.enchere.montantEnchere }</li></c:if>
+								<c:if test="${empty article.enchere.montantEnchere }">
+								<li>Prix : ${article.prixInitial}</li>
+								</c:if>
+								
+								<c:if test="${not empty article.enchere.montantEnchere }">
+								<li>Enchere en cours : ${article.enchere.montantEnchere }</li>
+								</c:if>
+								
 								<li>Fin de l'enchere le : ${article.dateFinEnchere }</li>
 								<li>Ajouté par : ${article.vendeur.pseudo }</li>
 								<li>Mis en vente le: ${article.dateDebutEnchere }</li>
