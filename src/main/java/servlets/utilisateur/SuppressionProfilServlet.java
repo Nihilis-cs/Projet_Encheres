@@ -52,7 +52,7 @@ public class SuppressionProfilServlet extends HttpServlet {
 		System.out.println(pseudo);
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
-			if(!um.utilisateurAEnchere(utilisateurActif.getId())) {
+			if(!um.utilisateurAEnchere(utilisateurActif.getId()) && (!um.utilisateurAArticle(utilisateurActif.getId()))) {
 				System.out.println("suppression");
 				um.deleteUtilisateur(pseudo);
 				session.setAttribute("utilisateurActif", null);

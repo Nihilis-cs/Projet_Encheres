@@ -22,7 +22,8 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
 	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
-	private final String A_ARTICLE = "Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
+	private final String A_ARTICLE = 
+			"Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
 	
 	
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
