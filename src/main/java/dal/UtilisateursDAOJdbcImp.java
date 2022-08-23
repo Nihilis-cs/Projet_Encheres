@@ -22,6 +22,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
 	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
 	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
+	private final String A_ARTICLE = "Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
 	
 	
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
@@ -146,17 +147,17 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 
 	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException {
-
-		try (
-				Connection  con = JdbcTools.getConnection();	
-				PreparedStatement stmt = con.prepareStatement(DELETE_USER);
-				){
-
-			stmt.setString(1, pseudo);
-			stmt.executeUpdate();
-		} catch (SQLException e) {
-			throw new DALException("Delete user failed - pseudo=" + pseudo, e);
-		}
+		
+			try (
+					Connection  con = JdbcTools.getConnection();	
+					PreparedStatement stmt = con.prepareStatement(DELETE_USER);
+					){
+	
+				stmt.setString(1, pseudo);
+				stmt.executeUpdate();
+			} catch (SQLException e) {
+				throw new DALException("Delete user failed - pseudo = " + pseudo, e);
+			}
 		return null;
 	}
 
@@ -253,6 +254,27 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 		
 		return aEnchere;
+	}
+	
+	public boolean utilisateurAArticle(int id) throws DALException {
+		boolean aArticle = true;
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(A_ARTICLE)){
+			stmt.setInt(1, id);
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				aArticle = true;
+			}else {
+				aArticle = false;
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Problème lors de la requête 'utilisateurAEnchere' : " + e.getMessage());
+		}
+
+		
+		return aArticle;
 	}
 
 
