@@ -28,7 +28,8 @@
 
 			<c:if test="${utilisateurActif.admin == '1'}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
-					href="${pageContext.request.contextPath}/navigation/admin" alt="Administrer le site">Administrer</a></li>
+					href="${pageContext.request.contextPath}/navigation/admin"
+					alt="Administrer le site">Administrer</a></li>
 			</c:if>
 
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
@@ -38,10 +39,11 @@
 			<li class="nav-item d-none d-lg-block"><a class="nav-link"
 				href="${pageContext.request.contextPath}/navigation/vente"
 				alt="Vendre un article">Vendre un article</a></li>
-
-			<li class="nav-item d-none d-lg-block"><a class="nav-link"
-				href="${pageContext.request.contextPath}/navigation/inscription"
-				alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
+			<c:if test="${empty utilisateurActif}">
+				<li class="nav-item d-none d-lg-block"><a class="nav-link"
+					href="${pageContext.request.contextPath}/navigation/inscription"
+					alt="S'inscrire à ENI-Encheres">M'inscrire</a></li>
+			</c:if>
 
 			<c:if test="${empty utilisateurActif}">
 				<li class="nav-item d-none d-lg-block"><a class="nav-link"
