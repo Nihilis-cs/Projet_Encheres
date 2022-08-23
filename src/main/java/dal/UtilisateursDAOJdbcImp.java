@@ -21,7 +21,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ? ";
 	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
-			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ? WHERE no_utilisateur = ?";
+			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur = ?";
 	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
 	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
 	private final String A_ARTICLE = 
@@ -182,7 +182,8 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 				stmt.setString(7, utilisateur.getCodePostal());
 				stmt.setString(8, utilisateur.getVille());
 				stmt.setString(9, utilisateur.getMotDePasse());
-				stmt.setInt(10, utilisateur.getId());
+				stmt.setInt(10, utilisateur.getCredit());
+				stmt.setInt(11, utilisateur.getId());
 				stmt.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {

@@ -84,24 +84,18 @@ public class ProposerEnchereServlet extends HttpServlet {
 					//Encheres ancienEnchere = em.selectByNoArticle(article.getNoArticle());
 					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
 					em.updateEnchere(enchere);
+					int ancienEnchere = article.getEnchere().getMontantEnchere(); //
+					Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
+					System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
+					int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
+					//System.out.println("Credit de l'ancien encherisseur" + creditAncEnch);
+					ancienEncherisseur.setCredit(creditAncEnch);
+					//System.out.println("ancien encherisseur qui va être recrediter : "+ancienEncherisseur);
+					um.updateCreditUtilisateur(ancienEncherisseur);
 				} else { //Sinon insert
 					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
 					em.insertEnchere(enchere);
 				}
-				//Calculer les nouveaux crédits de l'ancien encherisseur et du nouveau
-				//int enchMontantCredit = (em.selectByNoArticle(utilisateurActif.getId())).getMontantEnchere(); //RECUPERATION DU MONTANT DE lENCHERE
-
-				//CALCUL POUR LE REMBOURSEMENT
-				//System.out.println("Avant calcul credit actuel de l'encherisseur :"+creditNouvelEncherisseur);		
-				int ancienEnchere = article.getEnchere().getMontantEnchere();
-				Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
-				System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
-				int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
-				//System.out.println("Credit de l'ancien encherisseur" + creditAncEnch);
-				ancienEncherisseur.setCredit(creditAncEnch);
-				//System.out.println("ancien encherisseur qui va être recrediter : "+ancienEncherisseur);
-				um.updateCreditUtilisateur(ancienEncherisseur);
-
 				creditNouvelEncherisseur -= nouvelEnchere;
 				//System.out.println("Après calcul credit de l'encherisseur :"+creditNouvelEncherisseur);
 				//System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurInt);
