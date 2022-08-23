@@ -17,7 +17,7 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 	
 	private final String INSERT_ENCHERE = "INSERT INTO ENCHERES (no_utilisateur, no_article, date_enchere, montant_enchere)VALUES (?, ?, ?, ?)";
 	private final String UPDATE_ENCHERE = "UPDATE ENCHERES SET montant_enchere = ?, date_enchere = ?, no_utilisateur = ? WHERE no_article = ?";
-	private final String SELECT_BY_ARTICLE = "SELECT * FROM ENCHERES e INNER JOIN Articles a ON a.no_article = e.no_article WHERE e.no_article = ?";
+	private final String SELECT_BY_ARTICLE = "SELECT * FROM ENCHERES e INNER JOIN ARTICLES_VENDUS a ON a.no_article = e.no_article WHERE e.no_article = ?";
 	
 	public Encheres insertEnchere(Encheres ench) throws DALException {
 		try (Connection con = JdbcTools.getConnection();
@@ -60,7 +60,8 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 				enchere.setNoArticle(id);
 				enchere.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime())); 
 				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
-				enchere.setNoArticle(rs.getInt("no_article")); //Remplacer par encherisseur pouet
+				UtilisateursDao uDao = new UtilisateursDAOJdbcImp();
+				enchere.setEncherisseur(uDao.selectByID(rs.getInt("no_utilisateur"))); //Remplacer par encherisseur pouet
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

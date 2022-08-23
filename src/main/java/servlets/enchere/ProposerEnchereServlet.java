@@ -48,41 +48,61 @@ public class ProposerEnchereServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
 		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
-		System.out.println(utilisateurActif.toString());
-		System.out.println(utilisateurActif.getCredit());
+//		System.out.println(utilisateurActif.toString());
+//		System.out.println(utilisateurActif.getCredit());
 
-		int	creditUtilisateurI = utilisateurActif.getCredit();
+		int	creditNouvelEncherisseur = utilisateurActif.getCredit();
 
-		System.out.println("Je suis dans la servlet proposer une enchere");
-		String enchereUtilisateurS = request.getParameter("enchere");
+		//System.out.println("Je suis dans la servlet proposer une enchere");
+		String nouvelEnchereStr = request.getParameter("enchere");
+		//System.out.println("Enchere de l'user : " + enchereUtilisateurStr);
+		int nouvelEnchere = Integer.parseInt(nouvelEnchereStr);
 
-		System.out.println("Enchere de l'user : " + enchereUtilisateurS);
-		int enchereUtilisateurI = Integer.parseInt(enchereUtilisateurS);
-
-		if (enchereUtilisateurI >  creditUtilisateurI   ) {
-			request.setAttribute("creditErreur", "Vous n'avez pas assez de crédit/le montant de l'enchère est infèrieur à l'enchère actuel !");
+		if (nouvelEnchere >  creditNouvelEncherisseur   ) { //MESSAGE D'ERREUR SI L'USER N'A PAS ASSEZ DE CREDIT
+			request.setAttribute("messageErreur", "Vous n'avez pas assez de crédit !");
 			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
-		} else {
+		} else { //SINON L'ENCHERE S'EFFECTUE CORRECTEMENT
 			EncheresManager em =EncheresManager.getInstance();
 			UtilisateursManager um =UtilisateursManager.getInstance();
-			creditUtilisateurI = creditUtilisateurI - enchereUtilisateurI;
-			System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurI);
-			String noArticleS = request.getParameter("noArticle");
-			int noArticleI = Integer.parseInt(noArticleS);
-			System.out.println(noArticleI);
-			try {
-				Encheres enchere = new Encheres(utilisateurActif, noArticleI, LocalDateTime.now(), enchereUtilisateurI);
-				System.out.println(enchere);
-				em.updateEnchere(enchere);
-				utilisateurActif.setCredit(creditUtilisateurI);
-				um.updateCreditUtilisateur(utilisateurActif);
-				System.out.println(utilisateurActif.toString());
-				request.setAttribute("creditErreur", "Enchere effectué !");
-			} catch (BLLException e) {
+			try { 
+				String noArticleStr = request.getParameter("noArticle");
+				int noArticle = Integer.parseInt(noArticleStr); // JE RECUPERE LE NO ARTICLE DE LENCHERE LORSQUE Q'UN USER BET
+				
+				int ancienUserIdEnch = (em.selectByNoArticle(noArticle)).getEncherisseur().getId();//RECUPERATION DE L'ID DU DERNIER USER QUI A BET
+				System.out.println("id user qui bet"+utilisateurActif.getId()); //RECUPERATION DE L'ID DE L'USER QUI BET
+				System.out.println("id du last user qui a bet" + ancienUserIdEnch);
+				
+				if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
+					request.setAttribute("messageErreur", "Un utilisateur ne peut pas enchèrir sur un article qu'il a lui même mis en vente");
+					throw new BLLException("Un utilisateur ne peut pas enchèrir sur un article qu'il a lui même mis en vente");
+				} else {  
+					int enchMontantCredit = (em.selectByNoArticle(utilisateurActif.getId())).getMontantEnchere(); //RECUPERATION DU MONTANT DE lENCHERE
+					
+					//CALCUL POUR LE REMBOURSEMENT
+					creditNouvelEncherisseur = creditNouvelEncherisseur + enchMontantCredit; 
+					creditNouvelEncherisseur = creditNouvelEncherisseur - nouvelEnchere;
+					//System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurInt);
+					
+					System.out.println(noArticle);
+					try {
+						Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
+						//System.out.println(enchere);
+						em.updateEnchere(enchere);
+						utilisateurActif.setCredit(creditNouvelEncherisseur);
+						um.updateCreditUtilisateur(utilisateurActif);
+						//System.out.println(utilisateurActif.toString());
+						request.setAttribute("messageSucces", "Enchere effectuée !");
+					} catch (BLLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			} catch (BLLException e1) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
+				e1.printStackTrace();
 			}
+
 			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
 		}
