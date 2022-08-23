@@ -82,7 +82,7 @@
 					<div class="col-md-8 mb-3">
 						<label for="street">Rue</label> <input type="text"
 							class="form-control" id="rue" name="rue" placeholder=""
-							value="${utilisateurActif.rue}" maxlength="30" required>
+							value="${user.rue}" maxlength="30" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
