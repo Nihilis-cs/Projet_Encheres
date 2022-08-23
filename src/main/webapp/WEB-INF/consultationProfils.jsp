@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <html lang="fr" xmlns:mso="urn:schemas-microsoft-com:office:office"
 	xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
@@ -29,39 +29,40 @@
 
 </head>
 <body>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
-		<!--emptyHeader-->
-		<%@ include file="fragments/header_fragment.jsp"%>
-
 		<!--main bloc-->
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
 				<h1>Recherche utilisateur</h1>
-					<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
+				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
 					alt="">
 			</div>
 			<!--formulaire-->
 			<form class=""
-				action="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur" method="post">
+				action="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur"
+				method="post">
 				<label for="inputIdentifiant" class="sr-only"></label><input
 					type="text" id="inputRecherchePseudo" class="form-control"
-					name="Recherche" placeholder="Pseudo utilisateur?" required autofocus>
+					name="Recherche" placeholder="Pseudo utilisateur?" required
+					autofocus>
 				<div class="text-center">
 					<button class="btn btn-lg btn-primary " type="submit"
 						title="Recherche">Recherche</button>
 				</div>
 			</form>
-			
+
 			<p>Num utilisateur : ${utilisateurRecherche.id }</p>
 			<p>Prenom : ${utilisateurRecherche.prenom }</p>
 			<p>Nom : ${utilisateurRecherche.nom }</p>
 			<p>Mail : ${utilisateurRecherche.email }</p>
 			<p>telephone : ${utilisateurRecherche.telephone }</p>
-			<p>Adresse : ${utilisateurRecherche.rue } ${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
-			
-			<p> ${requestScope.erreurRecherche }</p>
-			
+			<p>Adresse : ${utilisateurRecherche.rue }
+				${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
+
+			<p>${requestScope.erreurRecherche }</p>
+
 		</main>
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">

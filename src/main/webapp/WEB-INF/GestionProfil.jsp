@@ -25,12 +25,8 @@
 
 </head>
 <body>
+<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
-		<!--emptyHeader-->
-		<header>
-			<%@ include file="fragments/header_fragment.jsp"%>
-		</header>
-
 		<!--main bloc-->
 		<main>
 			<!--title-->

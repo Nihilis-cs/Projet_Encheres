@@ -30,9 +30,10 @@
 
 </head>
 <body>
+<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--fullHeader-->
-		<%@ include file="fragments/header_fragment.jsp"%>
+		
 		<!--main bloc-->
 		<main>
 			<!--title-->
@@ -65,7 +66,6 @@
 				</c:forEach>
 			</div>
 		</main>
-
 		<!--footer-->
 		<footer class="border-top text-center align-bottom">
 			<div class="mt-3">

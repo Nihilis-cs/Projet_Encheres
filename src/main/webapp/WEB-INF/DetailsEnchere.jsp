@@ -29,9 +29,8 @@
 
 </head>
 <body>
-	<div class="container-fluid">
-		<!--emptyHeader-->
-		<%@ include file="fragments/header_fragment.jsp"%>
+<%@ include file="fragments/header_fragment.jsp"%>
+	<div class="container-fluid">		
 		<!--main bloc-->
 		<main>
 			<div class="row justify-content-center border-top card-deck">
