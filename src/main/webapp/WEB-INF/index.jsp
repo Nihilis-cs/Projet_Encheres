@@ -1,3 +1,5 @@
+
+<%@page import="java.text.SimpleDateFormat"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -145,7 +147,7 @@
 								<ul class="col-9 list-unstyled p-2">
 									<li>Prix : ${article.prixInitial}</li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
-									<li>Fin de l'enchère : ${article.dateFinEnchere}</li>
+									<li>Fin de l'enchère : ${article.dateFinEnchereToString }</li>
 									<li>Vendeur : <a
 										href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 								</ul>
