@@ -1,5 +1,8 @@
 package dal;
 
+import java.util.List;
+
+import bo.Articles;
 import bo.Utilisateurs;
 
 public interface UtilisateursDao {
@@ -12,4 +15,5 @@ public interface UtilisateursDao {
 	public Utilisateurs selectByID(int id) throws DALException;
 	public boolean utilisateurAEnchere(int id)throws DALException;
 	public boolean utilisateurAArticle(int id)throws DALException;
+	public List<Utilisateurs> selectAll() throws DALException;
 }

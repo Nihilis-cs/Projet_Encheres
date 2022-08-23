@@ -1,5 +1,7 @@
 package bll;
 
+import java.util.List;
+
 import bo.Utilisateurs;
 import dal.DALException;
 import dal.DAOFactory;
@@ -167,4 +169,17 @@ public class UtilisateursManager {
 		return reponse;
 	}
 	
+	public List<Utilisateurs> selectAll() throws BLLException{
+		List<Utilisateurs> u=null;
+		
+		try {
+			u = this.utilisateurDao.selectAll();
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+			//Documenter BLLException
+		}
+		return u;
+	}
+
 }
