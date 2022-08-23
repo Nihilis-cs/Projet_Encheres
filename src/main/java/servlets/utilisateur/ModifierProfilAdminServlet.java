@@ -1,6 +1,8 @@
 package servlets.utilisateur;
 
 import java.io.IOException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,16 +42,18 @@ public class ModifierProfilAdminServlet extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
 		int noUser = Integer.parseInt(request.getParameter("user"));
-		
+		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
-			UtilisateursManager um =UtilisateursManager.getInstance();
 			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, noUser);
-
 			um.updateUtilisateur(utilisateur);
+			
+			request.setAttribute("messageSucces", "Modifications bien prises en compte!");
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
+			request.setAttribute("messageErreur", "Modifications invalides.");
 			e.printStackTrace();
 		}
+		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/adminUser.jsp");
+		rs.forward(request, response);
 		
 	}
 
