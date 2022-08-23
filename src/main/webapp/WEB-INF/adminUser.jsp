@@ -32,8 +32,6 @@
 <body>
 <%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
-		<!--fullHeader-->
-		
 		<!--main bloc-->
 		<main>
 			<!--title-->
@@ -42,7 +40,7 @@
 			</div>
 			<div class="row justify-content-center border-top card-deck">
 				<c:forEach var="user" items="${liste}" >
-					<div class="col-12 col-sm-6 p-2">
+					<div class="col-12 col-sm-6 col-lg-4 p-2">
 						<div class="card">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
