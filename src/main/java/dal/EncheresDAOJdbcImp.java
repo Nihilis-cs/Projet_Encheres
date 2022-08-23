@@ -60,7 +60,7 @@ public class EncheresDAOJdbcImp implements EncheresDao {
 				enchere.setNoArticle(id);
 				enchere.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime())); 
 				enchere.setMontantEnchere(rs.getInt("montant_enchere"));
-				enchere.setNoArticle(rs.getInt("no_article"));
+				enchere.setNoArticle(rs.getInt("no_article")); //Remplacer par encherisseur pouet
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
