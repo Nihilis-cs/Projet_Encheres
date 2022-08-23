@@ -110,13 +110,13 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				PreparedStatement stmt = con.prepareStatement(SELECT_FILTER)){
 			
 			String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
-			String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-			String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
+			String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; 
+			String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; 
 			String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
 			String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
 			
 			
-			String requete = "";
+			String requete = " ";
 			
 			if (filter.contains("achats")) {
 				if (filter.contains("ouvertes")) {
@@ -158,7 +158,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 						requete += " WHERE" +  venteUserVD;
 					}
 				}
-				System.out.println(requete);
+				//System.out.println(requete);
 			}
 			
 			stmt.setString(1, requete);
