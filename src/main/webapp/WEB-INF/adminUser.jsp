@@ -59,11 +59,13 @@
 
 							</div>
 							<form
-								action="${pageContext.request.contextPath}/utilisateur/suppression"
+								action="${pageContext.request.contextPath}/administration/suppression"
 								method="post">
+								<input type="hidden"name="iduser" value="${user.id}">
+								<input type="hidden"name="pseudo" value="${user.pseudo}">
 								<div class="text-center">
 									<button type="submit" name="bouttonSupprimer"
-										value="boutonSupprimer">Supprimer le compte</button>
+										value="boutonSupprimer">Supprimer le compte ${user.id}</button>
 								</div>
 							</form>
 						</div>
