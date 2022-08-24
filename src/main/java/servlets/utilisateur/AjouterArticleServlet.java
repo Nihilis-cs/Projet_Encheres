@@ -102,7 +102,7 @@ public class AjouterArticleServlet extends HttpServlet {
 			rs.forward(request, response);
 		}
 		
-		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench, image);   
+		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		System.out.println(retrait.toString());
