@@ -44,9 +44,11 @@
 			<form class="form-login"
 				action="${pageContext.request.contextPath}/utilisateur/login"
 				method="post">
+				<p>Cookie pseudo : ${pseudo}</p>
+				<p>Cookie mdp : ${mdp}</p>
 				<label for="inputIdentifiant" class="sr-only">Identifiant</label> <input
 					type="text" id="inputIdentifiant" class="form-control"
-					name="pseudo" placeholder="Pseudo" required autofocus> <label
+					name="pseudo" placeholder="Pseudo"  value="${mdp}" required autofocus> <label
 					for="inputPassword" class="sr-only">Password</label> <input
 					type="password" id="inputPassword" class="form-control" name="mdp"
 					placeholder="Mot de passe" required>
