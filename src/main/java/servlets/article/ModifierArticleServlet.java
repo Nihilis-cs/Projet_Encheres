@@ -1,4 +1,4 @@
-package servlets.utilisateur;
+package servlets.article;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -29,12 +29,12 @@ import bo.Utilisateurs;
 
 
 @MultipartConfig
-@WebServlet("/article/ajout")
-public class AjouterArticleServlet extends HttpServlet {
+@WebServlet("/article/modifier")
+public class ModifierArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
 
-    public AjouterArticleServlet() {
+    public ModifierArticleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -52,6 +52,7 @@ public class AjouterArticleServlet extends HttpServlet {
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
 		
 		//Recuperation des données de l'article
+		String noArticle	= request.getParameter("idarticle");
 		String nomArticle	= request.getParameter("nomArticle");
 		String description 	= request.getParameter("description");
 		String categorie 	= request.getParameter("categorie");
@@ -61,9 +62,8 @@ public class AjouterArticleServlet extends HttpServlet {
 		String rue 			= request.getParameter("rue");
 		String codePostal 	= request.getParameter("codePostal");
 		String ville 		= request.getParameter("ville");
-		String image 		= request.getParameter("lienImage");
 		
-		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville + image);
+		System.out.println(noArticle + nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville);
 		
 		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
@@ -71,7 +71,8 @@ public class AjouterArticleServlet extends HttpServlet {
 		
 		String Fin[] = dateFin.split("T");
 		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
-					
+		
+		int idArticle				 = Integer.parseInt(noArticle);
 		int prixInitParse 		 	 = Integer.parseInt(prixInit);
 		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
 		Encheres ench 			 	 = null;
@@ -102,22 +103,38 @@ public class AjouterArticleServlet extends HttpServlet {
 			rs.forward(request, response);
 		}
 		
-		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench, image);   
+		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		System.out.println(retrait.toString());
 		
-		
 		try {
-			artmngr.insert(article, retrait);
+			artmngr.update(article, retrait);
 			request.setAttribute("messageSucces", "Article enregistré!");
 		} catch (BLLException e) {
 			request.setAttribute("messageErreur", "Article non valide!");
 			e.printStackTrace();
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/ModifierEnchere.jsp");
 			rs.forward(request, response);
 		}
-			
+		
+		
+//		//UPLOAD DE LA PHOTO
+//		String name = request.getParameter("uploadPhoto");
+//		System.out.println("name : " + name);
+//		
+//		
+//		// Gets absolute path to root directory of web app.
+//		String appPath = request.getServletContext().getRealPath("");
+//		// Gets image informations
+//		Part part = request.getPart("pictureFile");
+//		//Save image File and get fileName
+////		String fileName = saveFile()
+		
+		
+		
+		
+		
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 		

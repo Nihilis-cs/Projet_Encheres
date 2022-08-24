@@ -1,7 +1,11 @@
-<!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <html lang="fr" xmlns:mso="urn:schemas-microsoft-com:office:office"
 	xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -21,7 +25,7 @@
 	integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ"
 	crossorigin="anonymous">
 
-<title>ENI-Encheres : Ajouter vente</title>
+<title>ENI-Encheres : Modifier article</title>
 
 </head>
 <body>
@@ -37,26 +41,25 @@
 			</div>
 
 			<!--formulaire-->
-			<form action="${pageContext.request.contextPath}/article/ajout"
-				method="post" class="form-register needs-validation"
-				enctype="multipart/form-data" novalidate>
+			<form action="${pageContext.request.contextPath}/article/modifier"
+				method="post" class="form-register needs-validation" enctype="multipart/form-data" novalidate>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
 						<label for="nomArticle">Nom de l'article</label> <input
 							type="text" class="form-control" id="nomArticle"
-							name="nomArticle" placeholder="" maxlength="30" required value="">
+							name="nomArticle" placeholder="" maxlength="30" required value="${article.nomArticle}">
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
 						<div class="form-group">
-							<label for="categories-select">Catégories</label> <select
+							<label for="categories-select">CatÃ©gories</label> <select
 								class="form-control" id="categories-select" name="categorie">
 								<option selected>Toutes</option>
 								<option value="Informatique">Informatique</option>
 								<option value="Ameublement">Ameublement</option>
-								<option value="Vetement">Vêtement</option>
+								<option value="Vetement">VÃªtement</option>
 								<option value="Sport & Loisir">Sport & Loisirs</option>
 							</select>
 						</div>
@@ -66,21 +69,21 @@
 				<div class="row">
 					<label for="description">Description</label>
 					<textarea rows="4" cols="50" class="form-control" id="description"
-						name="description"></textarea>
+						name="description" >${article.description}</textarea>
 				</div>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
 						<label for="miseEnVente">Date mise en vente</label><input
 							type="datetime-local" class="form-control" id="dateDebut"
-							name="dateDebut" required>
+							name="dateDebut" value="${article.dateDebutEnchere}">
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
 						<label for="finDeVente">Date fin de vente</label> <input
 							type="datetime-local" class="form-control" id="dateFin"
-							name="dateFin" required>
+							name="dateFin" value="${article.dateFinEnchere}">
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
@@ -89,7 +92,7 @@
 					<div class="col-md-6 mb-3">
 						<label for="prixInit">Prix initial</label> <input type="number"
 							class="form-control" id="prixInit" name="prixInit" placeholder=""
-							value="" maxlength="15">
+							value="${article.prixInitial}" maxlength="15">
 					</div>
 					<div class="col-md-6 mb-3">
 						<fieldset>
@@ -106,19 +109,25 @@
 					</div>
 				</div>
 
+				<div class="text-center">
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<label for="image">photo de l'article</label><input type="file"
+								class="form-control" id="uploadPhoto" name="uploadPhoto"
+								accept="image/png, image/jpg" onchange="PreviewImage();">
+							<img id="uploadPreview" style="width: 100px; height: 100px;">
+							<div class="invalid-feedback">Ce champ est invalide !</div>
+						</div>
+					</div>
+				</div>
+				<input type="hidden" name="idarticle" value="${article.noArticle}">
+
 				<hr class="mb-4">
 				<div class="text-center">
-					<button class="btn btn-primary btn-lg" type="submit">Ajouter
-						un article</button>
+					<button class="btn btn-primary btn-lg" type="submit">Modifier cet article</button>
 				</div>
 			</form>
 		</main>
-		<!--footer-->
-		<footer class="border-top text-center align-bottom">
-			<div class="mt-3">
-				<small class="d-block text-muted">&copy; ENI Ecole 2022</small>
-			</div>
-		</footer>
 	</div>
 
 	<!-- Optional JavaScript -->
@@ -134,59 +143,6 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
-	<script>
-		// Example starter JavaScript for disabling form submissions if there are invalid fields
-		(function() {
-			'use strict';
 
-			window
-					.addEventListener(
-							'load',
-							function() {
-								// Fetch all the forms we want to apply custom Bootstrap validation styles to
-								var forms = document
-										.getElementsByClassName('needs-validation');
-
-								// Loop over them and prevent submission
-								var validation = Array.prototype.filter
-										.call(
-												forms,
-												function(form) {
-													form
-															.addEventListener(
-																	'submit',
-																	function(
-																			event) {
-																		//validation du mot de passe
-																		var password = document
-																				.getElementById("password"), confirm_password = document
-																				.getElementById("confirm_password");
-																		if (password.value != confirm_password.value) {
-																			confirm_password
-																					.setCustomValidity("Les mots de passe sont différents");
-																			event
-																					.preventDefault();
-																			event
-																					.stopPropagation();
-																		} else {
-																			confirm_password
-																					.setCustomValidity('');
-																		}
-																		//validations des saisies obligatoires
-																		if (form
-																				.checkValidity() === false) {
-																			event
-																					.preventDefault();
-																			event
-																					.stopPropagation();
-																		}
-																		form.classList
-																				.add('was-validated');
-																	}, false);
-												});
-							}, false);
-		})();
-	</script>
 </body>
-
 </html>
