@@ -22,7 +22,7 @@ public class Articles {
 	}
 
 	public Articles(String nomArticle, String description, LocalDateTime dateDebutEnchere, LocalDateTime dateFinEnchere,
-			int prixInitial, int prixVente, Utilisateurs vendeur, Categories categorie, EtatsVente etatVente, Encheres enchere, String image) {
+			int prixInitial, int prixVente, Utilisateurs vendeur, Categories categorie, EtatsVente etatVente, Encheres enchere) {
 		super();
 		this.nomArticle = nomArticle;
 		this.description = description;
