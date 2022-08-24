@@ -376,6 +376,13 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(6, a.getCategorie().getNoCategorie());
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.executeUpdate();
+				
+				stmtr.setString(1, r.getRue());
+				stmtr.setString(2, r.getCode_postal());
+				stmtr.setString(3, r.getVille());
+				stmtr.setInt(4, a.getVendeur().getId());
+				stmtr.executeUpdate();
+				
 				con.commit();
 			} catch (SQLException e) {
 				con.rollback();

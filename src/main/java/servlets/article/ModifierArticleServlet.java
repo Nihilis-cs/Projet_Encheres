@@ -52,7 +52,7 @@ public class ModifierArticleServlet extends HttpServlet {
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
 		
 		//Recuperation des données de l'article
-		String noArticle	= request.getParameter("idArticle");
+		String noArticle	= request.getParameter("idarticle");
 		String nomArticle	= request.getParameter("nomArticle");
 		String description 	= request.getParameter("description");
 		String categorie 	= request.getParameter("categorie");

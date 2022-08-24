@@ -70,7 +70,7 @@ public class ArticlesManager {
 	
 	public void update(Articles a, Retraits r) throws BLLException{
 		try {
-			this.articleDao.insert(a, r);
+			this.articleDao.update(a, r);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e.getMessage());
