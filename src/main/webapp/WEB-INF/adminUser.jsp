@@ -30,7 +30,7 @@
 
 </head>
 <body>
-<%@ include file="fragments/header_fragment.jsp"%>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--main bloc-->
 		<main>
@@ -39,14 +39,11 @@
 				<h1>Utilisateurs</h1>
 			</div>
 			<div class="row justify-content-center border-top card-deck">
-				<c:forEach var="user" items="${liste}" >
+				<c:forEach var="user" items="${liste}">
 					<div class="col-12 col-sm-6 col-lg-4 p-2">
 						<div class="card">
 							<div class="card-header text-center">
-								<h4 class="my-0 font-weight-normal">
-									<a href="${pageContext.request.contextPath}/navigation/modifierProfilAdmin?user=${user.id}">
-										${user.pseudo}</a>	
-								</h4>
+								<h4 class="my-0 font-weight-normal" style="color: blue; font-weight: bold;">${user.pseudo}</h4>
 							</div>
 							<div class="d-flex">
 								<ul class="col-9 list-unstyled p-2">
@@ -59,7 +56,16 @@
 									<li>Ville : ${user.ville}</li>
 									<li>Solde : ${user.credit}</li>
 								</ul>
+
 							</div>
+							<form
+								action="${pageContext.request.contextPath}/utilisateur/suppression"
+								method="post">
+								<div class="text-center">
+									<button type="submit" name="bouttonSupprimer"
+										value="boutonSupprimer">Supprimer le compte</button>
+								</div>
+							</form>
 						</div>
 					</div>
 				</c:forEach>

@@ -123,13 +123,14 @@
 						</div>
 					</c:if>
 				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">
-					<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
-				</button>
+				<div class="text-center mb-3">
+					<button class="btn btn-primary btn-lg" type="submit">Appliquer
+						filtres</button>
+				</div>
 			</form>
 			<h3>${creditErreur}</h3>
 			<!--enchères-->
-			<div class="row justify-content-center border-top card-deck">
+			<div class="row justify-content-center border-top card-deck mt-5">
 				<c:forEach var="article" items="${liste}">
 					<div class="col-12 col-sm-6 p-2">
 						<div class="card">
@@ -142,7 +143,7 @@
 							<div class="d-flex">
 								<div class="col-3 p-2">
 									<img class="img-fluid img-thumbnail" src="images/photo.svg"
-										alt="pas de photo" />
+										alt="${article.nomArticle}" />
 								</div>
 								<ul class="col-9 list-unstyled p-2">
 									<li><b>Prix : ${article.prixInitial}</b></li>
@@ -163,11 +164,7 @@
 									value="" required>
 								<div class="text-center">
 									<button class="btn btn-primary btn-lg" name="noArticle"
-										value="${article.noArticle}" type="submit">
-										<img class="small-icon"
-											src="https://static.cms.yp.ca/ecms/media/2/46331679_xxl-1447117938-600x360.jpg"
-											height="50" width="80" style="border-radius: 20px;">Encherir
-									</button>
+										value="${article.noArticle}" type="submit">Encherir</button>
 								</div>
 							</form>
 						</div>
