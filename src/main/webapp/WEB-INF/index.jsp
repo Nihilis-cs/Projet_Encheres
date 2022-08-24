@@ -51,7 +51,7 @@
 					<div class="col-md-6 mb-3">
 						<div class="form-group">
 							<label for="filter-input">Filtre</label> <input type="text"
-								class="form-control" id="filter-input" name="q"
+								class="form-control" id="filter-input" name="article-contenant"
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
