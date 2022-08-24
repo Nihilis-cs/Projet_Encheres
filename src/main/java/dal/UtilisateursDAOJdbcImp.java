@@ -19,6 +19,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			+ "mot_de_passe, credit, administrateur)VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
 	private final String SELECT_BY_PSEUDO = "SELECT * FROM UTILISATEURS WHERE pseudo = ? ";
+	private final String SELECT_BY_MAIL = "SELECT * FROM UTILISATEURS WHERE email = ? ";
 	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur = ?";
@@ -28,7 +29,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			"Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
 	private final String SELECT_ALL = "select *  from UTILISATEURS"; 
 
-	
+
 	private final String DELETE_ENCHERES_USER_ID = "DELETE FROM ENCHERES WHERE no_utilisateur = ?;";
 	private final String DELETE_ARTICLES_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
 	private final String DELETE_USER_ID = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?;";
@@ -153,6 +154,46 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		return utilisateur;
 	}
 
+	public boolean selectByPseudoCreation(String user) throws DALException{
+		boolean present=false;
+
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_PSEUDO)){
+			stmt.setString(1, user);
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				present = true; 
+			}else {
+				//throw new DALException("Pseudo introuvable ");
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Erreur dans la selection par le pseudo : " + e.getMessage());
+		}
+
+		return present;
+	}
+	public boolean selectByMailCreation(String mail) throws DALException{
+		boolean present=false;
+
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(SELECT_BY_MAIL)){
+			stmt.setString(1, mail);
+			ResultSet rs = stmt.executeQuery();
+
+			if(rs.next()) {
+				present = true; 
+			}else {
+				//throw new DALException("Pseudo introuvable ");
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Erreur dans la selection par le mail : " + e.getMessage());
+		}
+
+		return present;
+	}
 	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException {
 
 		try (

@@ -65,7 +65,6 @@ public class CreeCompteServlet extends HttpServlet {
 				//System.out.println("Creation de l'utilisateur avec les données (avant validation):"+utilisateur.toString());
 
 				test = um.validerUtilisateur(utilisateur); //Validation et Récuperation d'un boolean pour la validation 
-
 				um.insertUtilisateur(utilisateur);
 				//System.out.println(test);
 			} catch (BLLException e) {

@@ -51,7 +51,7 @@
 
 			<!--formulaire-->
 			<form action="${pageContext.request.contextPath}/article/ajout"
-				method="post" class="form-register needs-validation" novalidate>
+				method="post" class="form-register needs-validation" enctype="multipart/form-data" novalidate>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
@@ -108,7 +108,7 @@
 							<legend>Adresse de retrait</legend>
 							<label for="rue"> Rue</label> <br> <input
 								value="${utilisateurActif.rue}" size="50" type="text" id="rue"
-								name="rue"><br /> <label for="ville"> Ville</label> <br>
+								name="rue"><br /> <label for="ville"> Ville</label><br>
 							<input value="${utilisateurActif.ville}" type="text" size="20"
 								id="ville" name="ville"> <br /> <label for="codePostal">
 								Code Postal</label> <br> <input

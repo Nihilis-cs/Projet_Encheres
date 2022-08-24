@@ -53,7 +53,7 @@ public class UtilisateursManager {
 		boolean valide = true;
 		StringBuffer sb = new StringBuffer();
 
-
+		String mail=u.getEmail();
 		String pseudo = u.getPseudo();
 		boolean result = pseudo.matches("^[a-zA-Z0-9]*$");
 
@@ -67,7 +67,7 @@ public class UtilisateursManager {
 			sb.append("Le pseudo utilisateur est obligatoire.\n");
 			valide = false;
 		}
-		if(selectByPseudo(pseudo)!= null){
+		if(selectByPseudoCreation(pseudo)== true){
 			sb.append("Un compte avec ce pseudo a déjà été crée !.\n");
 			valide = false;
 		}
@@ -87,10 +87,10 @@ public class UtilisateursManager {
 			sb.append("L'email de l'utilisateur est obligatoire.\n");
 			valide = false;
 		}
-//		if((selectByPseudo(pseudo).getEmail())!= null){
-//			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
-//			valide = false;
-//		}
+		if((selectByMailCreation(mail)== true)){
+			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
+			valide = false;
+		}
 		if(u.getRue()==null || u.getRue().trim().length()==0){
 			sb.append("La rue de l'utilisateur  est obligatoire.\n");
 			valide = false;
@@ -120,10 +120,36 @@ public class UtilisateursManager {
 			u = this.utilisateurDao.selectByPseudo(user);
 		} catch (DALException e) {
 			e.printStackTrace();
-//			throw new BLLException(e.getMessage());
+			throw new BLLException(e.getMessage());
 			//Documenter BLLException
 		}
 		return u;
+	}
+	
+	public boolean selectByPseudoCreation(String user) throws BLLException{
+		boolean present = false;
+
+		try {
+			present = this.utilisateurDao.selectByPseudoCreation(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+			//throw new BLLException(e.getMessage());
+			//Documenter BLLException
+		}
+		return present;
+	}
+	
+	public boolean selectByMailCreation(String user) throws BLLException{
+		boolean present = false;
+
+		try {
+			present = this.utilisateurDao.selectByPseudoCreation(user);
+		} catch (DALException e) {
+			e.printStackTrace();
+			//throw new BLLException(e.getMessage());
+			//Documenter BLLException
+		}
+		return present;
 	}
 
 	public Utilisateurs deleteUtilisateur(String pseudo) throws BLLException {
