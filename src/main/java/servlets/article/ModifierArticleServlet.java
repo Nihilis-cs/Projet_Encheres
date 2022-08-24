@@ -103,9 +103,9 @@ public class ModifierArticleServlet extends HttpServlet {
 			rs.forward(request, response);
 		}
 		
-		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
+		Articles article = new Articles(idArticle, nomArticle, description, debutDate, finDate, prixInitParse, cat);   
 		System.out.println(article.toString());
-		Retraits retrait = new Retraits(rue, codePostal, ville);
+		Retraits retrait = new Retraits(idArticle ,rue, codePostal, ville);
 		System.out.println(retrait.toString());
 		
 		try {

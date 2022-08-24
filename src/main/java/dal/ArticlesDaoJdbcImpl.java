@@ -44,7 +44,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	private final String enchereEC = " (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
 
 	private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_enchere = ?, date_fin_enchere = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?;";
-	private final String UPDATE_R = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?;";
+	
 
 	public Articles insert(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -61,7 +61,6 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
-
 
 				stmt.executeUpdate();
 
@@ -365,8 +364,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	@Override
 	public void update(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
-				PreparedStatement stmt = con.prepareStatement(UPDATE);
-				PreparedStatement stmtr = con.prepareStatement(UPDATE_R)){
+				PreparedStatement stmt = con.prepareStatement(UPDATE);){
 			try {
 				con.setAutoCommit(false);
 				stmt.setString(1, a.getNomArticle());
@@ -378,11 +376,8 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.executeUpdate();
 				
-				stmtr.setString(1, r.getRue());
-				stmtr.setString(2, r.getCode_postal());
-				stmtr.setString(3, r.getVille());
-				stmtr.setInt(4, a.getVendeur().getId());
-				stmtr.executeUpdate();
+				RetraitsDAO rDao = new RetraitsDaoJdbcImp();
+				rDao.update(r);
 				
 				con.commit();
 			} catch (SQLException e) {

@@ -20,6 +20,14 @@ public class Retraits {
 	}
 
 
+	public Retraits(int idArticle, String rue, String codePostal, String ville) {
+		noArticle = idArticle;
+		this.rue = rue;
+		this.code_postal = codePostal;
+		this.ville = ville;
+	}
+
+
 	public int getNoArticle() {
 		return noArticle;
 	}

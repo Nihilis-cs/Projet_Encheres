@@ -13,6 +13,8 @@ public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 	private final String SELECT_BY_NOARTICLE="select * from RETRAITS\r\n"
 			+ "where no_article = ?";
 	
+	private final String UPDATE_R = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?;";
+	
 	public Retraits insertRetrait(Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT_RETRAIT)){
@@ -59,5 +61,30 @@ public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 		return retrait;
 		
 	}
+	
+	public void update(Retraits r)throws DALException{
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(UPDATE_R)){
+			try {
+				con.setAutoCommit(false);
+				stmt.setString(1, r.getRue());
+				stmt.setString(2, r.getCode_postal());
+				stmt.setString(3, r.getVille());
+				stmt.setInt(4, r.getNoArticle());
+				
+				stmt.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				con.rollback();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Erreur lors de l'insert du retrait : " + e.getMessage());
+		}
+
+	}
+	
+	
 	
 }
