@@ -51,7 +51,8 @@
 
 			<!--formulaire-->
 			<form action="${pageContext.request.contextPath}/article/ajout"
-				method="post" class="form-register needs-validation" enctype="multipart/form-data" novalidate>
+				method="post" class="form-register needs-validation"
+				enctype="multipart/form-data" novalidate>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
@@ -115,18 +116,6 @@
 								value="${utilisateurActif.codePostal}" size="10" type="text"
 								id="codePostal" name="codePostal"><br />
 						</fieldset>
-					</div>
-				</div>
-
-				<div class="text-center">
-					<div class="row">
-						<div class="col-md-12 mb-3">
-							<label for="image">photo de l'article</label><input type="file"
-								class="form-control" id="uploadPhoto" name="uploadPhoto"
-								accept="image/png, image/jpg" onchange="PreviewImage();">
-							<img id="uploadPreview" style="width: 100px; height: 100px;">
-							<div class="invalid-feedback">Ce champ est invalide !</div>
-						</div>
 					</div>
 				</div>
 
@@ -210,14 +199,6 @@
 												});
 							}, false);
 		})();
-	</script>
-	<script type="text/javascript">
-		function PreviewImage() {
-			var oFReader = new FileReader();
-			oFReader.onload = function(oFREvent) {
-				document.getElementById("uploadPreview").src = oFREvent.target.result;
-			};
-		};
 	</script>
 </body>
 

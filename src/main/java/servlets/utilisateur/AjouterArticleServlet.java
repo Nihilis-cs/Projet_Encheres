@@ -61,8 +61,9 @@ public class AjouterArticleServlet extends HttpServlet {
 		String rue 			= request.getParameter("rue");
 		String codePostal 	= request.getParameter("codePostal");
 		String ville 		= request.getParameter("ville");
+		String image 		= request.getParameter("lienImage");
 		
-		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville);
+		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville + image);
 		
 		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
@@ -100,10 +101,11 @@ public class AjouterArticleServlet extends HttpServlet {
 			rs.forward(request, response);
 		}
 		
-		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
+		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench, image);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		System.out.println(retrait.toString());
+		
 		
 		try {
 			artmngr.insert(article, retrait);
@@ -114,24 +116,7 @@ public class AjouterArticleServlet extends HttpServlet {
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
-		
-		
-//		//UPLOAD DE LA PHOTO
-//		String name = request.getParameter("uploadPhoto");
-//		System.out.println("name : " + name);
-//		
-//		
-//		// Gets absolute path to root directory of web app.
-//		String appPath = request.getServletContext().getRealPath("");
-//		// Gets image informations
-//		Part part = request.getPart("pictureFile");
-//		//Save image File and get fileName
-////		String fileName = saveFile()
-		
-		
-		
-		
-		
+			
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 		
