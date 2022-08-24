@@ -116,17 +116,17 @@ public class AjouterArticleServlet extends HttpServlet {
 		}
 		
 		
-		//UPLOAD DE LA PHOTO
-		String name = request.getParameter("uploadPhoto");
-		System.out.println("name : " + name);
-		
-		
-		// Gets absolute path to root directory of web app.
-		String appPath = request.getServletContext().getRealPath("");
-		// Gets image informations
-		Part part = request.getPart("pictureFile");
-		//Save image File and get fileName
-//		String fileName = saveFile()
+//		//UPLOAD DE LA PHOTO
+//		String name = request.getParameter("uploadPhoto");
+//		System.out.println("name : " + name);
+//		
+//		
+//		// Gets absolute path to root directory of web app.
+//		String appPath = request.getServletContext().getRealPath("");
+//		// Gets image informations
+//		Part part = request.getPart("pictureFile");
+//		//Save image File and get fileName
+////		String fileName = saveFile()
 		
 		
 		
