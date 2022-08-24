@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 import bo.Retraits;
 
-public class RetraitsDaoJdbcImp {
+public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 	private final String INSERT_RETRAIT = "insert into RETRAITS (no_article, rue, code_postal, ville)"
 			+ "values(?,?,?,?)";
 	private final String SELECT_BY_NOARTICLE="select * from RETRAITS\r\n"
