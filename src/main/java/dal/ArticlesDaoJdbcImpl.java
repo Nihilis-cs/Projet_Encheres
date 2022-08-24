@@ -103,7 +103,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	//CallableStatement cstmt = con.prepareCall("updateArticle");
 
 	@Override
-	public List<Articles> selectAllFilter(String filter, int idUser, int idCategorie) throws DALException {
+	public List<Articles> selectAllFilter(String filter, int idUser, int idCategorie, String nomArticle) throws DALException {
 		List<Articles> listeArticlesFilter = new ArrayList<Articles>();
 		int cpt = 0;
 		//int idCategorie=0;
@@ -114,6 +114,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
 		String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
 		String categorieListe = " a.no_categorie = "+ idCategorie ;
+		String articleContenant = " a.nom_article LIKE '%"+nomArticle+"%'";
 
 		String requete = "";
 
@@ -189,6 +190,14 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				requete += " AND " + categorieListe;
 			} else {
 				requete += " WHERE" + categorieListe;
+			}            
+			cpt ++;
+		}
+		if (nomArticle!=null) {
+			if (cpt != 0) {
+				requete += " AND " + articleContenant;
+			} else {
+				requete += " WHERE" + articleContenant;
 			}            
 			cpt ++;
 		}

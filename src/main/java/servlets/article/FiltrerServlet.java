@@ -48,6 +48,8 @@ public class FiltrerServlet extends HttpServlet {
 		Utilisateurs u = (Utilisateurs) session.getAttribute("utilisateurActif");
 		int idUser = u.getId();
 		String achatVente = request.getParameter("type-encheres");
+		String articleContenant = request.getParameter("article-contenant");
+		System.out.println(articleContenant);
 		//String categorie = request.getParameter("categorie");
 		String requete = null;
 		//System.out.println(achatVente);
@@ -72,10 +74,10 @@ public class FiltrerServlet extends HttpServlet {
 			System.out.println(idCategorieStr);
 			int idCategorie = Integer.parseInt(idCategorieStr);
 			
-		System.out.println(requete+idCategorie);
+		System.out.println(requete+idCategorie+articleContenant);
 		//System.out.println(requete+idUser);
 		try {
-			List<Articles> liste = am.selectAllFilter(requete, idUser, idCategorie);
+			List<Articles> liste = am.selectAllFilter(requete, idUser, idCategorie, articleContenant);
 			request.setAttribute("liste", liste);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

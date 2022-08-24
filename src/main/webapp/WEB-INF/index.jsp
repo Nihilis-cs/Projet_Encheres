@@ -51,7 +51,7 @@
 					<div class="col-md-6 mb-3">
 						<div class="form-group">
 							<label for="filter-input">Filtre</label> <input type="text"
-								class="form-control" id="filter-input" name="q"
+								class="form-control" id="filter-input" name="article-contenant"
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
@@ -145,11 +145,12 @@
 										alt="pas de photo" />
 								</div>
 								<ul class="col-9 list-unstyled p-2">
-									<li>Prix : ${article.prixInitial}</li>
+									<li><b>Prix : ${article.prixInitial}</b></li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchereToString }</li>
-									<li>Vendeur : <a
-										href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+									<c:if test="${utilisateurActif != null}">
+										<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+									</c:if>
 								</ul>
 							</div>
 							<form
