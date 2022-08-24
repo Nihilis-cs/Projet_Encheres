@@ -121,7 +121,7 @@
 					</div>
 				</div>
 				<hr class="mb-4">
-				<button class="btn btn-primary btn-lg btn-block" type="submit">Modifier
+				<button class="btn btn-primary btn-lg " type="submit">Modifier
 					mon compte</button>
 			</form>
 			<form

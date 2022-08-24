@@ -31,7 +31,7 @@ public class ModifierProfilAdminServlet extends HttpServlet {
 
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		//MODIFICATION UTILISASTEUR
+		//MODIFICATION UTILISATEUR
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
 		String prenom = request.getParameter("prenom");

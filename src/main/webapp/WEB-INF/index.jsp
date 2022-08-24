@@ -149,7 +149,8 @@
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchereToString }</li>
 									<c:if test="${utilisateurActif != null}">
-										<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+										<li>Vendeur : <a
+											href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 									</c:if>
 								</ul>
 							</div>
@@ -160,10 +161,14 @@
 									name="enchere" placeholder="Votre enchère"
 									min="${(article.enchere.montantEnchere) + 1 }" max="99999999"
 									value="" required>
-								<button class="btn btn-primary btn-lg" name="noArticle"
-									value="${article.noArticle}" type="submit">
-									Enchérir <img class="small-icon" src="images/bid.svg">
-								</button>
+								<div class="text-center">
+									<button class="btn btn-primary btn-lg" name="noArticle"
+										value="${article.noArticle}" type="submit">
+										<img class="small-icon"
+											src="https://static.cms.yp.ca/ecms/media/2/46331679_xxl-1447117938-600x360.jpg"
+											height="50" width="80" style="border-radius: 20px;">Encherir
+									</button>
+								</div>
 							</form>
 						</div>
 					</div>

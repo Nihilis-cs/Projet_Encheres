@@ -98,28 +98,35 @@
 				</div>
 
 				<div class="row">
-					<div class="col-md-4 mb-3">
+					<div class="col-md-6 mb-3">
 						<label for="prixInit">Prix initial</label> <input type="number"
 							class="form-control" id="prixInit" name="prixInit" placeholder=""
 							value="" maxlength="15">
 					</div>
+					<div class="col-md-6 mb-3">
+						<fieldset>
+							<legend>Adresse de retrait</legend>
+							<label for="rue"> Rue</label> <br> <input
+								value="${utilisateurActif.rue}" size="50" type="text" id="rue"
+								name="rue"><br /> <label for="ville"> Ville</label> <br>
+							<input value="${utilisateurActif.ville}" type="text" size="20"
+								id="ville" name="ville"> <br /> <label for="codePostal">
+								Code Postal</label> <br> <input
+								value="${utilisateurActif.codePostal}" size="10" type="text"
+								id="codePostal" name="codePostal"><br />
+						</fieldset>
+					</div>
 				</div>
 
-				<div class="row">
-					<div class="col-md-6 mb-3">
-						<label for="image">photo de l'article</label><input type="file"
-							class="form-control" id="uploadPhoto" name="uploadPhoto"
-							accept="image/png, image/jpg" onchange="PreviewImage();">
-						<img id="uploadPreview" style="width: 100px; height: 100px;">
-						<div class="invalid-feedback">Ce champ est invalide !</div>
-					</div>
-					<div class="col-md-6 mb-3">
-					<fieldset>
-						<legend>Adresse de retrait</legend>
-						<label for="rue"> Rue</label> <br> <input type="text" id="rue" name="rue"><br/>
-						<label for="codePostal"> Code Postal</label> <br> <input type="text" id="codePostal" name="codePostal"><br/>			
-						<label for="ville"> Ville</label> <br> <input type="text" id="ville" name="ville">
-					</fieldset>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<label for="image">photo de l'article</label><input type="file"
+								class="form-control" id="uploadPhoto" name="uploadPhoto"
+								accept="image/png, image/jpg" onchange="PreviewImage();">
+							<img id="uploadPreview" style="width: 100px; height: 100px;">
+							<div class="invalid-feedback">Ce champ est invalide !</div>
+						</div>
 					</div>
 				</div>
 

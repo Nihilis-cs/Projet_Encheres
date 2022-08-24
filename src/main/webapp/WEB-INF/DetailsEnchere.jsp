@@ -52,7 +52,7 @@
 								</c:if>
 								
 								<li>Fin de l'enchere le : ${article.dateFinEnchere }</li>
-								<li>Ajouté par : ${article.vendeur.pseudo }</li>
+								<li>Ajouté par : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 								<li>Mis en vente le: ${article.dateDebutEnchere }</li>
 							</ul>
 						</div>
