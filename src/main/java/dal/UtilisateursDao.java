@@ -16,4 +16,5 @@ public interface UtilisateursDao {
 	public boolean utilisateurAEnchere(int id)throws DALException;
 	public boolean utilisateurAArticle(int id)throws DALException;
 	public List<Utilisateurs> selectAll() throws DALException;
+	public void deleteUtilisateurId(int id) throws DALException;
 }

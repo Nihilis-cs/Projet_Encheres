@@ -49,14 +49,15 @@ public class SuppressionProfilServlet extends HttpServlet {
 		System.out.println(boutonSupprimer);
 		//Récuperation du pseudo et supression du compte dans la base de donnée
 		String pseudo = utilisateurActif.getPseudo();
+		int id = utilisateurActif.getId();
 		System.out.println(pseudo);
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
-			if(!um.utilisateurAEnchere(utilisateurActif.getId()) && (!um.utilisateurAArticle(utilisateurActif.getId()))) {
-				System.out.println("suppression");
-				um.deleteUtilisateur(pseudo);
+			if(!um.utilisateurAEnchere(utilisateurActif.getId())) {
+				um.deleteUtilisateurId(id);
 				session.setAttribute("utilisateurActif", null);
 				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/login.jsp");
+				request.setAttribute("messageSucces", "Suppression réussie. Adieu, " + pseudo + "." );
 				rs.forward(request, response);
 			} else {
 				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
@@ -64,7 +65,9 @@ public class SuppressionProfilServlet extends HttpServlet {
 				rs.forward(request, response);
 			}
 		} catch (BLLException e) {
-			// TODO Auto-generated catch block
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
+			request.setAttribute("messageErreur", "Suppression impossible" );
+			rs.forward(request, response);
 			e.printStackTrace();
 		}
 		

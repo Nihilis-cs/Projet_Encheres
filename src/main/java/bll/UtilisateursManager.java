@@ -118,6 +118,16 @@ public class UtilisateursManager {
 		return u;
 	}
 	
+	public void deleteUtilisateurId(int id)throws BLLException {
+
+		try {
+			this.utilisateurDao.deleteUtilisateurId(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+		}
+
+	}
+	
 	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws BLLException {
 		try {
 			utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);

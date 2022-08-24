@@ -27,8 +27,12 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String A_ARTICLE = 
 			"Select * from ARTICLES_VENDUS WHERE no_utilisateur = ? AND etat_vente = 'EC' ";
 	private final String SELECT_ALL = "select *  from UTILISATEURS"; 
+
 	
-	
+	private final String DELETE_ENCHERES_USER_ID = "DELETE FROM ENCHERES WHERE no_utilisateur = ?;";
+	private final String DELETE_ARTICLES_USER_ID = "DELETE FROM ARTICLES_VENDUS WHERE no_utilisateur = ?;";
+	private final String DELETE_USER_ID = "DELETE FROM UTILISATEURS WHERE no_utilisateur = ?;";
+
 	public Utilisateurs getUtilisateurByMailMDP(String pseudo, String mdp) throws DALException{
 		Connection con = null;
 		PreparedStatement stmt = null;
@@ -150,17 +154,17 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	}
 
 	public Utilisateurs deleteUtilisateur(String pseudo) throws DALException {
-		
-			try (
-					Connection  con = JdbcTools.getConnection();	
-					PreparedStatement stmt = con.prepareStatement(DELETE_USER);
-					){
-	
-				stmt.setString(1, pseudo);
-				stmt.executeUpdate();
-			} catch (SQLException e) {
-				throw new DALException("Delete user failed - pseudo = " + pseudo, e);
-			}
+
+		try (
+				Connection  con = JdbcTools.getConnection();	
+				PreparedStatement stmt = con.prepareStatement(DELETE_USER);
+				){
+
+			stmt.setString(1, pseudo);
+			stmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new DALException("Delete user failed - pseudo = " + pseudo, e);
+		}
 		return null;
 	}
 
@@ -194,19 +198,19 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		}
 		return utilisateur;
 	}
-	
+
 	public Utilisateurs updateCreditUtilisateur(Utilisateurs utilisateur) throws DALException {
 
- 		try (
+		try (
 				Connection  con = JdbcTools.getConnection();	
 				PreparedStatement stmt = con.prepareStatement(UPDATE_CREDIT);
 				){
 			try {
 				con.setAutoCommit(false);
-				
+
 				stmt.setInt(1,  utilisateur.getCredit());
 				stmt.setString(2,  utilisateur.getPseudo());
-				
+
 				stmt.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {
@@ -238,7 +242,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 
 		return utilisateur;
 	}
-	
+
 	public boolean utilisateurAEnchere(int id) throws DALException {
 		boolean aEnchere = true;
 		try(Connection con = JdbcTools.getConnection();
@@ -256,10 +260,10 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			throw new DALException("Problème lors de la requête 'utilisateurAEnchere' : " + e.getMessage());
 		}
 
-		
+
 		return aEnchere;
 	}
-	
+
 	public boolean utilisateurAArticle(int id) throws DALException {
 		boolean aArticle = true;
 		try(Connection con = JdbcTools.getConnection();
@@ -277,17 +281,17 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 			throw new DALException("Problème lors de la requête 'utilisateurAEnchere' : " + e.getMessage());
 		}
 
-		
+
 		return aArticle;
 	}
 
 	public List<Utilisateurs> selectAll() throws DALException{
 		List<Utilisateurs> liste = new ArrayList<Utilisateurs>();
-		
+
 		try(Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(SELECT_ALL)){
 			ResultSet rs = stmt.executeQuery();
-			
+
 			while(rs.next()) {
 				Utilisateurs utilisateur = utilisateurBuilder(rs);
 				liste.add(utilisateur);
@@ -298,7 +302,30 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 		}
 		return liste;	
 	}
-	
+
+	public void deleteUtilisateurId(int id) throws DALException {
+
+		try (Connection  con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(DELETE_ENCHERES_USER_ID + DELETE_ARTICLES_USER_ID + DELETE_USER_ID )){
+			try {
+				con.setAutoCommit(false);
+				//Delete Encheres
+				stmt.setInt(1, id);
+				//Delete Articles
+				stmt.setInt(2, id);
+				//Delete Utilisateur
+				stmt.setInt(3, id);
+				stmt.executeUpdate();
+				con.commit();
+			} catch (SQLException e) {
+				con.rollback();
+				throw new DALException("Delete user failed - id = " + id, e);
+			}
+
+		} catch (SQLException e) {
+			throw new DALException("Delete user failed - id = " + id, e);
+		}
+	}
 
 
 
