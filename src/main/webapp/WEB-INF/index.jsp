@@ -136,8 +136,16 @@
 						<div class="card">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
-									<a
-										href="${pageContext.request.contextPath}/navigation/detailsEnchere?article=${article.noArticle}">${article.nomArticle}</a>
+									<c:if
+										test="${utilisateurActif.pseudo == article.vendeur.pseudo}">
+										<a
+											href="${pageContext.request.contextPath}/navigation/modifierEnchere?article=${article.noArticle}">${article.nomArticle}</a>
+									</c:if>
+									<c:if
+										test="${utilisateurActif.pseudo != article.vendeur.pseudo}">
+										<a
+											href="${pageContext.request.contextPath}/navigation/detailsEnchere?article=${article.noArticle}">${article.nomArticle}</a>
+									</c:if>
 								</h4>
 							</div>
 							<div class="d-flex">
@@ -165,6 +173,11 @@
 								<div class="text-center">
 									<button class="btn btn-primary btn-lg" name="noArticle"
 										value="${article.noArticle}" type="submit">Encherir</button>
+									<%-- <c:if test="${utilisateurActif.pseudo == article.vendeur.pseudo}">
+										<p class="btn btn-primary btn-lg">
+											<a href="">Modifier/Supprimer</a>
+										</p>
+									</c:if> --%>
 								</div>
 							</form>
 						</div>
