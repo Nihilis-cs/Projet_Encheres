@@ -85,13 +85,14 @@ public class AjouterArticleServlet extends HttpServlet {
 			case "Ameublement":
 				cat= new Categories(2, categorie);
 				break;
-			case "Vêtement":
+			case "Vetement":
 				cat= new Categories(3, categorie);
 				break;
 			case "Sport & Loisir":
 				cat= new Categories(4, categorie);
 				break;
 			default: 
+				request.setAttribute("messageErreur", "Catégorie non valide");
 				throw new IHMException("Veuillez choisir une categorie");
 			}
 

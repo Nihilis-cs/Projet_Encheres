@@ -36,19 +36,6 @@
 					alt="">
 			</div>
 
-			<!--erreur-->
-
-			<!-- 		
-			<div class="d-flex alert-danger">
-				<div class="col-3 p-2">
-					<img class="small-icon" src="images/error.svg">
-				</div>
-				<ul class="col-9 list-unstyled p-2">
-					<li>Choisissez une catgorie SVP !</li>
-				</ul>
-			</div>
--->
-
 			<!--formulaire-->
 			<form action="${pageContext.request.contextPath}/article/ajout"
 				method="post" class="form-register needs-validation" enctype="multipart/form-data" novalidate>
@@ -68,7 +55,7 @@
 								<option selected>Toutes</option>
 								<option value="Informatique">Informatique</option>
 								<option value="Ameublement">Ameublement</option>
-								<option value="Vêtement">Vêtement</option>
+								<option value="Vetement">Vêtement</option>
 								<option value="Sport & Loisir">Sport & Loisirs</option>
 							</select>
 						</div>
