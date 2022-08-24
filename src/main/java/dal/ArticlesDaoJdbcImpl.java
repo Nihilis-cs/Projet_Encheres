@@ -103,16 +103,18 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	//CallableStatement cstmt = con.prepareCall("updateArticle");
 
 	@Override
-	public List<Articles> selectAllFilter(String filter, int idUser) throws DALException {
+	public List<Articles> selectAllFilter(String filter, int idUser, int idCategorie, String nomArticle) throws DALException {
 		List<Articles> listeArticlesFilter = new ArrayList<Articles>();
 		int cpt = 0;
-
+		//int idCategorie=0;
 		//System.out.println(requete);
 		String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = " + idUser;
 		String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = "+idUser; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE
 		String venteUserEC = " a.no_utilisateur = "+ idUser+" AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
 		String venteUserCR = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'CR'";
 		String venteUserVD = " a.no_utilisateur = "+ idUser+" AND etat_vente = 'VD'";
+		String categorieListe = " a.no_categorie = "+ idCategorie ;
+		String articleContenant = " a.nom_article LIKE '%"+nomArticle+"%'";
 
 		String requete = "";
 
@@ -157,12 +159,53 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				}
 			}
 			System.out.println(requete);
-		}        
+		}
+		if (idCategorie==1) {
+			System.out.println("DANS LE IF 1 CATEGORIE :" + idCategorie);
+			if (cpt != 0) {
+				requete += " AND " + categorieListe;
+			} else {
+				requete += " WHERE" + categorieListe;
+			}            
+			cpt ++;
+		}
+		if (idCategorie==2) {
+			if (cpt != 0) {
+				requete += " AND " + categorieListe;
+			} else {
+				requete += " WHERE" + categorieListe;
+			}            
+			cpt ++;
+		}
+		if (idCategorie==3) {
+			if (cpt != 0) {
+				requete += " AND " + categorieListe;
+			} else {
+				requete += " WHERE" + categorieListe;
+			}            
+			cpt ++;
+		}
+		if (idCategorie==4) {
+			if (cpt != 0) {
+				requete += " AND " + categorieListe;
+			} else {
+				requete += " WHERE" + categorieListe;
+			}            
+			cpt ++;
+		}
+		if (nomArticle!=null) {
+			if (cpt != 0) {
+				requete += " AND " + articleContenant;
+			} else {
+				requete += " WHERE" + articleContenant;
+			}            
+			cpt ++;
+		}
 		try(Connection con = JdbcTools.getConnection();){
 			String requeteCompl=SELECT_FILTER + requete;
 			PreparedStatement stmt = con.prepareStatement(requeteCompl);
 
-			System.out.println(requeteCompl);
+			System.out.println("REQUETE COMPLETE DES FILTRES"+requeteCompl);
 			ResultSet rs = stmt.executeQuery();
 
 			while(rs.next()) {

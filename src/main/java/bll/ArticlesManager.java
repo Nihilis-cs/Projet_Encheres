@@ -44,10 +44,10 @@ public class ArticlesManager {
 		return liste;
 	}
 	
-	public List<Articles> selectAllFilter(String filter, int idUser) throws BLLException{
+	public List<Articles> selectAllFilter(String filter, int idUser, int idCategorie, String nomArticle) throws BLLException{
 		List<Articles> liste = null;
 		try {
-			liste = this.articleDao.selectAllFilter(filter, idUser);
+			liste = this.articleDao.selectAllFilter(filter, idUser, idCategorie, nomArticle);
 		} catch (DALException e) {
 			e.printStackTrace();
 		}

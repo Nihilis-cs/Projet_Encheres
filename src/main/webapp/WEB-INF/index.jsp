@@ -51,17 +51,17 @@
 					<div class="col-md-6 mb-3">
 						<div class="form-group">
 							<label for="filter-input">Filtre</label> <input type="text"
-								class="form-control" id="filter-input" name="q"
+								class="form-control" id="filter-input" name="article-contenant"
 								placeholder="articles contenant...">
 						</div>
 						<div class="form-group">
 							<label for="categories-select">Catégories</label> <select
 								class="form-control" id="categories-select" name="categorie">
-								<option selected>Toutes</option>
-								<option name="categorie" value="">Informatique</option>
-								<option name="categorie" value="">Ameublement</option>
-								<option name="categorie" value="">Vêtement</option>
-								<option name="categorie" value="">Sport & Loisirs</option>
+								<option value="0" selected>Toutes</option>
+								<option name="categorie" value="1">Informatique</option>
+								<option name="categorie" value="2">Ameublement</option>
+								<option name="categorie" value="3">Vêtement</option>
+								<option name="categorie" value="4">Sport & Loisirs</option>
 							</select>
 						</div>
 					</div>
