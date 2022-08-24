@@ -11,11 +11,11 @@ import dal.UtilisateursDao;
 public class UtilisateursManager {
 	private static UtilisateursManager usrMngr;
 	private UtilisateursDao utilisateurDao;	
-	
+
 	private UtilisateursManager() {
 		this.utilisateurDao = DAOFactory.getUtilisateurDAO();
 	}
-	
+
 	public static UtilisateursManager getInstance() {
 		if(usrMngr == null) {
 			usrMngr = new UtilisateursManager();
@@ -26,7 +26,7 @@ public class UtilisateursManager {
 
 	public Utilisateurs getUtilisateurByMailMdp(String pseudo, String mdp) throws BLLException {		
 		Utilisateurs u=null;
-		
+
 		try {
 			u = this.utilisateurDao.getUtilisateurByMailMDP(pseudo, mdp);
 		} catch (DALException e) {
@@ -47,17 +47,32 @@ public class UtilisateursManager {
 		return u;
 	}
 
-	public void validerUtilisateur(Utilisateurs u) throws BLLException
+	public boolean validerUtilisateur(Utilisateurs u) throws BLLException
 	{
+
 		boolean valide = true;
 		StringBuffer sb = new StringBuffer();
-		
-		if(u==null){
-			throw new BLLException("Article null");
-		}
+
+
+		String pseudo = u.getPseudo();
+		boolean result = pseudo.matches("^[a-zA-Z0-9]*$");
+
+
+
+		//		if(u==null){
+		//			throw new BLLException("Article null");
+		//		}
 		//Les attributs des articles sont obligatoires
 		if(u.getPseudo()==null || u.getPseudo().trim().length()==0){
 			sb.append("Le pseudo utilisateur est obligatoire.\n");
+			valide = false;
+		}
+		if(selectByPseudo(pseudo)!= null){
+			sb.append("Un compte avec ce pseudo a déjà été crée !.\n");
+			valide = false;
+		}
+		if(result==false){
+			sb.append("Le pseudo de l'utilisateur doit contenir seulement des lettres ou des chiffres.\n");
 			valide = false;
 		}
 		if(u.getNom()==null || u.getNom().trim().length()==0){
@@ -72,6 +87,10 @@ public class UtilisateursManager {
 			sb.append("L'email de l'utilisateur est obligatoire.\n");
 			valide = false;
 		}
+//		if((selectByPseudo(pseudo).getEmail())!= null){
+//			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
+//			valide = false;
+//		}
 		if(u.getRue()==null || u.getRue().trim().length()==0){
 			sb.append("La rue de l'utilisateur  est obligatoire.\n");
 			valide = false;
@@ -88,26 +107,25 @@ public class UtilisateursManager {
 			sb.append("La rue de l'utilisateur  est obligatoire.\n");
 			valide = false;
 		}
-		
 		if(!valide){
 			throw new BLLException(sb.toString());
 		}
-
+		return valide;
 	}
-	
+
 	public Utilisateurs selectByPseudo(String user) throws BLLException{
 		Utilisateurs u=null;
-		
+
 		try {
 			u = this.utilisateurDao.selectByPseudo(user);
 		} catch (DALException e) {
 			e.printStackTrace();
-			throw new BLLException(e.getMessage());
+//			throw new BLLException(e.getMessage());
 			//Documenter BLLException
 		}
 		return u;
 	}
-	
+
 	public Utilisateurs deleteUtilisateur(String pseudo) throws BLLException {
 		Utilisateurs u=null;
 		try {
@@ -117,7 +135,7 @@ public class UtilisateursManager {
 		}
 		return u;
 	}
-	
+
 	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws BLLException {
 		try {
 			utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);
@@ -126,16 +144,16 @@ public class UtilisateursManager {
 		}
 		return utilisateur;
 	}
-	
-//	public Utilisateurs updateCreditUtilisateur(int credit, String pseudo) throws BLLException {
-//		Utilisateurs u=null;
-//		try {
-//			u =  this.utilisateurDao.updateCreditUtilisateur(credit, pseudo);
-//		} catch (DALException e) {
-//			e.printStackTrace();
-//		}
-//		return u;
-//	}
+
+	//	public Utilisateurs updateCreditUtilisateur(int credit, String pseudo) throws BLLException {
+	//		Utilisateurs u=null;
+	//		try {
+	//			u =  this.utilisateurDao.updateCreditUtilisateur(credit, pseudo);
+	//		} catch (DALException e) {
+	//			e.printStackTrace();
+	//		}
+	//		return u;
+	//	}
 
 	public Utilisateurs updateCreditUtilisateur(Utilisateurs utilisateur) throws BLLException {
 		try {
@@ -168,10 +186,10 @@ public class UtilisateursManager {
 		}
 		return reponse;
 	}
-	
+
 	public List<Utilisateurs> selectAll() throws BLLException{
 		List<Utilisateurs> u=null;
-		
+
 		try {
 			u = this.utilisateurDao.selectAll();
 		} catch (DALException e) {
@@ -184,7 +202,7 @@ public class UtilisateursManager {
 
 	public Utilisateurs selectByID(int id) throws BLLException{
 		Utilisateurs u = null;
-		
+
 		try {
 			u = this.utilisateurDao.selectByID(id);
 		} catch (DALException e) {

@@ -21,14 +21,14 @@ import dal.UtilisateursDAOJdbcImp;
 @WebServlet("/utilisateur/inscription")
 public class CreeCompteServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public CreeCompteServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	/**
+	 * @see HttpServlet#HttpServlet()
+	 */
+	public CreeCompteServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
@@ -41,7 +41,7 @@ public class CreeCompteServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		boolean test = false; //BOOLEAN POUR LA REDIRECTION VALIDER USER 
 		//Récuperation des données saisie par l'utilisateur et création d'un nouveau user dans la BDD
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");
@@ -52,25 +52,37 @@ public class CreeCompteServlet extends HttpServlet {
 		String codePostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
-		System.out.println(pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp);
-		//String confirmMdp = request.getParameter("confirm_mdp");
-		UtilisateursManager um =UtilisateursManager.getInstance();
+		String confirmMdp = request.getParameter("confirm_mdp");
 		
-		try {
-			
-			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
-			System.out.println(utilisateur.toString());
-			um.validerUtilisateur(utilisateur);
-			um.insertUtilisateur(utilisateur);
-		} catch (BLLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		System.out.println("Récuperation des données dans la jsp"+pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp);
+		System.out.println("Valeur mot de passe avant le if(mdp==confirmMdp) - Mot de passe jsp : "+mdp+" Confirmation mot de passe jsp : "+confirmMdp);
+		
+		if(mdp.equals(confirmMdp)) {
+			try {
+				UtilisateursManager um =UtilisateursManager.getInstance();
+
+				Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
+				//System.out.println("Creation de l'utilisateur avec les données (avant validation):"+utilisateur.toString());
+
+				test = um.validerUtilisateur(utilisateur); //Validation et Récuperation d'un boolean pour la validation 
+
+				um.insertUtilisateur(utilisateur);
+				//System.out.println(test);
+			} catch (BLLException e) {
+				e.printStackTrace();
+				request.setAttribute("messageErreur", e.getMessage());			
+			}
+			if(test==true) {
+				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
+				rs.forward(request, response);
+			} else {
+				RequestDispatcher rs = request.getRequestDispatcher("/navigation/inscription");
+				rs.forward(request, response);
+			}
+		} else {
+			request.setAttribute("messageErreur", "Les mots de passes ne correspondent pas ! ");
+			RequestDispatcher rs = request.getRequestDispatcher("/navigation/inscription");
+			rs.forward(request, response);
 		}
-
-		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-		rs.forward(request, response);
-	
-		
 	}
-
 }

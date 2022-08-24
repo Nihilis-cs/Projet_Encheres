@@ -32,6 +32,9 @@ public class RechecherProfilServlet extends HttpServlet {
 			try {
 				userRech = um.selectByPseudo(request.getParameter("pseudoVendeur"));
 				request.setAttribute("utilisateurRecherche", userRech);
+				if (userRech == null) {
+					request.setAttribute("messageErreur", "Pseudo non trouvé.");
+				}
 			} catch (BLLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
