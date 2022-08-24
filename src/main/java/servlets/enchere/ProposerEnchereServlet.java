@@ -106,7 +106,7 @@ public class ProposerEnchereServlet extends HttpServlet {
 			}
 
 		} catch (BLLException e) {
-			request.setAttribute("messageErreur", "");
+
 			e.printStackTrace();
 		}
 

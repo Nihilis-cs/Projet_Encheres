@@ -42,13 +42,9 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			+ "Where a.no_article = ?";
 
 	private final String enchereEC = " (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
-	//private final String enchereUser = " etat_vente = 'EC'  AND e.no_utilisateur = ?" ; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-	//	private final String enchereWin = " etat_vente = 'VD' AND e.no_utilisateur = ?"; //? VA ÊTRE REMPLACE PAR LID DE LUSER CONNECTE 
-	//	
-	//	private final String venteUserEC = " a.no_utilisateur = ? AND  (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)"; //--NO_UTILISATEUR DYNAMIQUE CEST LE ? de L'ID USER ACTUELLEMENT CO
-	//	private final String venteUserCR = " a.no_utilisateur = ? AND etat_vente = 'CR'";
-	//	private final String venteUserVD = " a.no_utilisateur = ? AND etat_vente = 'VD'";
-	//private final String UPDATE_ETAT_VENTE
+
+	private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_enchere = ?, date_fin_enchere = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?;";
+	private final String UPDATE_R = "UPDATE RETRAITS SET rue = ?, code_postal = ?, ville = ? WHERE no_article = ?;";
 
 	public Articles insert(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -65,22 +61,23 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
-				
+
+
 				stmt.executeUpdate();
-				
+
 				con.commit();
 				ResultSet rs = stmt.getGeneratedKeys();
-				
+
 				if(rs.next()) {
 					a.setNoArticle(rs.getInt(1));
 				}
-				
-				
+
+
 				r.setNoArticle(a.getNoArticle());
 				RetraitsDAO rdao = new RetraitsDaoJdbcImp();
 				rdao.insertRetrait(r);
-				
-				
+
+
 			}catch(Exception e){
 				e.printStackTrace();
 				con.rollback();	
@@ -342,7 +339,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				default : article.setEtatVente(null); 
 				break;
 				}
-				
+
 				if (rs.getDate("date_enchere") != null) {
 					Encheres e = new Encheres();
 					e.setDateEnchere(LocalDateTime.of((rs.getDate("date_enchere").toLocalDate()),rs.getTime("date_enchere").toLocalTime()));
@@ -355,7 +352,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				} else {
 					article.setEnchere(null);
 				}
-				
+
 			}else {
 				throw new DALException("Id introuvable ");
 			}
@@ -363,5 +360,43 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			throw new DALException("Erreur dans la selection par l'Id : " + e.getMessage());
 		}
 		return article;
+	}
+
+	@Override
+	public void update(Articles a, Retraits r) throws DALException {
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(UPDATE);
+				PreparedStatement stmtr = con.prepareStatement(UPDATE_R)){
+			try {
+				con.setAutoCommit(false);
+				stmt.setString(1, a.getNomArticle());
+				stmt.setString(2, a.getDescription());
+				stmt.setTimestamp(3, java.sql.Timestamp.valueOf(a.getDateDebutEnchere()));
+				stmt.setTimestamp(4, java.sql.Timestamp.valueOf(a.getDateFinEnchere()));
+				stmt.setInt(5, a.getPrixInitial());
+				stmt.setInt(6, a.getCategorie().getNoCategorie());
+				stmt.setInt(7, a.getVendeur().getId());
+				stmt.executeUpdate();
+				
+				stmtr.setString(1, r.getRue());
+				stmtr.setString(2, r.getCode_postal());
+				stmtr.setString(3, r.getVille());
+				stmtr.setInt(4, a.getVendeur().getId());
+				stmtr.executeUpdate();
+				
+				con.commit();
+			} catch (SQLException e) {
+				con.rollback();
+				e.printStackTrace();
+				throw new DALException("Update annulé " + e.getMessage());
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Update annulé " + e.getMessage());
+			
+		}
+
+
 	}
 }

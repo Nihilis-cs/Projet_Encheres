@@ -7,9 +7,19 @@
 		<!-- Brand/logo -->
 		<a class="navbar-brand"
 			href="${pageContext.request.contextPath}/navigation/accueil"> <strong>ENI-Encheres</strong>
-		</a> <a class="navbar-brand" href="#" alt="Gérer mon profil"
-			title="Gérer mon profil"> <span class="align-middle align-top text-muted">
-				<!-- Connecté ou pas --> <c:if test="${not empty utilisateurActif}">
+		</a>
+		<c:if test="${empty utilisateurActif}">
+				 <a class="navbar-brand"
+			href="${pageContext.request.contextPath}/navigation/login"
+			title="Gérer mon profil"> <span
+			class="align-middle align-top text-muted"></span></a>
+			
+		</c:if>
+		 <a class="navbar-brand"
+			href="#"
+			title="Gérer mon profil"> <span
+			class="align-middle align-top text-muted"> <!-- Connecté ou pas -->
+				<c:if test="${not empty utilisateurActif}">
 					<p>${utilisateurActif.nom}${utilisateurActif.prenom}
 						${utilisateurActif.credit} crédits</p>
 				</c:if> <c:if test="${empty utilisateurActif}">
