@@ -145,11 +145,12 @@
 										alt="pas de photo" />
 								</div>
 								<ul class="col-9 list-unstyled p-2">
-									<li>Prix : ${article.prixInitial}</li>
+									<li><b>Prix : ${article.prixInitial}</b></li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchereToString }</li>
-									<li>Vendeur : <a
-										href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+									<c:if test="${utilisateurActif != null}">
+										<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+									</c:if>
 								</ul>
 							</div>
 							<form

@@ -23,11 +23,16 @@ import bo.Utilisateurs;
 				DispatcherType.FORWARD, 
 				DispatcherType.INCLUDE
 		}
-					, urlPatterns = { "/navigation/vente", "/enchere/proposer" })
+					, urlPatterns = { "/navigation/vente", "/enchere/proposer", "/navigation/detailsEnchere" })
 public class FilterCo extends HttpFilter implements Filter {
        
 
-    public FilterCo() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -2510887638401566631L;
+
+	public FilterCo() {
         super();
         // TODO Auto-generated constructor stub
     }
