@@ -25,7 +25,7 @@
 
 </head>
 <body>
-<%@ include file="fragments/header_fragment.jsp"%>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--main bloc-->
 		<main>
@@ -35,10 +35,10 @@
 				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
 					alt="">
 			</div>
-			
+
 			<!--erreur-->
-			
-<!-- 		
+
+			<!-- 		
 			<div class="d-flex alert-danger">
 				<div class="col-3 p-2">
 					<img class="small-icon" src="images/error.svg">
@@ -48,33 +48,32 @@
 				</ul>
 			</div>
 -->
-			
+
 			<!--formulaire-->
-			<form
-				action="${pageContext.request.contextPath}/article/ajout"
+			<form action="${pageContext.request.contextPath}/article/ajout"
 				method="post" class="form-register needs-validation" novalidate>
 
-			<div class="row">
-				<div class="col-md-6 mb-3">
-					<label for="nomArticle">Nom de l'article</label> <input type="text"
-						class="form-control" id="nomArticle" name="nomArticle" placeholder=""
-						maxlength="30" required value="">
-					<div class="invalid-feedback">Ce champ est invalide !</div>
-				</div>
+				<div class="row">
+					<div class="col-md-6 mb-3">
+						<label for="nomArticle">Nom de l'article</label> <input
+							type="text" class="form-control" id="nomArticle"
+							name="nomArticle" placeholder="" maxlength="30" required value="">
+						<div class="invalid-feedback">Ce champ est invalide !</div>
+					</div>
 
-				<div class="col-md-6 mb-3">
-					<div class="form-group">
-						<label for="categories-select">Catégories</label> <select
-							class="form-control" id="categories-select" name="categorie">
-							<option selected>Toutes</option>
-							<option value="Informatique">Informatique</option>
-							<option value="Ameublement">Ameublement</option>
-							<option value="Vêtement">Vêtement</option>
-							<option value="Sport & Loisir">Sport & Loisirs</option>
-						</select>
+					<div class="col-md-6 mb-3">
+						<div class="form-group">
+							<label for="categories-select">Catégories</label> <select
+								class="form-control" id="categories-select" name="categorie">
+								<option selected>Toutes</option>
+								<option value="Informatique">Informatique</option>
+								<option value="Ameublement">Ameublement</option>
+								<option value="Vêtement">Vêtement</option>
+								<option value="Sport & Loisir">Sport & Loisirs</option>
+							</select>
+						</div>
 					</div>
 				</div>
-			</div>
 
 				<div class="row">
 					<label for="description">Description</label>
@@ -84,39 +83,50 @@
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
-						<label for="miseEnVente">Date mise en vente</label><input type="datetime-local"
-							class="form-control" id="dateDebut" name="dateDebut" required>
+						<label for="miseEnVente">Date mise en vente</label><input
+							type="datetime-local" class="form-control" id="dateDebut"
+							name="dateDebut" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
-						<label for="finDeVente">Date fin de vente</label> <input type="datetime-local"
-							class="form-control" id="dateFin" name="dateFin" required>
+						<label for="finDeVente">Date fin de vente</label> <input
+							type="datetime-local" class="form-control" id="dateFin"
+							name="dateFin" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
 
 				<div class="row">
 					<div class="col-md-4 mb-3">
-						<label for="prixInit">Prix initial</label>
-						<input type="number" class="form-control" id="prixInit" name="prixInit"
-							placeholder="" value="" maxlength="15">
+						<label for="prixInit">Prix initial</label> <input type="number"
+							class="form-control" id="prixInit" name="prixInit" placeholder=""
+							value="" maxlength="15">
 					</div>
 				</div>
 
 				<div class="row">
-					<div class="col-md-4 mb-3">
+					<div class="col-md-6 mb-3">
 						<label for="image">photo de l'article</label><input type="file"
 							class="form-control" id="uploadPhoto" name="uploadPhoto"
 							accept="image/png, image/jpg" onchange="PreviewImage();">
-							<img id="uploadPreview" style="width: 100px; height: 100px;" >
+						<img id="uploadPreview" style="width: 100px; height: 100px;">
 						<div class="invalid-feedback">Ce champ est invalide !</div>
+					</div>
+					<div class="col-md-6 mb-3">
+					<fieldset>
+						<legend>Adresse de retrait</legend>
+						<label for="rue"> Rue</label> <br> <input type="text" id="rue" name="rue"><br/>
+						<label for="codePostal"> Code Postal</label> <br> <input type="text" id="codePostal" name="codePostal"><br/>			
+						<label for="ville"> Ville</label> <br> <input type="text" id="ville" name="ville">
+					</fieldset>
 					</div>
 				</div>
 
 				<hr class="mb-4">
 				<div class="text-center">
-					<button class="btn btn-primary btn-lg" type="submit">Ajouter un article</button>
+					<button class="btn btn-primary btn-lg" type="submit">Ajouter
+						un article</button>
 				</div>
 			</form>
 		</main>
@@ -142,47 +152,66 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
 
-        window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
+			window
+					.addEventListener(
+							'load',
+							function() {
+								// Fetch all the forms we want to apply custom Bootstrap validation styles to
+								var forms = document
+										.getElementsByClassName('needs-validation');
 
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-                //validation du mot de passe
-                var password = document.getElementById("password")
-                , confirm_password = document.getElementById("confirm_password");
-                if(password.value != confirm_password.value) {
-                    confirm_password.setCustomValidity("Les mots de passe sont différents");
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    confirm_password.setCustomValidity('');
-                }
-                //validations des saisies obligatoires
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });            
-    }, false);
-    })();
-    </script>
-    <script type="text/javascript">
-    	function PreviewImage(){
-    		var oFReader = new FileReader();
-    		oFReader.onload = function (oFREvent){
-    			document.getElementById("uploadPreview").src = 
-    			oFREvent.target.result;
-    		};
-    	};
-    </script>
+								// Loop over them and prevent submission
+								var validation = Array.prototype.filter
+										.call(
+												forms,
+												function(form) {
+													form
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		//validation du mot de passe
+																		var password = document
+																				.getElementById("password"), confirm_password = document
+																				.getElementById("confirm_password");
+																		if (password.value != confirm_password.value) {
+																			confirm_password
+																					.setCustomValidity("Les mots de passe sont différents");
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		} else {
+																			confirm_password
+																					.setCustomValidity('');
+																		}
+																		//validations des saisies obligatoires
+																		if (form
+																				.checkValidity() === false) {
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		}
+																		form.classList
+																				.add('was-validated');
+																	}, false);
+												});
+							}, false);
+		})();
+	</script>
+	<script type="text/javascript">
+		function PreviewImage() {
+			var oFReader = new FileReader();
+			oFReader.onload = function(oFREvent) {
+				document.getElementById("uploadPreview").src = oFREvent.target.result;
+			};
+		};
+	</script>
 </body>
 
 </html>

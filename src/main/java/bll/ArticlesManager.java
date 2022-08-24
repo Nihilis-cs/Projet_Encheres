@@ -3,6 +3,7 @@ package bll;
 import java.util.List;
 
 import bo.Articles;
+import bo.Retraits;
 import dal.ArticlesDao;
 import dal.DALException;
 import dal.DAOFactory;
@@ -22,10 +23,10 @@ public class ArticlesManager {
 		return artmngr;
 	}
 	
-	public Articles insert(Articles article) throws BLLException{
+	public Articles insert(Articles article, Retraits retrait) throws BLLException{
 		Articles a =null;
 		try {
-			a = this.articleDao.insert(article);
+			a = this.articleDao.insert(article, retrait);
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException("insert de merde ta capté");

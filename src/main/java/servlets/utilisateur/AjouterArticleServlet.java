@@ -21,6 +21,7 @@ import bo.Articles;
 import bo.Categories;
 import bo.Encheres;
 import bo.EtatsVente;
+import bo.Retraits;
 import bo.Utilisateurs;
 
 /**
@@ -55,7 +56,11 @@ public class AjouterArticleServlet extends HttpServlet {
 		String dateDebut 	= request.getParameter("dateDebut");
 		String dateFin 		= request.getParameter("dateFin");
 		String prixInit 	= request.getParameter("prixInit");
-		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit);
+		String rue 			= request.getParameter("rue");
+		String codePostal 	= request.getParameter("codePostal");
+		String ville 		= request.getParameter("ville");
+		
+		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville);
 		
 		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
@@ -95,9 +100,11 @@ public class AjouterArticleServlet extends HttpServlet {
 		
 		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
+		Retraits retrait = new Retraits(rue, codePostal, ville);
+		System.out.println(retrait.toString());
 		
 		try {
-			artmngr.insert(article);
+			artmngr.insert(article, retrait);
 			request.setAttribute("messageSucces", "Article enregistré!");
 		} catch (BLLException e) {
 			request.setAttribute("messageErreur", "Article non valide!");
