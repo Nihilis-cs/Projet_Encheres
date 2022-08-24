@@ -8,7 +8,7 @@
 		<a class="navbar-brand"
 			href="${pageContext.request.contextPath}/navigation/accueil"> <strong>ENI-Encheres</strong>
 		</a> <a class="navbar-brand" href="#" alt="Gérer mon profil"
-			title="Gérer mon profil"> <span class="align-middle text-muted">
+			title="Gérer mon profil"> <span class="align-middle align-top text-muted">
 				<!-- Connecté ou pas --> <c:if test="${not empty utilisateurActif}">
 					<p>${utilisateurActif.nom}${utilisateurActif.prenom}
 						${utilisateurActif.credit} crédits</p>
@@ -39,9 +39,10 @@
 
 					<a class="dropdown-item"
 						href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur"
-						alt="Chercher un utilisateur">Recherche d'un utilisateur</a> 
-						
-					<a class="dropdown-item" href="${pageContext.request.contextPath}/navigation/vente">Vendre un article</a>
+						alt="Chercher un utilisateur">Recherche d'un utilisateur</a> <a
+						class="dropdown-item"
+						href="${pageContext.request.contextPath}/navigation/vente">Vendre
+						un article</a>
 
 					<c:if test="${empty utilisateurActif}">
 						<a class="dropdown-item"

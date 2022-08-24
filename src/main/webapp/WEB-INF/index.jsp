@@ -123,13 +123,14 @@
 						</div>
 					</c:if>
 				</div>
-				<button class="btn btn-primary btn-lg btn-block" type="submit">
-					<img class="small-icon" src="images/search.svg" alt="Eni Ecole">
-				</button>
+				<div class="text-center mb-3">
+					<button class="btn btn-primary btn-lg" type="submit">Appliquer
+						filtres</button>
+				</div>
 			</form>
 			<h3>${creditErreur}</h3>
 			<!--enchères-->
-			<div class="row justify-content-center border-top card-deck">
+			<div class="row justify-content-center border-top card-deck mt-5">
 				<c:forEach var="article" items="${liste}">
 					<div class="col-12 col-sm-6 p-2">
 						<div class="card">
@@ -142,14 +143,15 @@
 							<div class="d-flex">
 								<div class="col-3 p-2">
 									<img class="img-fluid img-thumbnail" src="images/photo.svg"
-										alt="pas de photo" />
+										alt="${article.nomArticle}" />
 								</div>
 								<ul class="col-9 list-unstyled p-2">
 									<li><b>Prix : ${article.prixInitial}</b></li>
 									<li>Meilleure enchère : ${article.enchere.montantEnchere}</li>
 									<li>Fin de l'enchère : ${article.dateFinEnchereToString }</li>
 									<c:if test="${utilisateurActif != null}">
-										<li>Vendeur : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
+										<li>Vendeur : <a
+											href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
 									</c:if>
 								</ul>
 							</div>
@@ -160,10 +162,10 @@
 									name="enchere" placeholder="Votre enchère"
 									min="${(article.enchere.montantEnchere) + 1 }" max="99999999"
 									value="" required>
-								<button class="btn btn-primary btn-lg" name="noArticle"
-									value="${article.noArticle}" type="submit">
-									Enchérir <img class="small-icon" src="images/bid.svg">
-								</button>
+								<div class="text-center">
+									<button class="btn btn-primary btn-lg" name="noArticle"
+										value="${article.noArticle}" type="submit">Encherir</button>
+								</div>
 							</form>
 						</div>
 					</div>

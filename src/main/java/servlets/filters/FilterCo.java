@@ -23,7 +23,7 @@ import bo.Utilisateurs;
 				DispatcherType.FORWARD, 
 				DispatcherType.INCLUDE
 		}
-					, urlPatterns = { "/navigation/vente", "/enchere/proposer", "/navigation/detailsEnchere" })
+					, urlPatterns = { "/navigation/vente", "/enchere/proposer", "/navigation/detailsEnchere", "/article/ajout" })
 public class FilterCo extends HttpFilter implements Filter {
        
 

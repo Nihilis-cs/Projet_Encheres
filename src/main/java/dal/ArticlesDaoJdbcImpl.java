@@ -13,6 +13,7 @@ import java.util.List;
 import bo.Articles;
 import bo.Encheres;
 import bo.EtatsVente;
+import bo.Retraits;
 import bo.Utilisateurs;
 
 public class ArticlesDaoJdbcImpl implements ArticlesDao {
@@ -49,7 +50,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	//	private final String venteUserVD = " a.no_utilisateur = ? AND etat_vente = 'VD'";
 	//private final String UPDATE_ETAT_VENTE
 
-	public Articles insert(Articles a) throws DALException {
+	public Articles insert(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
 				PreparedStatement stmt = con.prepareStatement(INSERT_Article, Statement.RETURN_GENERATED_KEYS)){
 			try {
@@ -64,11 +65,23 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(7, a.getVendeur().getId());
 				stmt.setInt(8, a.getCategorie().getNoCategorie());
 				stmt.setString(9, a.getEtatVente().toString());
-
+				
 				stmt.executeUpdate();
+				
 				con.commit();
-
-			}catch(SQLException e){
+				ResultSet rs = stmt.getGeneratedKeys();
+				
+				if(rs.next()) {
+					a.setNoArticle(rs.getInt(1));
+				}
+				
+				
+				r.setNoArticle(a.getNoArticle());
+				RetraitsDAO rdao = new RetraitsDaoJdbcImp();
+				rdao.insertRetrait(r);
+				
+				
+			}catch(Exception e){
 				e.printStackTrace();
 				con.rollback();	
 			}

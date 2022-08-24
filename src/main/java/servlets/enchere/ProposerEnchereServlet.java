@@ -57,8 +57,10 @@ public class ProposerEnchereServlet extends HttpServlet {
 
 		String noArticleStr = request.getParameter("noArticle");// JE RECUPERE LE NO ARTICLE DE LENCHERE LORSQUE Q'UN USER BET
 		int noArticle = Integer.parseInt(noArticleStr); // JE RECUPERE LE NO ARTICLE DE LENCHERE LORSQUE Q'UN USER BET
+
 		int ancienUserIdEnch = 0; 
 		Articles article;
+
 		try {
 			article = am.selectById(noArticle);
 			if (nouvelEnchere >  creditNouvelEncherisseur   ) { //MESSAGE D'ERREUR SI L'USER N'A PAS ASSEZ DE CREDIT
@@ -70,9 +72,6 @@ public class ProposerEnchereServlet extends HttpServlet {
 					ancienUserIdEnch = (em.selectByNoArticle(noArticle)).getEncherisseur().getId();//RECUPERATION DE L'ID DU DERNIER USER QUI A BET
 					System.out.println("Id du dernier user qui a bet : "+ancienUserIdEnch);
 					int vendeur = article.getVendeur().getId();
-					//System.out.println(vendeur);
-					//System.out.println("id user qui bet"+utilisateurActif.getId()); //RECUPERATION DE L'ID DE L'USER QUI BET
-					//System.out.println("id du last user qui a bet" + ancienUserIdEnch);
 
 					if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
 						request.setAttribute("messageErreur", "Vous avez déjà enchéri sur  cet article");
@@ -80,30 +79,25 @@ public class ProposerEnchereServlet extends HttpServlet {
 					} else if( vendeur == utilisateurActif.getId()) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR SON ENCHERE
 						request.setAttribute("messageErreur", "Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
 						throw new BLLException("Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
-					} 
-					//Encheres ancienEnchere = em.selectByNoArticle(article.getNoArticle());
+					}
+					
 					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
 					em.updateEnchere(enchere);
 					int ancienEnchere = article.getEnchere().getMontantEnchere(); //
 					Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
 					System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
 					int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
-					//System.out.println("Credit de l'ancien encherisseur" + creditAncEnch);
 					ancienEncherisseur.setCredit(creditAncEnch);
-					//System.out.println("ancien encherisseur qui va être recrediter : "+ancienEncherisseur);
 					um.updateCreditUtilisateur(ancienEncherisseur);
 				} else { //Sinon insert
 					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
 					em.insertEnchere(enchere);
 				}
 				creditNouvelEncherisseur -= nouvelEnchere;
-				//System.out.println("Après calcul credit de l'encherisseur :"+creditNouvelEncherisseur);
-				//System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurInt);
-				//System.out.println(article.getEnchere().toString());
+
 				try {
 					utilisateurActif.setCredit(creditNouvelEncherisseur);
 					um.updateCreditUtilisateur(utilisateurActif);
-					//System.out.println(utilisateurActif.toString());
 					request.setAttribute("messageSucces", "Enchere effectuée !");
 				} catch (BLLException e) {
 					// TODO Auto-generated catch block
@@ -119,57 +113,6 @@ public class ProposerEnchereServlet extends HttpServlet {
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
 
-		//		try { 
-		//
-		//			if (em.selectByNoArticle(noArticle)!=null) {
-		//				//int ancienUserIdEnch = (em.selectByNoArticle(noArticle)).getEncherisseur().getId();//RECUPERATION DE L'ID DU DERNIER USER QUI A BET
-		//				//System.out.println(ancienUserIdEnch);
-		//				//int vendeur = (am.selectById(noArticle)).getVendeur().getId(); 
-		//				//							System.out.println(vendeur);
-		//				//							System.out.println("id user qui bet"+utilisateurActif.getId()); //RECUPERATION DE L'ID DE L'USER QUI BET
-		//				//							System.out.println("id du last user qui a bet" + ancienUserIdEnch);
-		//
-		//				if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
-		//					request.setAttribute("messageErreur", "Vous avez déjà enchéri sur  cet article");
-		//					throw new BLLException("Un utilisateur ne peut pas enchèrir sur un article qu'il a lui même mis en vente");
-		//				} else if( vendeur == utilisateurActif.getId()) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR SON ENCHERE
-		//					request.setAttribute("messageErreur", "Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
-		//					throw new BLLException("Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
-		//				} else {  
-		//					int enchMontantCredit = (em.selectByNoArticle(utilisateurActif.getId())).getMontantEnchere(); //RECUPERATION DU MONTANT DE lENCHERE
-		//
-		//					//CALCUL POUR LE REMBOURSEMENT
-		//					creditNouvelEncherisseur = creditNouvelEncherisseur + enchMontantCredit; 
-		//					creditNouvelEncherisseur = creditNouvelEncherisseur - nouvelEnchere;
-		//					//System.out.println("Credit user après l'enchere qu'il vient d'effectuer :" +creditUtilisateurInt);
-		//
-		//					System.out.println(noArticle);
-		//					try {
-		//						Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
-		//						//System.out.println(enchere);
-		//						em.updateEnchere(enchere);
-		//						utilisateurActif.setCredit(creditNouvelEncherisseur);
-		//						um.updateCreditUtilisateur(utilisateurActif);
-		//						//System.out.println(utilisateurActif.toString());
-		//						request.setAttribute("messageSucces", "Enchere effectuée !");
-		//					} catch (BLLException e) {
-		//						// TODO Auto-generated catch block
-		//						e.printStackTrace();
-		//					}
-		//				}
-		//			} else { //SI IL N'Y A PAS D'ENCHERE QUE FAIRE : 
-		//
-		//			}	
-		//
-		//
-		//
-		//		} catch (BLLException e1) {
-		//			// TODO Auto-generated catch block
-		//			e1.printStackTrace();
-		//		}
-		//
-		//		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-		//		rs.forward(request, response);
 	}
 }
 
