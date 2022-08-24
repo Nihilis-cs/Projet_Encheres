@@ -8,11 +8,14 @@ import java.time.format.DateTimeFormatter;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import javax.imageio.ImageIO;
 import servlets.utilisateur.IHMException;
 import bll.ArticlesManager;
 import bll.BLLException;
@@ -24,9 +27,8 @@ import bo.EtatsVente;
 import bo.Retraits;
 import bo.Utilisateurs;
 
-/**
- * Servlet implementation class AjouterArticleServlet
- */
+
+@MultipartConfig
 @WebServlet("/article/ajout")
 public class AjouterArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -112,6 +114,23 @@ public class AjouterArticleServlet extends HttpServlet {
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
+		
+		
+		//UPLOAD DE LA PHOTO
+		String name = request.getParameter("uploadPhoto");
+		System.out.println("name : " + name);
+		
+		
+		// Gets absolute path to root directory of web app.
+		String appPath = request.getServletContext().getRealPath("");
+		// Gets image informations
+		Part part = request.getPart("pictureFile");
+		//Save image File and get fileName
+//		String fileName = saveFile()
+		
+		
+		
+		
 		
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
