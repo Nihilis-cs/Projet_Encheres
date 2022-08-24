@@ -34,7 +34,6 @@ public class Articles {
 		this.categorie = categorie;
 		this.etatVente = etatVente;
 		this.enchere = enchere;
-		this.image = image;
 	}
 
 	public Articles(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
