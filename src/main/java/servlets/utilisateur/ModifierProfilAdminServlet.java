@@ -41,12 +41,14 @@ public class ModifierProfilAdminServlet extends HttpServlet {
 		String codePostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
-		int noUser = Integer.parseInt(request.getParameter("user"));
+		String inputUser= request.getParameter("ident");
+		int noUser = Integer.parseInt(inputUser);
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
 			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, noUser);
 			um.updateUtilisateur(utilisateur);
-			
+			System.out.println("/////////////////////");
+			System.out.println(utilisateur);
 			request.setAttribute("messageSucces", "Modifications bien prises en compte!");
 		} catch (BLLException e) {
 			request.setAttribute("messageErreur", "Modifications invalides.");

@@ -43,7 +43,6 @@ public class GestionProfilServlet extends HttpServlet {
 		String boutonSupprimer = request.getParameter("boutonSupprimer");
 		System.out.println(boutonSupprimer);
 
-
 		//MODIFICATION UTILISASTEUR
 		String pseudo = request.getParameter("pseudo");
 		String nom = request.getParameter("nom");

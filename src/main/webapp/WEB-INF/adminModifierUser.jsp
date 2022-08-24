@@ -103,11 +103,21 @@
 					</div>
 				</div>
 
-				<hr class="mb-4">
-				<div class="text-center">
-					<button class="btn btn-primary btn-lg" type="submit">Modifier
-						le compte</button>
+				<div class="row">
+					<div class="col-md-4 mb-3">
+						<label for="zipcode">No user</label> <input type="number"
+							class="form-control" id="ident" name="ident"
+							placeholder="" min="01000" max="99999" value="${user.id}"
+							>
+						<div class="invalid-feedback">Ce champ est invalide !</div>
+					</div>
 				</div>
+				
+					<hr class="mb-4">
+					<div class="text-center">
+						<button class="btn btn-primary btn-lg" type="submit">Modifier
+							le compte</button>
+					</div>
 			</form>
 			<form
 				action="${pageContext.request.contextPath}/utilisateur/suppression"
