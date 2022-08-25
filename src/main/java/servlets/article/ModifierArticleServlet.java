@@ -52,6 +52,7 @@ public class ModifierArticleServlet extends HttpServlet {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
 		
+		
 		//Recuperation des données de l'article
 		String noArticle	= request.getParameter("idarticle");
 		String nomArticle	= request.getParameter("nomArticle");
@@ -81,6 +82,7 @@ public class ModifierArticleServlet extends HttpServlet {
 		Categories cat 				 = null;
 		
 		try {
+			
 			switch(categorie) {
 			case "Informatique": 
 				cat= new Categories(1, categorie);
@@ -96,6 +98,16 @@ public class ModifierArticleServlet extends HttpServlet {
 				break;
 			default: 
 				request.setAttribute("messageErreur", "Catégorie non valide");
+				try {
+					Articles articleR = artmngr.selectById(idArticle);
+					System.out.println("Prout");
+					articleR.toString();
+					request.setAttribute("article", articleR );//Renvoyer l'article pour affichage après l'erreur
+					request.setAttribute("messageErreur", "Article non valide!");
+				} catch (BLLException e1) {
+					//Stp pas cette erreur
+					e1.printStackTrace();
+				}
 				throw new IHMException("Veuillez choisir une categorie");
 			}
 
@@ -113,37 +125,29 @@ public class ModifierArticleServlet extends HttpServlet {
 		article.setCategorie(cat);
 		article.setVendeur(utilisateurActif);
 		article.setEtatVente(EtatsVente.EC);
-		//Articles article = new Articles(idArticle, nomArticle, description, debutDate, finDate, prixInitParse, cat, utilisateurActif, EtatsVente.CR);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(idArticle ,rue, codePostal, ville);
 		System.out.println(retrait.toString());
 		
-		try {
+		try  {
 			artmngr.update(article, retrait);
 			request.setAttribute("messageSucces", "Article enregistré!");
 		} catch (BLLException e) {
-			request.setAttribute("messageErreur", "Article non valide!");
-			e.printStackTrace();
+			
+			//e.printStackTrace();
+			try {
+				Articles articleR = artmngr.selectById(idArticle);
+				System.out.println("Prout");
+				articleR.toString();
+				request.setAttribute("article", articleR );//Renvoyer l'article pour affichage après l'erreur
+				request.setAttribute("messageErreur", "Article non valide!");
+			} catch (BLLException e1) {
+				//Stp pas cette erreur
+				e1.printStackTrace();
+			}
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/ModifierEnchere.jsp");
 			rs.forward(request, response);
 		}
-		
-		
-//		//UPLOAD DE LA PHOTO
-//		String name = request.getParameter("uploadPhoto");
-//		System.out.println("name : " + name);
-//		
-//		
-//		// Gets absolute path to root directory of web app.
-//		String appPath = request.getServletContext().getRealPath("");
-//		// Gets image informations
-//		Part part = request.getPart("pictureFile");
-//		//Save image File and get fileName
-////		String fileName = saveFile()
-		
-		
-		
-		
 		
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
