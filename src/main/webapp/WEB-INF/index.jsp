@@ -150,9 +150,10 @@
 							</div>
 							<div class="d-flex">
 								<div class="col-3 p-2">
-								<c:if test="${article.categorie.noCategorie }"></c:if>
+								<c:if test="${article.categorie.noCategorie == 4 }">
 									<img class="img-fluid img-thumbnail" src="img/sport.png"
 										style="height: 100px;width: 100px;" alt="${article.nomArticle}"/>
+										</c:if>
 								</div>
 								<ul class="col-9 list-unstyled p-2">
 									<li><b>Prix : ${article.prixInitial}</b></li>
