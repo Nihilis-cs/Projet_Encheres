@@ -61,7 +61,7 @@
 			<p>Adresse : ${utilisateurRecherche.rue }
 				${utilisateurRecherche.codePostal } ${utilisateurRecherche.ville }</p>
 
-			<p>${requestScope.erreurRecherche }</p>
+<%-- 			<p>${requestScope.erreurRecherche }</p> --%>
 
 		</main>
 		<!--footer-->

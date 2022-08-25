@@ -32,12 +32,12 @@ import bo.Utilisateurs;
 @WebServlet("/article/modifier")
 public class ModifierArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
 
-    public ModifierArticleServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+
+	public ModifierArticleServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -51,7 +51,8 @@ public class ModifierArticleServlet extends HttpServlet {
 		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
-		
+
+
 		//Recuperation des données de l'article
 		String noArticle	= request.getParameter("idarticle");
 		String nomArticle	= request.getParameter("nomArticle");
@@ -63,24 +64,25 @@ public class ModifierArticleServlet extends HttpServlet {
 		String rue 			= request.getParameter("rue");
 		String codePostal 	= request.getParameter("codePostal");
 		String ville 		= request.getParameter("ville");
-		
+
 		System.out.println(noArticle + nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville);
-		
+
 		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
 		LocalDateTime debutDate = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
-		
+
 		String Fin[] = dateFin.split("T");
 		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
-		
+
 		int idArticle				 = Integer.parseInt(noArticle);
 		int prixInitParse 		 	 = Integer.parseInt(prixInit);
 		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
 		Encheres ench 			 	 = null;
 		int prixVente 			 	 =0;
 		Categories cat 				 = null;
-		
+
 		try {
+
 			switch(categorie) {
 			case "Informatique": 
 				cat= new Categories(1, categorie);
@@ -96,11 +98,13 @@ public class ModifierArticleServlet extends HttpServlet {
 				break;
 			default: 
 				request.setAttribute("messageErreur", "Catégorie non valide");
+				Articles articleR = getPlaceholder(idArticle);
+				request.setAttribute("article", articleR );//Renvoyer l'article pour affichage après l'erreur
 				throw new IHMException("Veuillez choisir une categorie");
 			}
 
 		} catch (Exception e) {
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/ModifierEnchere.jsp");
 			rs.forward(request, response);
 		}
 		Articles article = new Articles();
@@ -113,41 +117,40 @@ public class ModifierArticleServlet extends HttpServlet {
 		article.setCategorie(cat);
 		article.setVendeur(utilisateurActif);
 		article.setEtatVente(EtatsVente.EC);
-		//Articles article = new Articles(idArticle, nomArticle, description, debutDate, finDate, prixInitParse, cat, utilisateurActif, EtatsVente.CR);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(idArticle ,rue, codePostal, ville);
 		System.out.println(retrait.toString());
-		
-		try {
+
+		try  {
 			artmngr.update(article, retrait);
 			request.setAttribute("messageSucces", "Article enregistré!");
 		} catch (BLLException e) {
+
+			Articles articleR = getPlaceholder(idArticle);
+			request.setAttribute("article", articleR );//Renvoyer l'article pour affichage après l'erreur
 			request.setAttribute("messageErreur", "Article non valide!");
-			e.printStackTrace();
+
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/ModifierEnchere.jsp");
 			rs.forward(request, response);
 		}
-		
-		
-//		//UPLOAD DE LA PHOTO
-//		String name = request.getParameter("uploadPhoto");
-//		System.out.println("name : " + name);
-//		
-//		
-//		// Gets absolute path to root directory of web app.
-//		String appPath = request.getServletContext().getRealPath("");
-//		// Gets image informations
-//		Part part = request.getPart("pictureFile");
-//		//Save image File and get fileName
-////		String fileName = saveFile()
-		
-		
-		
-		
-		
+
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
-		
+
+	}
+
+	private Articles getPlaceholder(int id) {
+		ArticlesManager artmngr = ArticlesManager.getInstance();
+		Articles articleR = null;
+		try {
+			articleR = artmngr.selectById(id);
+			System.out.println("Prout");
+			articleR.toString();
+		} catch (BLLException e1) {
+			//Stp pas cette erreur
+			e1.printStackTrace();
+		}
+		return articleR;
 	}
 
 }

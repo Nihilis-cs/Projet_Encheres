@@ -204,7 +204,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			}            
 			cpt ++;
 		}
-		if (nomArticle!=null) {
+		if (!nomArticle.isEmpty()) {
 			if (cpt != 0) {
 				requete += " AND " + articleContenant;
 			} else {

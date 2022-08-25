@@ -55,7 +55,7 @@
 					<div class="col-md-6 mb-3">
 						<div class="form-group">
 							<label for="categories-select">Catégories</label> <select
-								class="form-control" id="categories-select" name="categorie">
+								class="form-control" id="categories-select" required name="categorie">
 								<option selected>Toutes</option>
 								<option value="Informatique">Informatique</option>
 								<option value="Ameublement">Ameublement</option>
@@ -69,21 +69,21 @@
 				<div class="row">
 					<label for="description">Description</label>
 					<textarea rows="4" cols="50" class="form-control" id="description"
-						name="description" >${article.description}</textarea>
+						name="description" required >${article.description}</textarea>
 				</div>
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
 						<label for="miseEnVente">Date mise en vente</label><input
 							type="datetime-local" class="form-control" id="dateDebut"
-							name="dateDebut" value="${article.dateDebutEnchere}">
+							name="dateDebut" value="${article.dateDebutEnchere}" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 
 					<div class="col-md-6 mb-3">
 						<label for="finDeVente">Date fin de vente</label> <input
 							type="datetime-local" class="form-control" id="dateFin"
-							name="dateFin" value="${article.dateFinEnchere}">
+							name="dateFin" value="${article.dateFinEnchere}" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
@@ -92,7 +92,7 @@
 					<div class="col-md-6 mb-3">
 						<label for="prixInit">Prix initial</label> <input type="number"
 							class="form-control" id="prixInit" name="prixInit" placeholder=""
-							value="${article.prixInitial}" maxlength="15">
+							value="${article.prixInitial}" maxlength="15" required min="1" step="1">
 					</div>
 					<div class="col-md-6 mb-3">
 						<fieldset>
