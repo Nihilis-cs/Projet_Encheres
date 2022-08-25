@@ -45,6 +45,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_enchere = ?, date_fin_enchere = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?;";
 	
+	private final String DELETE = "DELETE FROM ARTICLES_VENDUS Where no_article = ?;";
 
 	public Articles insert(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -373,13 +374,14 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setTimestamp(4, java.sql.Timestamp.valueOf(a.getDateFinEnchere()));
 				stmt.setInt(5, a.getPrixInitial());
 				stmt.setInt(6, a.getCategorie().getNoCategorie());
-				stmt.setInt(7, a.getVendeur().getId());
-				stmt.executeUpdate();
+				stmt.setInt(7, a.getNoArticle());
+				System.out.println("update avec : " + a.toString());
 				
+				stmt.executeUpdate();
+
+				con.commit();
 				RetraitsDAO rDao = new RetraitsDaoJdbcImp();
 				rDao.update(r);
-				
-				con.commit();
 			} catch (SQLException e) {
 				con.rollback();
 				e.printStackTrace();
@@ -393,5 +395,16 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		}
 
 
+	}
+
+	public void delete(int id) throws DALException{
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(DELETE);){
+			stmt.setInt(1,  id);
+			stmt.executeUpdate();	
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Delete impossible");
+		}
 	}
 }

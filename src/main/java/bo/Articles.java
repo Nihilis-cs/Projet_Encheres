@@ -66,7 +66,7 @@ public class Articles {
 	
 
 	public Articles(int noArticle, String nomArticle, String description, LocalDateTime dateDebutEnchere,
-			LocalDateTime dateFinEnchere, int prixInitial, Categories categorie) {
+			LocalDateTime dateFinEnchere, int prixInitial, Categories categorie, Utilisateurs vendeur, EtatsVente etatVente) {
 		this.noArticle = noArticle;
 		this.nomArticle = nomArticle;
 		this.description = description;
@@ -74,6 +74,8 @@ public class Articles {
 		this.dateFinEnchere = dateFinEnchere;
 		this.prixInitial = prixInitial;
 		this.categorie = categorie;
+		this.vendeur = vendeur;
+		this.etatVente = etatVente;
 	}
 
 	public int getNoArticle() {

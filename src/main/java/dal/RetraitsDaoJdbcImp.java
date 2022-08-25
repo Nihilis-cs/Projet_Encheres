@@ -25,6 +25,7 @@ public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 				stmt.setString(3, r.getCode_postal());
 				stmt.setString(4, r.getVille());
 				stmt.executeUpdate();
+				
 				con.commit();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -71,7 +72,7 @@ public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 				stmt.setString(2, r.getCode_postal());
 				stmt.setString(3, r.getVille());
 				stmt.setInt(4, r.getNoArticle());
-				
+				System.out.println("update retraits avec : " + r.getNoArticle() + " " + r.getRue() + " " + r.getCode_postal() + " " + r.getVille() );
 				stmt.executeUpdate();
 				con.commit();
 			} catch (SQLException e) {
@@ -80,7 +81,7 @@ public class RetraitsDaoJdbcImp implements  RetraitsDAO {
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
-			throw new DALException("Erreur lors de l'insert du retrait : " + e.getMessage());
+			throw new DALException("Erreur lors de l'update du retrait : " + e.getMessage());
 		}
 
 	}
