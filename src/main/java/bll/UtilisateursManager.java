@@ -114,6 +114,9 @@ public class UtilisateursManager {
 
 		try {
 			u = this.utilisateurDao.selectByPseudo(user);
+			if (u == null) {
+				throw new BLLException("Pseudo introuvable.");
+			}
 		} catch (DALException e) {
 			e.printStackTrace();
 			throw new BLLException(e.getMessage());

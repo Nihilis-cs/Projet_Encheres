@@ -32,9 +32,10 @@ public class RechecherProfilServlet extends HttpServlet {
 			try {
 				userRech = um.selectByPseudo(request.getParameter("pseudoVendeur"));
 				request.setAttribute("utilisateurRecherche", userRech);
-
+				System.out.println("pouet");
 			} catch (BLLException e) {
-				request.setAttribute("messageErreur", "Pseudo non trouvé.");
+				System.out.println("Prout");
+				request.setAttribute("messageErreur", e.getMessage());
 				e.printStackTrace();
 			}
 			
@@ -54,8 +55,7 @@ public class RechecherProfilServlet extends HttpServlet {
 			userRech = um.selectByPseudo(pseudoSaisi);
 			request.setAttribute("utilisateurRecherche", userRech);
 		} catch (BLLException e) {
-			String messErreur = "Le pseudo sélectionné n'est pas valide";
-			request.setAttribute("erreurRecherche",messErreur );
+			request.setAttribute("messageErreur", e.getMessage());
 			e.printStackTrace();
 		}
 		
