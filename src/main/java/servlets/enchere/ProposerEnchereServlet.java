@@ -18,6 +18,7 @@ import bll.EncheresManager;
 import bll.UtilisateursManager;
 import bo.Articles;
 import bo.Encheres;
+import bo.EtatsVente;
 import bo.Utilisateurs;
 
 /**
@@ -63,48 +64,63 @@ public class ProposerEnchereServlet extends HttpServlet {
 
 		try {
 			article = am.selectById(noArticle);
-			if (nouvelEnchere >  creditNouvelEncherisseur   ) { //MESSAGE D'ERREUR SI L'USER N'A PAS ASSEZ DE CREDIT
-				request.setAttribute("messageErreur", "Vous n'avez pas assez de crédit !");
-				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-				rs.forward(request, response);
-			} else { //SINON L'ENCHERE S'EFFECTUE CORRECTEMENT
-				if (article.getEnchere()!= null) { //Si l'enchere existe deja pour cet article alors update;
-					ancienUserIdEnch = (em.selectByNoArticle(noArticle)).getEncherisseur().getId();//RECUPERATION DE L'ID DU DERNIER USER QUI A BET
-					System.out.println("Id du dernier user qui a bet : "+ancienUserIdEnch);
-					int vendeur = article.getVendeur().getId();
+			if ((article.getEtatVente().equals(EtatsVente.EC))) {
+				if (nouvelEnchere >  creditNouvelEncherisseur   ) { //MESSAGE D'ERREUR SI L'USER N'A PAS ASSEZ DE CREDIT
+					request.setAttribute("messageErreur", "Vous n'avez pas assez de crédit !");
+					RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
+					rs.forward(request, response);
+				} else { //SINON L'ENCHERE S'EFFECTUE CORRECTEMENT
+					if (article.getEnchere()!= null) { //Si l'enchere existe deja pour cet article alors update;
+						ancienUserIdEnch = (em.selectByNoArticle(noArticle)).getEncherisseur().getId();//RECUPERATION DE L'ID DU DERNIER USER QUI A BET
+						System.out.println("Id du dernier user qui a bet : "+ancienUserIdEnch);
+						int vendeur = article.getVendeur().getId();
 
-					if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
-						request.setAttribute("messageErreur", "Vous avez déjà enchéri sur  cet article");
-						throw new BLLException("Vous avez déjà enchéri sur  cet article");
-					} else if( vendeur == utilisateurActif.getId()) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR SON ENCHERE
-						request.setAttribute("messageErreur", "Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
-						throw new BLLException("Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
+						if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
+							request.setAttribute("messageErreur", "Vous avez déjà enchéri sur  cet article");
+							throw new BLLException("Vous avez déjà enchéri sur  cet article");
+						}
+						if( vendeur == utilisateurActif.getId()) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR SON ENCHERE
+							request.setAttribute("messageErreur", "Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
+							throw new BLLException("Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
+						}
+
+						Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
+						em.updateEnchere(enchere);
+						int ancienEnchere = article.getEnchere().getMontantEnchere(); //
+						Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
+						System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
+						int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
+						ancienEncherisseur.setCredit(creditAncEnch);
+						um.updateCreditUtilisateur(ancienEncherisseur);
+					} else { //Sinon insert
+						int vendeur = article.getVendeur().getId();
+						if (ancienUserIdEnch == utilisateurActif.getId() ) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR UNE ENCHERE OU IL EST DEJA PLACE
+							request.setAttribute("messageErreur", "Vous avez déjà enchéri sur  cet article");
+							throw new BLLException("Vous avez déjà enchéri sur  cet article");
+						}
+						if( vendeur == utilisateurActif.getId()) { // CONDITION AFIN D'EMPECHER UN USER DE BET SUR SON ENCHERE
+							request.setAttribute("messageErreur", "Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
+							throw new BLLException("Cette enchère vous appartient vous ne pouvez pas enchérir dessus !");
+						}
+
+
+						Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
+						em.insertEnchere(enchere);
 					}
-					
-					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
-					em.updateEnchere(enchere);
-					int ancienEnchere = article.getEnchere().getMontantEnchere(); //
-					Utilisateurs ancienEncherisseur = um.selectByID(ancienUserIdEnch);
-					System.out.println("Ancien encherisseur qui va recevoir ses crédits"+ancienEncherisseur);
-					int creditAncEnch = ancienEncherisseur.getCredit()+ancienEnchere;
-					ancienEncherisseur.setCredit(creditAncEnch);
-					um.updateCreditUtilisateur(ancienEncherisseur);
-				} else { //Sinon insert
-					Encheres enchere = new Encheres(utilisateurActif, noArticle, LocalDateTime.now(), nouvelEnchere);
-					em.insertEnchere(enchere);
-				}
-				creditNouvelEncherisseur -= nouvelEnchere;
+					creditNouvelEncherisseur -= nouvelEnchere;
 
-				try {
-					utilisateurActif.setCredit(creditNouvelEncherisseur);
-					um.updateCreditUtilisateur(utilisateurActif);
-					request.setAttribute("messageSucces", "Enchere effectuée !");
-				} catch (BLLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					try {
+						utilisateurActif.setCredit(creditNouvelEncherisseur);
+						um.updateCreditUtilisateur(utilisateurActif);
+						request.setAttribute("messageSucces", "Enchere effectuée !");
+					} catch (BLLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
+			} else {
+				request.setAttribute("messageErreur", "L'article n'est pas encore en vente ! Reviendez plus tard, merki <3");
 			}
-
 		} catch (BLLException e) {
 
 			e.printStackTrace();

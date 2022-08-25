@@ -190,6 +190,14 @@ public class Articles {
 		return dateFin;
 	}
 	
+	public String getDateDebutEnchereToString() {
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd LLLL yyyy HH:mm");
+		String dateDebut = dateDebutEnchere.format(formatter);
+
+		
+		return dateDebut;
+	}
+	
 	
 	
 }

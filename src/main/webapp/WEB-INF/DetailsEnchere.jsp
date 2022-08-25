@@ -51,9 +51,9 @@
 								<li>Enchere en cours : ${article.enchere.montantEnchere }</li>
 								</c:if>
 								
-								<li>Fin de l'enchere le : ${article.dateFinEnchere }</li>
+								<li>Fin de l'enchere le : ${article.dateFinEnchereToString }</li>
 								<li>Ajouté par : <a href="${pageContext.request.contextPath}/utilisateur/rechercheUtilisateur?pseudoVendeur=${article.vendeur.pseudo}">${article.vendeur.pseudo}</a></li>
-								<li>Mis en vente le: ${article.dateDebutEnchere }</li>
+								<li>Mis en vente le: ${article.dateDebutEnchereToString }</li>
 							</ul>
 						</div>
 						<form action="${pageContext.request.contextPath}/enchere/proposer"
