@@ -80,7 +80,7 @@
 					<div class="col-md-6 mb-3">
 						<label for="finDeVente">Date fin de vente</label> <input
 							type="datetime-local" class="form-control" id="dateFin"
-							name="dateFin" required>
+							name="dateFin" min="" required>
 						<div class="invalid-feedback">Ce champ est invalide !</div>
 					</div>
 				</div>
@@ -105,22 +105,6 @@
 						</fieldset>
 					</div>
 				</div>
-
-				<div class="text-center">
-					<div class="row">
-						<div class="col-md-12 mb-3">
-							<h3>
-								<label for="image">Photo de l'article</label>
-							</h3>
-							<input type="text" name="name" id="name" placeholder="nom de votre photo"/>
-							<input type="file" id="pictureFile" name="pictureFile"
-								accept="image/png, image/jpeg" onchange="PreviewImage();" /> <br>
-						    <img id="uploadPreview" style="width: 100px; height: 100px; border-radius:40px;"/>
-							<div class="invalid-feedback">Ce champ est invalide !</div>
-						</div>
-					</div>
-				</div>
-
 				<hr class="mb-4">
 				<div class="text-center">
 					<button class="btn btn-primary btn-lg" type="submit" value="Upload">Ajouter

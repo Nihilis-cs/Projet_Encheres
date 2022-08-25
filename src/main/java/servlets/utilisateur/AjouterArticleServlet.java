@@ -45,7 +45,7 @@ public class AjouterArticleServlet extends HttpServlet {
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// CREDIT A 0 QUAND ON UPDATE LE PROFIL
+
 	}
 
 
@@ -74,147 +74,67 @@ public class AjouterArticleServlet extends HttpServlet {
 
 		String Fin[] = dateFin.split("T");
 		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
+		boolean isBefore = finDate.isBefore(debutDate);
+		System.out.println(isBefore);
 
-		int prixInitParse 		 	 = Integer.parseInt(prixInit);
-		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
-		Encheres ench 			 	 = null;
-		int prixVente 			 	 = 0;
-		Categories cat 				 = null;
-		
-		try {
-			switch(categorie) {
-			case "Informatique": 
-				cat= new Categories(1, categorie);
-				break;
-			case "Ameublement":
-				cat= new Categories(2, categorie);
-				break;
-			case "Vetement":
-				cat= new Categories(3, categorie);
-				break;
-			case "Sport & Loisir":
-				cat= new Categories(4, categorie);
-				break;
-			default: 
-				request.setAttribute("messageErreur", "Catégorie non valide");
-				throw new IHMException("Veuillez choisir une categorie");
+
+		if(isBefore) {
+			request.setAttribute("messageErreur", "Date non valide");			
+			RequestDispatcher rs = request.getRequestDispatcher("/navigation/vente");
+			rs.forward(request, response);
+			
+		}else {
+
+			int prixInitParse 		 	 = Integer.parseInt(prixInit);
+			Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
+			Encheres ench 			 	 = null;
+			int prixVente 			 	 = 0;
+			Categories cat 				 = null;
+
+			try {
+				switch(categorie) {
+				case "Informatique": 
+					cat= new Categories(1, categorie);
+					break;
+				case "Ameublement":
+					cat= new Categories(2, categorie);
+					break;
+				case "Vetement":
+					cat= new Categories(3, categorie);
+					break;
+				case "Sport & Loisir":
+					cat= new Categories(4, categorie);
+					break;
+				default: 
+					request.setAttribute("messageErreur", "Catégorie non valide");
+					throw new IHMException("Veuillez choisir une categorie");
+				}
+
+			} catch (Exception e) {
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+				rs.forward(request, response);
 			}
 
-		} catch (Exception e) {
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+
+			Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
+			System.out.println(article.toString());
+			Retraits retrait = new Retraits(rue, codePostal, ville);
+			System.out.println(retrait.toString());
+
+			try {
+				artmngr.insert(article, retrait);
+				request.setAttribute("messageSucces", "Article enregistré!");
+			} catch (BLLException e) {
+				request.setAttribute("messageErreur", "Article non valide!");
+				e.printStackTrace();
+				RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+				rs.forward(request, response);
+			}
+			
+			RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 			rs.forward(request, response);
 		}
-
-		////////////////////////// DEBUT IMAGE
-//		try {
-//			String name = request.getParameter("name");
-//			System.out.println("name: " + name);
-//			Images image= null;
-//
-//			// Gets absolute path to root directory of web app.
-//			String appPath = request.getServletContext().getRealPath("");
-//
-//			// Gets image informations
-//			Part part = request.getPart("pictureFile");
-//
-//			//Save image File and get fileName
-//			String fileName = saveFile(appPath, part);
-//
-//			// save Truc in database
-//			image = new Images(name, fileName);
-//			ImagesDAOJdbcImp dao = new ImagesDAOJdbcImp();
-//			dao.insert(image);
-//
-//			//redirection
-//			request.setAttribute("truc", image);
-//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/uploadresult.jsp");
-//			rd.forward(request, response);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			request.setAttribute("errorMessage", "Error: " + e.getMessage());
-//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/Vente.jsp");
-//			dispatcher.forward(request, response);
-//		}
-		///////////////////////////////////////////FIN IMAGE
-
-		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
-		System.out.println(article.toString());
-		Retraits retrait = new Retraits(rue, codePostal, ville);
-		System.out.println(retrait.toString());
-
-		try {
-			artmngr.insert(article, retrait);
-			request.setAttribute("messageSucces", "Article enregistré!");
-		} catch (BLLException e) {
-			request.setAttribute("messageErreur", "Article non valide!");
-			e.printStackTrace();
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
-			rs.forward(request, response);
-		}
-
-
-		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
-		rs.forward(request, response);
 
 	}
-
-	
-	/**
-	* Sauvegarder le fichier image
-	* @param appPath
-	* @param part
-	* @return
-	* @throws IOException
-	*/
-//	private String saveFile(String appPath, Part part) throws IOException {
-//		appPath = appPath.replace('\\', '/');
-//		// The directory to save uploaded file
-//		String fullSavePath = null;
-//		if (appPath.endsWith("/")) {
-//			fullSavePath = appPath + SAVE_DIRECTORY;
-//		} else {
-//			fullSavePath = appPath + "/" + SAVE_DIRECTORY;
-//		}
-//		// Creates the save directory if it does not exists
-//		File fileSaveDir = new File(fullSavePath);
-//		if (!fileSaveDir.exists()) {
-//			fileSaveDir.mkdir();
-//		}
-//		String filePath=null;
-//		String fileName = extractFileName(part);
-//		System.out.println(fileName);
-//		String[] fn = fileName.split("(\\.)"); fileName = fn[0];
-//		String ext = fn[(fn.length-1)];
-//		if(!ext.isEmpty()) {
-//			//generate a unique file name
-//			UUID uuid = UUID.randomUUID(); fileName = fileName + "_" + uuid.toString() + "." + ext ;
-//			if (fileName != null && fileName.length() > 0) {
-//				filePath = fullSavePath + File.separator + fileName;
-//				System.out.println("Write attachment to file: " + filePath);
-//				// Write to file
-//				part.write(filePath);
-//			}
-//		}
-//		return fileName;
-//	}
-//
-//	/**
-//	* extraire le nom du fichier provenant du client
-//	* @param part
-//	* @return
-//	*/
-//	private String extractFileName(Part part) {
-//		String contentDisp = part.getHeader("content-disposition");
-//		String[] items = contentDisp.split(";");
-//		for (String s : items) {
-//			if (s.trim().startsWith("filename")) {
-//				String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
-//				clientFileName = clientFileName.replace("\\", "/");
-//				int i = clientFileName.lastIndexOf('/');
-//				return clientFileName.substring(i + 1);
-//			}
-//		}
-//		return null;
-//	}
 
 }

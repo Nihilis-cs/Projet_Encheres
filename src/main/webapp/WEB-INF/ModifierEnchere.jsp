@@ -109,17 +109,6 @@
 					</div>
 				</div>
 
-				<div class="text-center">
-					<div class="row">
-						<div class="col-md-12 mb-3">
-							<label for="image">photo de l'article</label><input type="file"
-								class="form-control" id="uploadPhoto" name="uploadPhoto"
-								accept="image/png, image/jpg" onchange="PreviewImage();">
-							<img id="uploadPreview" style="width: 100px; height: 100px;">
-							<div class="invalid-feedback">Ce champ est invalide !</div>
-						</div>
-					</div>
-				</div>
 				<input type="hidden" name="idarticle" value="${article.noArticle}">
 
 				<hr class="mb-4">
