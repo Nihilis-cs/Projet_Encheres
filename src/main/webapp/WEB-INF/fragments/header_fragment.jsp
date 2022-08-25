@@ -22,7 +22,7 @@
 			title="Gérer mon profil"> <span
 			class="align-middle align-top text-muted"> <!-- Connecté ou pas -->
 				<c:if test="${not empty utilisateurActif}">
-					<p>${utilisateurActif.nom}${utilisateurActif.prenom}
+					<p>${utilisateurActif.nom} ${utilisateurActif.prenom}
 						${utilisateurActif.credit} crédits</p>
 				</c:if> <c:if test="${empty utilisateurActif}">
 					<p>Visiteur</p>
