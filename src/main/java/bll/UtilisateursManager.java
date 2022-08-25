@@ -59,10 +59,6 @@ public class UtilisateursManager {
 
 
 
-		//		if(u==null){
-		//			throw new BLLException("Article null");
-		//		}
-		//Les attributs des articles sont obligatoires
 		if(u.getPseudo()==null || u.getPseudo().trim().length()==0){
 			sb.append("Le pseudo utilisateur est obligatoire.\n");
 			valide = false;
@@ -125,7 +121,7 @@ public class UtilisateursManager {
 		}
 		return u;
 	}
-	
+
 	public boolean selectByPseudoCreation(String user) throws BLLException{
 		boolean present = false;
 
@@ -138,7 +134,7 @@ public class UtilisateursManager {
 		}
 		return present;
 	}
-	
+
 	public boolean selectByMailCreation(String user) throws BLLException{
 		boolean present = false;
 
@@ -171,12 +167,18 @@ public class UtilisateursManager {
 		}
 
 	}
-	
+
 	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws BLLException {
 		try {
-			utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);
-		} catch (DALException e) {
+			if (validerUtilisateur(utilisateur)) {
+				utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);
+			}
+		} catch (BLLException e) {
 			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+		} catch (DALException de) {
+			de.printStackTrace();
+			throw new BLLException(de.getMessage());
 		}
 		return utilisateur;
 	}

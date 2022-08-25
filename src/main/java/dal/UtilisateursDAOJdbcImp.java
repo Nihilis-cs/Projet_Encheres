@@ -23,6 +23,7 @@ public class UtilisateursDAOJdbcImp implements UtilisateursDao  {
 	private final String DELETE_USER = "DELETE FROM UTILISATEURS WHERE pseudo = ?";
 	private final String UPDATE_USER = "UPDATE UTILISATEURS SET pseudo = ?, nom = ?, prenom = ?, email = ?, telephone = ?, "
 			+ "rue = ?, code_postal = ?, ville = ?, mot_de_passe = ?, credit = ? WHERE no_utilisateur = ?";
+	private final String UPDATE_USER_PASS = "UPDATE UTILISATEURS SET mot_de_passe = ? WHERE email = ?";
 	private final String UPDATE_CREDIT = "UPDATE UTILISATEURS SET credit = ? WHERE pseudo = ?";
 	private final String A_ENCHERE = "Select * from ENCHERES WHERE no_utilisateur = ?";
 	private final String A_ARTICLE = 
