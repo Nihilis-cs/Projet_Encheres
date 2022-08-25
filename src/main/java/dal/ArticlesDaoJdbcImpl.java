@@ -373,13 +373,14 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setTimestamp(4, java.sql.Timestamp.valueOf(a.getDateFinEnchere()));
 				stmt.setInt(5, a.getPrixInitial());
 				stmt.setInt(6, a.getCategorie().getNoCategorie());
-				stmt.setInt(7, a.getVendeur().getId());
-				stmt.executeUpdate();
+				stmt.setInt(7, a.getNoArticle());
+				System.out.println("update avec : " + a.toString());
 				
+				stmt.executeUpdate();
+
+				con.commit();
 				RetraitsDAO rDao = new RetraitsDaoJdbcImp();
 				rDao.update(r);
-				
-				con.commit();
 			} catch (SQLException e) {
 				con.rollback();
 				e.printStackTrace();

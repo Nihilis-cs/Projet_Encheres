@@ -48,6 +48,7 @@ public class ModifierArticleServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session  		= request.getSession();
+		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
 		
@@ -102,8 +103,17 @@ public class ModifierArticleServlet extends HttpServlet {
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
-		
-		Articles article = new Articles(idArticle, nomArticle, description, debutDate, finDate, prixInitParse, cat);   
+		Articles article = new Articles();
+		article.setNoArticle(idArticle);
+		article.setNomArticle(nomArticle);
+		article.setDescription(description);
+		article.setDateDebutEnchere(debutDate);
+		article.setDateFinEnchere(finDate);
+		article.setPrixInitial(prixInitParse);
+		article.setCategorie(cat);
+		article.setVendeur(utilisateurActif);
+		article.setEtatVente(EtatsVente.EC);
+		//Articles article = new Articles(idArticle, nomArticle, description, debutDate, finDate, prixInitParse, cat, utilisateurActif, EtatsVente.CR);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(idArticle ,rue, codePostal, ville);
 		System.out.println(retrait.toString());
