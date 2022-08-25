@@ -25,7 +25,7 @@
 
 </head>
 <body>
-<%@ include file="fragments/header_fragment.jsp"%>
+	<%@ include file="fragments/header_fragment.jsp"%>
 	<div class="container-fluid">
 		<!--main bloc-->
 		<main>
@@ -119,18 +119,19 @@
 						<div class="invalid-feedback">Ce champ est invalide ou les
 							mots de passe sont différents !</div>
 					</div>
-					<input type="hidden" name="credit" value="${utilisateurActif.credit}">
-					
-					
+					<input type="hidden" name="credit"
+						value="${utilisateurActif.credit}">
 				</div>
 				<hr class="mb-4">
-				<button class="btn btn-primary btn-lg " type="submit">Modifier
-					mon compte</button>
+				<div class="text-center mb-4">
+					<button class="btn btn-primary btn-lg " type="submit">Modifier
+						mon compte</button>
+				</div>
 			</form>
 			<form
 				action="${pageContext.request.contextPath}/utilisateur/suppression"
 				method="post">
-				<div class="text-center">
+				<div class="text-center mb-3">
 					<button type="submit" name="bouttonSupprimer"
 						value="boutonSupprimer">Supprimer mon compte</button>
 				</div>
@@ -158,38 +159,58 @@
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
 	<script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-    (function() {
-        'use strict';
+		// Example starter JavaScript for disabling form submissions if there are invalid fields
+		(function() {
+			'use strict';
 
-        window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
+			window
+					.addEventListener(
+							'load',
+							function() {
+								// Fetch all the forms we want to apply custom Bootstrap validation styles to
+								var forms = document
+										.getElementsByClassName('needs-validation');
 
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-                //validation du mot de passe
-                var password = document.getElementById("password")
-                , confirm_password = document.getElementById("confirm_password");
-                if(password.value != confirm_password.value) {
-                    confirm_password.setCustomValidity("Les mots de passe sont différents");
-                    event.preventDefault();
-                    event.stopPropagation();
-                } else {
-                    confirm_password.setCustomValidity('');
-                }
-                //validations des saisies obligatoires
-                if (form.checkValidity() === false) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });            
-    }, false);
-    })();
-    </script>
+								// Loop over them and prevent submission
+								var validation = Array.prototype.filter
+										.call(
+												forms,
+												function(form) {
+													form
+															.addEventListener(
+																	'submit',
+																	function(
+																			event) {
+																		//validation du mot de passe
+																		var password = document
+																				.getElementById("password"), confirm_password = document
+																				.getElementById("confirm_password");
+																		if (password.value != confirm_password.value) {
+																			confirm_password
+																					.setCustomValidity("Les mots de passe sont différents");
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		} else {
+																			confirm_password
+																					.setCustomValidity('');
+																		}
+																		//validations des saisies obligatoires
+																		if (form
+																				.checkValidity() === false) {
+																			event
+																					.preventDefault();
+																			event
+																					.stopPropagation();
+																		}
+																		form.classList
+																				.add('was-validated');
+																	}, false);
+												});
+							}, false);
+		})();
+	</script>
 </body>
 
 </html>

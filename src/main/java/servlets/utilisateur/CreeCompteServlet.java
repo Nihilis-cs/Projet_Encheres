@@ -66,7 +66,9 @@ public class CreeCompteServlet extends HttpServlet {
 
 				test = um.validerUtilisateur(utilisateur); //Validation et Récuperation d'un boolean pour la validation 
 				um.insertUtilisateur(utilisateur);
+				request.setAttribute("messageSucces", "Compte créé avec succes! Bienvenue!");
 				//System.out.println(test);
+				
 			} catch (BLLException e) {
 				e.printStackTrace();
 				request.setAttribute("messageErreur", e.getMessage());			

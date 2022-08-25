@@ -41,7 +41,8 @@
 
 			<div class="row justify-content-center border-top card-deck">
 				<div class="col-12 col-sm-6 col-lg-4 p-2">
-					<div class="card">
+				
+					<div class="card text-center">
 						<form action="${pageContext.request.contextPath }/navigation/admin">
 							<button>Utilisateurs</button>
 						</form>
