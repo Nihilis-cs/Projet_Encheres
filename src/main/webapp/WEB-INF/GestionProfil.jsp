@@ -119,6 +119,9 @@
 						<div class="invalid-feedback">Ce champ est invalide ou les
 							mots de passe sont différents !</div>
 					</div>
+					<input type="hidden" name="credit" value="${utilisateurActif.credit}">
+					
+					
 				</div>
 				<hr class="mb-4">
 				<button class="btn btn-primary btn-lg " type="submit">Modifier

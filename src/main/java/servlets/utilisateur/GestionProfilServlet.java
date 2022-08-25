@@ -53,11 +53,14 @@ public class GestionProfilServlet extends HttpServlet {
 		String codePostal = request.getParameter("codepostal");
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
+		String creditStr = request.getParameter("credit");
+		int credit = Integer.parseInt(creditStr);
 		int id = utilisateurActif.getId();
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		System.out.println("Données saisi par l'user pour modification dans la BDD = "+pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp+id);
 		try {
 			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, id);
+			utilisateur.setCredit(credit);
 			System.out.println(utilisateur);
 			um.updateUtilisateur(utilisateur);
 			session.setAttribute("utilisateurActif", utilisateur);
