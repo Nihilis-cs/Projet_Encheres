@@ -108,6 +108,68 @@ public class UtilisateursManager {
 		}
 		return valide;
 	}
+	
+	public boolean validerUtilisateurUpdate(Utilisateurs u, Utilisateurs utilisateurActif) throws BLLException
+	{
+
+		boolean valide = true;
+		StringBuffer sb = new StringBuffer();
+
+		String mail=u.getEmail();
+		String pseudo = u.getPseudo();
+		boolean result = pseudo.matches("^[a-zA-Z0-9]*$");
+
+
+
+		if(u.getPseudo()==null || u.getPseudo().trim().length()==0){
+			sb.append("Le pseudo utilisateur est obligatoire.\n");
+			valide = false;
+		}
+		if(selectByPseudoCreation(pseudo)== true && u.getId() != utilisateurActif.getId()){
+			sb.append("Un compte avec ce pseudo a déjà été crée !.\n");
+			valide = false;
+		}
+		if(result==false){
+			sb.append("Le pseudo de l'utilisateur doit contenir seulement des lettres ou des chiffres.\n");
+			valide = false;
+		}
+		if(u.getNom()==null || u.getNom().trim().length()==0){
+			sb.append("Le nom utilisateur  est obligatoire.\n");
+			valide = false;
+		}
+		if(u.getPrenom()==null || u.getPrenom().trim().length()==0){
+			sb.append("Le prénom utilisateur  est obligatoire.\n");
+			valide = false;
+		}
+		if(u.getEmail()==null || u.getEmail().trim().length()==0){
+			sb.append("L'email de l'utilisateur est obligatoire.\n");
+			valide = false;
+		}
+		if((selectByMailCreation(mail)== true)){
+			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
+			valide = false;
+		}
+		if(u.getRue()==null || u.getRue().trim().length()==0){
+			sb.append("La rue de l'utilisateur  est obligatoire.\n");
+			valide = false;
+		}
+		if(u.getCodePostal()==null || u.getCodePostal().trim().length()==0){
+			sb.append("Le code postal de l'utilisateur est obligatoire.\n");
+			valide = false;
+		}
+		if(u.getMotDePasse()==null || u.getMotDePasse().trim().length()==0){
+			sb.append("Le mot de passe de l'utilisateur  est obligatoire.\n");
+			valide = false;
+		}
+		if(u.getRue()==null || u.getRue().trim().length()==0){
+			sb.append("La rue de l'utilisateur  est obligatoire.\n");
+			valide = false;
+		}
+		if(!valide){
+			throw new BLLException(sb.toString());
+		}
+		return valide;
+	}
 
 	public Utilisateurs selectByPseudo(String user) throws BLLException{
 		Utilisateurs u=null;
@@ -171,9 +233,9 @@ public class UtilisateursManager {
 
 	}
 
-	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur) throws BLLException {
+	public Utilisateurs updateUtilisateur(Utilisateurs utilisateur, Utilisateurs utilisateurActif) throws BLLException {
 		try {
-			if (validerUtilisateur(utilisateur)) {
+			if (validerUtilisateurUpdate(utilisateur, utilisateurActif)) {
 				utilisateur =  this.utilisateurDao.updateUtilisateur(utilisateur);
 			}
 		} catch (BLLException e) {

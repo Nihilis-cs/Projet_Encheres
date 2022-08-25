@@ -46,7 +46,7 @@ public class ModifierProfilAdminServlet extends HttpServlet {
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		try {
 			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, noUser);
-			um.updateUtilisateur(utilisateur);
+			um.updateUtilisateur(utilisateur, utilisateur);
 			System.out.println("/////////////////////");
 			System.out.println(utilisateur);
 			request.setAttribute("messageSucces", "Modifications bien prises en compte!");

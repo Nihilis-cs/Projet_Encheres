@@ -22,10 +22,10 @@ public class GestionProfilServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 
-    public GestionProfilServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public GestionProfilServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 
 
@@ -54,28 +54,35 @@ public class GestionProfilServlet extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
 		String creditStr = request.getParameter("credit");
+		String confirmMdp = request.getParameter("confirm_mdp");
 		int credit = Integer.parseInt(creditStr);
 		int id = utilisateurActif.getId();
 		UtilisateursManager um =UtilisateursManager.getInstance();
 		System.out.println("Données saisi par l'user pour modification dans la BDD = "+pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp+id);
-		try {
-			Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, id);
-			utilisateur.setCredit(credit);
-			System.out.println(utilisateur);
-			um.updateUtilisateur(utilisateur);
-			session.setAttribute("utilisateurActif", utilisateur);
-			request.setAttribute("messageSucces", "Modifications bien prises en compte!");
-		} catch (BLLException e) {
-			request.setAttribute("messageErreur", "Modifications invalides.");
-			e.printStackTrace();
+
+		if(mdp.equals(confirmMdp)) {
+			try {
+				Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, id);
+				utilisateur.setCredit(credit);
+				System.out.println(utilisateur);
+				um.updateUtilisateur(utilisateur, utilisateurActif);
+				session.setAttribute("utilisateurActif", utilisateur);
+				request.setAttribute("messageSucces", "Modifications bien prises en compte!");
+			} catch (BLLException e) {
+				request.setAttribute("messageErreur", "Modifications invalides.");
+				e.printStackTrace();
+			}
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
+			rs.forward(request, response);
+
+			Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateurActif");
+			System.out.println(utilisateur.toString());
+
+		} else {
+			request.setAttribute("messageErreur", "Les mots de passes ne correspondent pas ! ");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
+			rs.forward(request, response);
 		}
-		RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/GestionProfil.jsp");
-		rs.forward(request, response);
-
-
-
-		Utilisateurs utilisateur = (Utilisateurs) session.getAttribute("utilisateurActif");
-		System.out.println(utilisateur.toString());
 
 	}
 
