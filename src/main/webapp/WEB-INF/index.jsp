@@ -150,10 +150,27 @@
 							</div>
 							<div class="d-flex">
 								<div class="col-3 p-2">
-								<c:if test="${article.categorie.noCategorie == 4 }">
-									<img class="img-fluid img-thumbnail" src="img/sport.png"
-										style="height: 100px;width: 100px;" alt="${article.nomArticle}"/>
-										</c:if>
+									<c:if test="${article.categorie.noCategorie == 1 }">
+										<img class="img-fluid img-thumbnail"
+											src="img/informatique.png"
+											style="height: 100px; width: 100px;"
+											alt="${article.nomArticle}" />
+									</c:if>
+									<c:if test="${article.categorie.noCategorie == 2 }">
+										<img class="img-fluid img-thumbnail" src="img/meuble.png"
+											style="height: 100px; width: 100px;"
+											alt="${article.nomArticle}" />
+									</c:if>
+									<c:if test="${article.categorie.noCategorie == 3 }">
+										<img class="img-fluid img-thumbnail" src="img/vetements.png"
+											style="height: 100px; width: 100px;"
+											alt="${article.nomArticle}" />
+									</c:if>
+									<c:if test="${article.categorie.noCategorie == 4 }">
+										<img class="img-fluid img-thumbnail" src="img/sport.png"
+											style="height: 100px; width: 100px;"
+											alt="${article.nomArticle}" />
+									</c:if>
 								</div>
 								<ul class="col-9 list-unstyled p-2">
 									<li><b>Prix : ${article.prixInitial}</b></li>
