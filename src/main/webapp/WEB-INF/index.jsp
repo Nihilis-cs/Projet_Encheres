@@ -152,22 +152,22 @@
 								<div class="col-3 p-2">
 									<c:if test="${article.categorie.noCategorie == 1 }">
 										<img class="img-fluid img-thumbnail"
-											src="img/informatique.png"
+											src="${pageContext.request.contextPath}/img/informatique.png"
 											style="height: 100px; width: 100px;"
 											alt="${article.nomArticle}" />
 									</c:if>
 									<c:if test="${article.categorie.noCategorie == 2 }">
-										<img class="img-fluid img-thumbnail" src="img/meuble.png"
+										<img class="img-fluid img-thumbnail" src="${pageContext.request.contextPath}/img/meuble.png"
 											style="height: 100px; width: 100px;"
 											alt="${article.nomArticle}" />
 									</c:if>
 									<c:if test="${article.categorie.noCategorie == 3 }">
-										<img class="img-fluid img-thumbnail" src="img/vetements.png"
+										<img class="img-fluid img-thumbnail" src="${pageContext.request.contextPath}/img/vetements.png"
 											style="height: 100px; width: 100px;"
 											alt="${article.nomArticle}" />
 									</c:if>
 									<c:if test="${article.categorie.noCategorie == 4 }">
-										<img class="img-fluid img-thumbnail" src="img/sport.png"
+										<img class="img-fluid img-thumbnail" src="${pageContext.request.contextPath}/img/sport.png"
 											style="height: 100px; width: 100px;"
 											alt="${article.nomArticle}" />
 									</c:if>
