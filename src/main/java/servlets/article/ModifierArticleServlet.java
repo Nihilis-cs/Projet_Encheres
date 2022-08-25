@@ -100,7 +100,7 @@ public class ModifierArticleServlet extends HttpServlet {
 			}
 
 		} catch (Exception e) {
-			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
+			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/ModifierEnchere.jsp");
 			rs.forward(request, response);
 		}
 		Articles article = new Articles();
