@@ -42,7 +42,7 @@
 
 			<!--formulaire-->
 			<form action="${pageContext.request.contextPath}/article/modifier"
-				method="post" class="form-register needs-validation" enctype="multipart/form-data" novalidate>
+				method="post" class="form-register needs-validation" enctype="multipart/form-data">
 
 				<div class="row">
 					<div class="col-md-6 mb-3">
