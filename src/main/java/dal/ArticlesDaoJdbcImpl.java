@@ -45,6 +45,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 
 	private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_enchere = ?, date_fin_enchere = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?;";
 	
+	private final String DELETE = "DELETE FROM ARTICLES_VENDUS Where no_article = ?;";
 
 	public Articles insert(Articles a, Retraits r) throws DALException {
 		try(Connection con = JdbcTools.getConnection();
@@ -394,5 +395,16 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		}
 
 
+	}
+
+	public void delete(int id) throws DALException{
+		try(Connection con = JdbcTools.getConnection();
+				PreparedStatement stmt = con.prepareStatement(DELETE);){
+			stmt.setInt(1,  id);
+			stmt.executeUpdate();	
+		}catch (SQLException e) {
+			e.printStackTrace();
+			throw new DALException("Delete impossible");
+		}
 	}
 }
