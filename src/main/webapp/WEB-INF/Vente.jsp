@@ -105,17 +105,17 @@
 						</fieldset>
 					</div>
 				</div>
+
 				<div class="text-center">
 					<div class="row">
 						<div class="col-md-12 mb-3">
 							<h3>
-								<label for="image">photo de l'article</label>
+								<label for="image">Photo de l'article</label>
 							</h3>
-							<input type="text" placeholder="nom de la photo" name="name"
-								id="name"> <input type="file" id="uploadPhoto"
-								name="uploadPhoto" accept="image/png, image/jpg"
-								onchange="PreviewImage();"><br> <img
-								id="uploadPreview" style="width: 100px; height: 100px;">
+							<input type="text" name="name" id="name" placeholder="nom de votre photo"/>
+							<input type="file" id="pictureFile" name="pictureFile"
+								accept="image/png, image/jpeg" onchange="PreviewImage();" /> <br>
+						    <img id="uploadPreview" style="width: 100px; height: 100px; border-radius:40px;"/>
 							<div class="invalid-feedback">Ce champ est invalide !</div>
 						</div>
 					</div>
@@ -123,7 +123,7 @@
 
 				<hr class="mb-4">
 				<div class="text-center">
-					<button class="btn btn-primary btn-lg" type="submit">Ajouter
+					<button class="btn btn-primary btn-lg" type="submit" value="Upload">Ajouter
 						un article</button>
 				</div>
 			</form>
