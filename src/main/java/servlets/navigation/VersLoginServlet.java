@@ -25,6 +25,7 @@ public class VersLoginServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		Cookie[] cookies = request.getCookies();
+		String checked = "";
 		if(cookies != null ) { // RECUPERATION DES COOKIES AFIN DES LES AFFICHERS SUR LES LOGS
 			for(Cookie cookie : cookies) {
 				if(cookie.getName().equals("pseudo")) {
@@ -33,12 +34,15 @@ public class VersLoginServlet extends HttpServlet {
 				if(cookie.getName().equals("mdp")) {
 					request.setAttribute("mdp", cookie.getValue());
 				}
+				if(cookie.getName().equals("remember")) {
+					checked = "checked='checked'";
+					request.setAttribute("remember", checked);
+				}
 			}
 		}
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 		rd.forward(request, response);
 	}
-
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);

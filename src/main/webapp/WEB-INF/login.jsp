@@ -52,7 +52,7 @@
 					placeholder="Mot de passe" value="${mdp}" required>
 				<div class="checkbox mb-3">
 					<label> <input type="checkbox" name="remember"
-						value="remember"> Se souvenir de moi
+						value="remember" ${remember}> Se souvenir de moi
 					</label>
 				</div>
 				<div class="text-center">
