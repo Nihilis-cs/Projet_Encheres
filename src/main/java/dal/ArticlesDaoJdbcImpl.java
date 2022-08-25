@@ -257,7 +257,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			u.setVille(rs.getString("ville"));
 			art.setVendeur(u);
 			Categories c = new Categories();
-			c.setNoCategorie(rs.getInt("a.no_categorie"));
+			c.setNoCategorie(rs.getInt("no_categorie"));
 			switch (c.getNoCategorie()) {
 			case 1: c.setLibelle("Informatique");
 			break;
