@@ -33,8 +33,7 @@
 		<ul class="navbar-nav ml-auto">
 			<li class="nav-item dropdown d-lg-none"><a
 				class="nav-link dropdown-toggle" href="#" id="navbardrop"
-				data-toggle="dropdown"> <img class="small-icon"
-					src="images/menu.svg" alt="Menu ENI-Encheres">
+				data-toggle="dropdown">
 			</a>
 				<div class="dropdown-menu">
 					<c:if test="${not empty utilisateurActif}">
