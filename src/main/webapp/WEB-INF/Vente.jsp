@@ -89,7 +89,7 @@
 					<div class="col-md-6 mb-3">
 						<label for="prixInit">Prix initial</label> <input type="number"
 							class="form-control" id="prixInit" name="prixInit" placeholder=""
-							value="" maxlength="15">
+							value="" min="1" maxlength="15" required>
 					</div>
 					<div class="col-md-6 mb-3">
 						<fieldset>
