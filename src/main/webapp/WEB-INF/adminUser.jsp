@@ -65,7 +65,7 @@
 								<input type="hidden"name="pseudo" value="${user.pseudo}">
 								<div class="text-center">
 									<button type="submit" name="bouttonSupprimer"
-										value="boutonSupprimer">Supprimer le compte ${user.id}</button>
+										value="boutonSupprimer">Supprimer ${user.pseudo}</button>
 								</div>
 							</form>
 						</div>
