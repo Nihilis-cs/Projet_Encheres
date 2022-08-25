@@ -35,7 +35,6 @@ public class VersLoginServlet extends HttpServlet {
 				}
 			}
 		}
-
 		RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/login.jsp");
 		rd.forward(request, response);
 	}
