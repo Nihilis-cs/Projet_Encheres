@@ -46,12 +46,11 @@ public class ModifArticleFilter extends HttpFilter implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest httpRequest = (HttpServletRequest)request;
-		//Recuperer l'utilisateur actif et l'idArticle à consulter
-		HttpSession session = httpRequest.getSession();
-		Utilisateurs utilisateurActif = (Utilisateurs) session.getAttribute("utilisateurActif");
+
 		String strNoArticle = httpRequest.getParameter("article");
 		int noArticle = Integer.parseInt(strNoArticle);
 		ArticlesManager am = ArticlesManager.getInstance();
+		
 		try {
 			Articles a = am.selectById(noArticle) ;
 			if(a.getEtatVente() == EtatsVente.CR) {	
