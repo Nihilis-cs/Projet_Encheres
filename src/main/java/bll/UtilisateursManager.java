@@ -43,6 +43,8 @@ public class UtilisateursManager {
 			u =  this.utilisateurDao.insertUtilisateur(utilisateur);
 		} catch (DALException e) {
 			e.printStackTrace();
+			throw new BLLException("Creation de compte échec");
+			
 		}
 		return u;
 	}
