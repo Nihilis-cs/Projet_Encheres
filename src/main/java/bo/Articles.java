@@ -185,9 +185,7 @@ public class Articles {
 	public String getDateFinEnchereToString() {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("EEEE dd LLLL yyyy HH:mm");
 		String dateFin = dateFinEnchere.format(formatter);
-//		String Debut[] = dateDebut.split("T");        
-//        LocalDateTime debutDate = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
-//		dateFinEnchere.toString()
+
 		
 		return dateFin;
 	}

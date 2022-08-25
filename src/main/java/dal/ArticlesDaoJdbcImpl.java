@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bo.Articles;
+import bo.Categories;
 import bo.Encheres;
 import bo.EtatsVente;
 import bo.Retraits;
@@ -44,7 +45,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 	private final String enchereEC = " (GETDATE() BETWEEN date_debut_enchere AND date_fin_enchere)";
 
 	private final String UPDATE = "UPDATE ARTICLES_VENDUS SET nom_article = ?, description = ?, date_debut_enchere = ?, date_fin_enchere = ?, prix_initial = ?, no_categorie = ? WHERE no_article = ?;";
-	
+
 	private final String DELETE = "DELETE FROM ARTICLES_VENDUS Where no_article = ?;";
 
 	public Articles insert(Articles a, Retraits r) throws DALException {
@@ -255,7 +256,20 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 			u.setCodePostal(rs.getString("code_postal"));
 			u.setVille(rs.getString("ville"));
 			art.setVendeur(u);
-			art.setCategorie(null); //A modifier quand les catégories seront gérées
+			Categories c = new Categories();
+			c.setNoCategorie(rs.getInt("a.no_categorie"));
+			switch (c.getNoCategorie()) {
+			case 1: c.setLibelle("Informatique");
+			break;
+			case 2: c.setLibelle("Ameublement");
+			break;
+			case 3: c.setLibelle("Vetement");
+			break;
+			case 4: c.setLibelle("Sport & Loisir");
+			break;
+			default : break;
+			}
+			art.setCategorie(c); //A modifier quand les catégories seront gérées
 			switch(rs.getString("etat_vente")) {
 			case "CR" : art.setEtatVente(EtatsVente.CR);
 			break;
@@ -376,7 +390,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 				stmt.setInt(6, a.getCategorie().getNoCategorie());
 				stmt.setInt(7, a.getNoArticle());
 				System.out.println("update avec : " + a.toString());
-				
+
 				stmt.executeUpdate();
 
 				con.commit();
@@ -391,7 +405,7 @@ public class ArticlesDaoJdbcImpl implements ArticlesDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new DALException("Update annulé " + e.getMessage());
-			
+
 		}
 
 
