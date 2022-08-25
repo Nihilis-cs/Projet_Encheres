@@ -16,7 +16,7 @@ public class JdbcTools {
 		Context context;
 		try {
 			context = new InitialContext();
-			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx_encheres");
+			dataSource = (DataSource) context.lookup("java:comp/env/jdbc/pool_cnx_any");
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}
