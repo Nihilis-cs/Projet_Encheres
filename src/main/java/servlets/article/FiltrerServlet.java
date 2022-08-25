@@ -48,14 +48,12 @@ public class FiltrerServlet extends HttpServlet {
 		ArticlesManager am =ArticlesManager.getInstance();
 		Utilisateurs u = (Utilisateurs) session.getAttribute("utilisateurActif");
 		String requete = null;
-		int idUser; //= u.getId();
+		int idUser; 
 		
 		String idCategorieStr = request.getParameter("categorie");
-		System.out.println(idCategorieStr);
 		int idCategorie = Integer.parseInt(idCategorieStr);
 		
 		String articleContenant = request.getParameter("article-contenant");
-		System.out.println(articleContenant);
 		if (u != null) {
 			idUser = u.getId();
 			String achatVente = request.getParameter("type-encheres");
@@ -65,19 +63,12 @@ public class FiltrerServlet extends HttpServlet {
 				String enchere2 = request.getParameter("encheres2");
 				String enchere3 = request.getParameter("encheres3");
 				requete = achatVente + enchere1 + enchere2 + enchere3;
-				//System.out.println(requete);
 			} else if (achatVente.equals("ventes")) {
 				String vente1 = request.getParameter("ventes1");
 				String vente2 = request.getParameter("ventes2");
 				String vente3 = request.getParameter("ventes3");
 				requete = achatVente + vente1 + vente2 + vente3;
-				//System.out.println(requete);
 			}
-
-			
-
-			System.out.println(requete+idCategorie+articleContenant);
-			//System.out.println(requete+idUser);
 			try {
 				
 				List<Articles> liste = am.selectAllFilter(requete, idUser, idCategorie, articleContenant);
