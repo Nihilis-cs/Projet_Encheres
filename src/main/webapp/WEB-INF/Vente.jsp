@@ -105,6 +105,21 @@
 						</fieldset>
 					</div>
 				</div>
+				<div class="text-center">
+					<div class="row">
+						<div class="col-md-12 mb-3">
+							<h3>
+								<label for="image">photo de l'article</label>
+							</h3>
+							<input type="text" placeholder="nom de la photo" name="name"
+								id="name"> <input type="file" id="uploadPhoto"
+								name="uploadPhoto" accept="image/png, image/jpg"
+								onchange="PreviewImage();"><br> <img
+								id="uploadPreview" style="width: 100px; height: 100px;">
+							<div class="invalid-feedback">Ce champ est invalide !</div>
+						</div>
+					</div>
+				</div>
 
 				<hr class="mb-4">
 				<div class="text-center">
@@ -134,6 +149,18 @@
 		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
 		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
 		crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		function PreviewImage() {
+			var oFReader = new FileReader();
+			oFReader
+					.readAsDataURL(document.getElementById("pictureFile").files[0]);
+			oFReader.onload = function(oFREvent) {
+				document.getElementById("uploadPreview").src = oFREvent.target.result;
+			};
+		};
+	</script>
+
+
 	<script>
 		// Example starter JavaScript for disabling form submissions if there are invalid fields
 		(function() {
