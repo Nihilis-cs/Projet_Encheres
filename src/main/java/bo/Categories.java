@@ -9,6 +9,9 @@ public class Categories {
 		this.noCategorie = noCategorie;
 		this.libelle = libelle;
 	}
+	public Categories() {
+		// TODO Auto-generated constructor stub
+	}
 	public int getNoCategorie() {
 		return noCategorie;
 	}

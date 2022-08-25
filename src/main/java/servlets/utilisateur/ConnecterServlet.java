@@ -45,9 +45,8 @@ public class ConnecterServlet extends HttpServlet {
 		String mdp = request.getParameter("mdp");
 		String sauvegarderLogin = request.getParameter("remember");
 
-		System.out.println("CheckBoxe se souvenir : "+ sauvegarderLogin);
-
 		UtilisateursManager um = UtilisateursManager.getInstance();
+
 		try {
 			Utilisateurs utilisateur = um.getUtilisateurByMailMdp(pseudo, mdp);
 			if (utilisateur == null) {
@@ -61,28 +60,42 @@ public class ConnecterServlet extends HttpServlet {
 				session.setAttribute("utilisateurActif", utilisateur);
 				session.setMaxInactiveInterval(300);
 
-				if (sauvegarderLogin != null) {
+				if (sauvegarderLogin != null) { // SI L'USER SOUHAITE SE SOUVENIR DES LOGINS CREATIONS DES COOKIES CONTENANT LES LOGS
 
 					Cookie cookiePseudo = new Cookie("pseudo", pseudo );
 					Cookie cookieMdp = new Cookie("mdp", mdp );
+					Cookie cookieSaveLogin = new Cookie("remember", sauvegarderLogin );
+
 					cookiePseudo.setMaxAge(Integer.MAX_VALUE);
 					cookieMdp.setMaxAge(Integer.MAX_VALUE);
+					cookieSaveLogin.setMaxAge(Integer.MAX_VALUE);
+
+					cookiePseudo.setPath("/Projet_Encheres");
+					cookieMdp.setPath("/Projet_Encheres");
+					cookieSaveLogin.setPath("/Projet_Encheres");
+
 					response.addCookie(cookiePseudo);
 					response.addCookie(cookieMdp);
-//					request.setAttribute("pseudo", cookiePseudo);
-//					request.setAttribute("mdp", cookieMdp);
-
+					response.addCookie(cookieSaveLogin);
+				} else { // SI LA CHECKBOX N'EST PAS CHECK SUPPRRESION DES COOKIES 
 					Cookie[] cookies = request.getCookies();
-					System.out.println(cookies);
 					if(cookies != null ) {
 						for(Cookie cookie : cookies) {
 							if(cookie.getName().equals("pseudo")) {
-								request.setAttribute("pseudo", cookie.getValue());
+								cookie.setMaxAge(0);
+								cookie.setPath("/Projet_Encheres");
+								response.addCookie(cookie);
 							}
 							if(cookie.getName().equals("mdp")) {
-								request.setAttribute("mdp", cookie.getValue());
+								cookie.setMaxAge(0);
+								cookie.setPath("/Projet_Encheres");
+								response.addCookie(cookie);
 							}
-
+							if(cookie.getName().equals("remember")) {
+								cookie.setMaxAge(0);
+								cookie.setPath("/Projet_Encheres");
+								response.addCookie(cookie);
+							}
 						}
 					}
 				}

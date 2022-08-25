@@ -41,8 +41,6 @@
 			<!--title-->
 			<div class="mx-auto text-center">
 				<h1>Enchères</h1>
-				<h2>Cookie pseudo : ${pseudo}</h2>
-				<h2>Cookie mdp : ${mdp}</h2>
 			</div>
 			<!--filtre-->
 			<form class="form-filter border mb-3"
