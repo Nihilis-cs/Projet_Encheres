@@ -1,10 +1,12 @@
 package servlets.utilisateur;
 
+import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -24,25 +26,26 @@ import bo.Articles;
 import bo.Categories;
 import bo.Encheres;
 import bo.EtatsVente;
+import bo.Images;
 import bo.Retraits;
 import bo.Utilisateurs;
+import dal.ImagesDAOJdbcImp;
 
 
 @MultipartConfig
 @WebServlet("/article/ajout")
 public class AjouterArticleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	public static final String SAVE_DIRECTORY = "uploads";
 
-    public AjouterArticleServlet() {
-        super();
-        // TODO Auto-generated constructor stub
-    }
+	public AjouterArticleServlet() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
 
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+		// CREDIT A 0 QUAND ON UPDATE LE PROFIL
 	}
 
 
@@ -50,7 +53,7 @@ public class AjouterArticleServlet extends HttpServlet {
 		HttpSession session  		= request.getSession();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH-mm");
 		ArticlesManager artmngr 	= ArticlesManager.getInstance();
-		
+
 		//Recuperation des données de l'article
 		String nomArticle	= request.getParameter("nomArticle");
 		String description 	= request.getParameter("description");
@@ -61,21 +64,21 @@ public class AjouterArticleServlet extends HttpServlet {
 		String rue 			= request.getParameter("rue");
 		String codePostal 	= request.getParameter("codePostal");
 		String ville 		= request.getParameter("ville");
-		String image 		= request.getParameter("lienImage");
-		
-		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville + image);
-		
+		//		String image 		= request.getParameter("lienImage");
+
+		System.out.println(nomArticle + categorie + description + dateDebut + dateFin + prixInit + rue + codePostal + ville );
+
 		//Conversion dates
 		String Debut[] = dateDebut.split("T");		
 		LocalDateTime debutDate = LocalDateTime.of(LocalDate.parse(Debut[0]), LocalTime.parse(Debut[1]));
-		
+
 		String Fin[] = dateFin.split("T");
 		LocalDateTime finDate = LocalDateTime.of(LocalDate.parse(Fin[0]), LocalTime.parse(Fin[1]));
-					
+
 		int prixInitParse 		 	 = Integer.parseInt(prixInit);
 		Utilisateurs user 		 	 = (Utilisateurs) session.getAttribute("utilisateurActif");
 		Encheres ench 			 	 = null;
-		int prixVente 			 	 =0;
+		int prixVente 			 	 = 0;
 		Categories cat 				 = null;
 		
 		try {
@@ -101,13 +104,44 @@ public class AjouterArticleServlet extends HttpServlet {
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
-		
+
+		////////////////////////// DEBUT IMAGE
+//		try {
+//			String name = request.getParameter("name");
+//			System.out.println("name: " + name);
+//			Images image= null;
+//
+//			// Gets absolute path to root directory of web app.
+//			String appPath = request.getServletContext().getRealPath("");
+//
+//			// Gets image informations
+//			Part part = request.getPart("pictureFile");
+//
+//			//Save image File and get fileName
+//			String fileName = saveFile(appPath, part);
+//
+//			// save Truc in database
+//			image = new Images(name, fileName);
+//			ImagesDAOJdbcImp dao = new ImagesDAOJdbcImp();
+//			dao.insert(image);
+//
+//			//redirection
+//			request.setAttribute("truc", image);
+//			RequestDispatcher rd = request.getRequestDispatcher("/WEB-INF/uploadresult.jsp");
+//			rd.forward(request, response);
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			request.setAttribute("errorMessage", "Error: " + e.getMessage());
+//			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/Vente.jsp");
+//			dispatcher.forward(request, response);
+//		}
+		///////////////////////////////////////////FIN IMAGE
+
 		Articles article = new Articles(nomArticle, description, debutDate, finDate, prixInitParse, prixVente,  user, cat, EtatsVente.CR, ench);   
 		System.out.println(article.toString());
 		Retraits retrait = new Retraits(rue, codePostal, ville);
 		System.out.println(retrait.toString());
-		
-		
+
 		try {
 			artmngr.insert(article, retrait);
 			request.setAttribute("messageSucces", "Article enregistré!");
@@ -117,10 +151,70 @@ public class AjouterArticleServlet extends HttpServlet {
 			RequestDispatcher rs = request.getRequestDispatcher("/WEB-INF/Vente.jsp");
 			rs.forward(request, response);
 		}
-			
+
+
 		RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 		rs.forward(request, response);
-		
+
 	}
+
+	
+	/**
+	* Sauvegarder le fichier image
+	* @param appPath
+	* @param part
+	* @return
+	* @throws IOException
+	*/
+//	private String saveFile(String appPath, Part part) throws IOException {
+//		appPath = appPath.replace('\\', '/');
+//		// The directory to save uploaded file
+//		String fullSavePath = null;
+//		if (appPath.endsWith("/")) {
+//			fullSavePath = appPath + SAVE_DIRECTORY;
+//		} else {
+//			fullSavePath = appPath + "/" + SAVE_DIRECTORY;
+//		}
+//		// Creates the save directory if it does not exists
+//		File fileSaveDir = new File(fullSavePath);
+//		if (!fileSaveDir.exists()) {
+//			fileSaveDir.mkdir();
+//		}
+//		String filePath=null;
+//		String fileName = extractFileName(part);
+//		System.out.println(fileName);
+//		String[] fn = fileName.split("(\\.)"); fileName = fn[0];
+//		String ext = fn[(fn.length-1)];
+//		if(!ext.isEmpty()) {
+//			//generate a unique file name
+//			UUID uuid = UUID.randomUUID(); fileName = fileName + "_" + uuid.toString() + "." + ext ;
+//			if (fileName != null && fileName.length() > 0) {
+//				filePath = fullSavePath + File.separator + fileName;
+//				System.out.println("Write attachment to file: " + filePath);
+//				// Write to file
+//				part.write(filePath);
+//			}
+//		}
+//		return fileName;
+//	}
+//
+//	/**
+//	* extraire le nom du fichier provenant du client
+//	* @param part
+//	* @return
+//	*/
+//	private String extractFileName(Part part) {
+//		String contentDisp = part.getHeader("content-disposition");
+//		String[] items = contentDisp.split(";");
+//		for (String s : items) {
+//			if (s.trim().startsWith("filename")) {
+//				String clientFileName = s.substring(s.indexOf("=") + 2, s.length() - 1);
+//				clientFileName = clientFileName.replace("\\", "/");
+//				int i = clientFileName.lastIndexOf('/');
+//				return clientFileName.substring(i + 1);
+//			}
+//		}
+//		return null;
+//	}
 
 }

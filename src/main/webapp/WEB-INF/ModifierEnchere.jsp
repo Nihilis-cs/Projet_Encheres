@@ -35,7 +35,7 @@
 		<main>
 			<!--title-->
 			<div class="mx-auto text-center">
-				<h1>Vendre un article</h1>
+				<h1>Modifier un article</h1>
 				<img class="mb-4 large-icon rounded-circle" src="images/user.svg"
 					alt="">
 			</div>
@@ -125,6 +125,15 @@
 				<hr class="mb-4">
 				<div class="text-center">
 					<button class="btn btn-primary btn-lg" type="submit">Modifier cet article</button>
+				</div>
+			</form>
+			<form
+				action="${pageContext.request.contextPath}/article/suppression"
+				method="post">
+				<input type="hidden" name="idarticle" value="${article.noArticle}">
+				<div class="text-center">
+					<button type="submit" name="bouttonSupprimer"
+						value="boutonSupprimer">Supprimer ${article.nomArticle}</button>
 				</div>
 			</form>
 		</main>

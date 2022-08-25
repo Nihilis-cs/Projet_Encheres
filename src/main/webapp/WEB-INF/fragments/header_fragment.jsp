@@ -6,7 +6,9 @@
 		class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
 		<!-- Brand/logo -->
 		<a class="navbar-brand"
-			href="${pageContext.request.contextPath}/navigation/accueil"> <strong>ENI-Encheres</strong>
+			href="${pageContext.request.contextPath}/navigation/accueil"> <img alt="eni-logo"
+			 src="https://cdn.freebiesupply.com/logos/large/2x/eni-1-logo-svg-vector.svg"
+			  style="height: 80px; width: 80px; border-radius:50px;" >
 		</a>
 		<c:if test="${empty utilisateurActif}">
 				 <a class="navbar-brand"

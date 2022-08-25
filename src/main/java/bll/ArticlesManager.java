@@ -77,5 +77,14 @@ public class ArticlesManager {
 		}
 	}
 	
+	public void delete(int id) throws BLLException{
+		try {
+			this.articleDao.delete(id);
+		} catch (DALException e) {
+			e.printStackTrace();
+			throw new BLLException(e.getMessage());
+		}
+	}
+	
 	
 }
