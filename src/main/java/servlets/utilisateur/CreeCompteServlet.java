@@ -53,22 +53,18 @@ public class CreeCompteServlet extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
 		String confirmMdp = request.getParameter("confirm_mdp");
-		
-		System.out.println("Récuperation des données dans la jsp"+pseudo+ nom+ prenom+ email+ phone+ rue+ codePostal+ ville+ mdp);
-		System.out.println("Valeur mot de passe avant le if(mdp==confirmMdp) - Mot de passe jsp : "+mdp+" Confirmation mot de passe jsp : "+confirmMdp);
-		
+
 		if(mdp.equals(confirmMdp)) {
 			try {
 				UtilisateursManager um =UtilisateursManager.getInstance();
 
 				Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
-				//System.out.println("Creation de l'utilisateur avec les données (avant validation):"+utilisateur.toString());
+			
 
 				test = um.validerUtilisateur(utilisateur); //Validation et Récuperation d'un boolean pour la validation 
 				um.insertUtilisateur(utilisateur);
 				request.setAttribute("messageSucces", "Compte créé avec succes! Bienvenue!");
-				//System.out.println(test);
-				
+
 			} catch (BLLException e) {
 				e.printStackTrace();
 				request.setAttribute("messageErreur", e.getMessage());			
