@@ -17,3 +17,7 @@ h1, label, .user-info, .button{
 .form-control{
 	background-color : rgb(156, 156, 156);
 }
+
+.card-full{
+	background-color: rgb(128, 128, 128);
+}

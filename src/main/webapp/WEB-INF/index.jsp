@@ -132,8 +132,8 @@
 			<!--enchères-->
 			<div class="row justify-content-center border-top card-deck mt-5">
 				<c:forEach var="article" items="${liste}">
-					<div class="col-12 col-sm-6 p-2">
-						<div class="card">
+					<div class="col-12 col-sm-6 p-2 ">
+						<div class="card card-full">
 							<div class="card-header text-center">
 								<h4 class="my-0 font-weight-normal">
 									<c:if
