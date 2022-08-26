@@ -147,7 +147,7 @@ public class UtilisateursManager {
 			sb.append("L'email de l'utilisateur est obligatoire.\n");
 			valide = false;
 		}
-		if((selectByMailCreation(mail)== true)){
+		if((selectByMailCreation(mail)== true) && u.getId() != utilisateurActif.getId()){
 			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
 			valide = false;
 		}

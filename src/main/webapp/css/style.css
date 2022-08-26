@@ -4,7 +4,7 @@ body{
 	background-color: rgb(41, 41, 41);
 }
 
-h1, label, .user-info, .button{
+h1, label, .user-info, .button, a, p{
 	color : rgb(255,163, 26);
 }
 
@@ -19,5 +19,9 @@ h1, label, .user-info, .button{
 }
 
 .card-full{
-	background-color: rgb(128, 128, 128);
+	background-color: rgb(41, 41, 41);;
+}
+
+li{
+	color: white;
 }

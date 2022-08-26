@@ -1,9 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<head>
+<%-- <head>
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
-</head>
+</head> --%>
 <header>
 	<nav
 		class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
