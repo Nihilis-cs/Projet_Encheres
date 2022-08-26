@@ -85,7 +85,7 @@ public class UtilisateursManager {
 			sb.append("L'email de l'utilisateur est obligatoire.\n");
 			valide = false;
 		}
-		if((selectByMailCreation(mail)== true)){
+		if((selectByMailCreation(mail) == true)){
 			sb.append("Un compte a déjà été crée avec cette adresse mail !.\n");
 			valide = false;
 		}
@@ -206,7 +206,7 @@ public class UtilisateursManager {
 		boolean present = false;
 
 		try {
-			present = this.utilisateurDao.selectByPseudoCreation(user);
+			present = this.utilisateurDao.selectByMailCreation(user);
 		} catch (DALException e) {
 			e.printStackTrace();
 			//throw new BLLException(e.getMessage());

@@ -53,23 +53,23 @@ public class CreeCompteServlet extends HttpServlet {
 		String ville = request.getParameter("ville");
 		String mdp = request.getParameter("mdp");
 		String confirmMdp = request.getParameter("confirm_mdp");
-
+		UtilisateursManager um =UtilisateursManager.getInstance();
+		Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
 		if(mdp.equals(confirmMdp)) {
 			try {
-				UtilisateursManager um =UtilisateursManager.getInstance();
-
-				Utilisateurs utilisateur = new Utilisateurs(pseudo, nom, prenom, email, phone, rue, codePostal, ville, mdp, 100, (byte)0);
-			
-
 				test = um.validerUtilisateur(utilisateur); //Validation et Récuperation d'un boolean pour la validation 
-				um.insertUtilisateur(utilisateur);
-				request.setAttribute("messageSucces", "Compte créé avec succes! Bienvenue!");
-
 			} catch (BLLException e) {
 				e.printStackTrace();
 				request.setAttribute("messageErreur", e.getMessage());			
 			}
 			if(test==true) {
+				try {
+					um.insertUtilisateur(utilisateur);
+					request.setAttribute("messageSucces", "Compte créé avec succes! Bienvenue!");
+				} catch (BLLException e) {
+					request.setAttribute("messageErreur", e.getMessage());
+					e.printStackTrace();
+				}
 				RequestDispatcher rs = request.getRequestDispatcher("/navigation/accueil");
 				rs.forward(request, response);
 			} else {
