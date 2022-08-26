@@ -1,0 +1,19 @@
+@charset "UTF-8";
+
+body{
+	background-color: rgb(41, 41, 41);
+}
+
+h1, label, .user-info, .button{
+	color : rgb(255,163, 26);
+}
+
+.btn-primary{
+	color : rgb(41, 41, 41);
+	border-color : rgb(255,163, 26);
+	background-color : rgb(255,163, 26);
+}
+
+.form-control{
+	background-color : rgb(156, 156, 156);
+}

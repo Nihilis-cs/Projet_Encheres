@@ -1,6 +1,9 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<head>
+	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
+</head>
 <header>
 	<nav
 		class="pr-5 navbar navbar-expand-sm bg-dark navbar-dark align-top justify-content-between">
@@ -17,15 +20,15 @@
 			class="align-middle align-top text-muted"></span></a>
 			
 		</c:if>
-		 <a class="navbar-brand"
+		 <a class="navbar-brand" 
 			href="#"
 			title="Gérer mon profil"> <span
 			class="align-middle align-top text-muted"> <!-- Connecté ou pas -->
 				<c:if test="${not empty utilisateurActif}">
-					<p>${utilisateurActif.nom} ${utilisateurActif.prenom}
+					<p class="user-info">${utilisateurActif.nom} ${utilisateurActif.prenom}
 						${utilisateurActif.credit} crédits</p>
 				</c:if> <c:if test="${empty utilisateurActif}">
-					<p>Visiteur</p>
+					<p class="user-info">Visiteur</p>
 				</c:if>
 		</span>
 		</a>

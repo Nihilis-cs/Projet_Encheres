@@ -20,7 +20,7 @@
 	crossorigin="anonymous">
 
 <!-- Personnal CSS-->
-<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css">
 
 <!--icons-->
 <link rel="stylesheet"
